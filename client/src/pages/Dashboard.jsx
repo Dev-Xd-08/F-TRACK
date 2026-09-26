@@ -25,11 +25,13 @@ import { getProgression } from '../services/progressionService';
 import { getRecords } from '../services/recordService';
 import { getQuests, getQuestHistory } from '../services/questService';
 import { getAchievements } from '../services/achievementService';
+import { getAnalytics } from '../services/analyticsService';
 import AscensionHUD from '../components/progression/AscensionHUD';
 import PersonalRecordMatrix from '../components/progression/PersonalRecordMatrix';
 import RecentActivity from '../components/progression/RecentActivity';
 import QuestBoard from '../components/quests/QuestBoard';
 import AchievementShowcase from '../components/achievements/AchievementShowcase';
+import AnalyticsDashboard from '../components/analytics/AnalyticsDashboard';
 import AnimeButton from '../components/ui/AnimeButton';
 import GlassCard from '../components/ui/GlassCard';
 import EnergyBar from '../components/ui/EnergyBar';
@@ -46,8 +48,9 @@ export const Dashboard = () => {
   const [quests, setQuests] = useState(null);
   const [questHistory, setQuestHistory] = useState([]);
   const [achievementsData, setAchievementsData] = useState(null);
+  const [analyticsData, setAnalyticsData] = useState(null);
 
-  // Load real workouts, health metrics, ascension progression, personal records, active quests, and achievements
+  // Load real workouts, health metrics, ascension progression, personal records, active quests, achievements, and analytics
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
@@ -58,7 +61,8 @@ export const Dashboard = () => {
           recordData, 
           questData, 
           questHistoryData,
-          achievementRes
+          achievementRes,
+          analyticsRes
         ] = await Promise.all([
           getWorkouts().catch(() => ({ workouts: [] })),
           getHealthProfile().catch(() => ({ profile: null })),
@@ -67,6 +71,7 @@ export const Dashboard = () => {
           getQuests().catch(() => ({ daily: [], weekly: [] })),
           getQuestHistory().catch(() => ({ history: [] })),
           getAchievements().catch(() => null),
+          getAnalytics().catch(() => null),
         ]);
 
         setWorkouts(workoutData.workouts || []);
@@ -87,6 +92,9 @@ export const Dashboard = () => {
         }
         if (achievementRes) {
           setAchievementsData(achievementRes);
+        }
+        if (analyticsRes && analyticsRes.analytics) {
+          setAnalyticsData(analyticsRes.analytics);
         }
       } catch (err) {
         console.warn('Failed to load dashboard metrics', err.message);
@@ -190,7 +198,7 @@ export const Dashboard = () => {
             <div className="space-y-3">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-neon/40 bg-cyan-neon/10 text-cyan-neon text-xs font-orbitron font-bold tracking-widest">
                 <Sparkles className="w-3.5 h-3.5" />
-                <span>CHAMBER PROTOCOL ACTIVE • STAGE 9 ACHIEVEMENT MATRIX ONLINE</span>
+                <span>CHAMBER PROTOCOL ACTIVE • STAGE 10 ANALYTICS CORE ONLINE</span>
               </div>
 
               <h1 className="font-orbitron text-2xl sm:text-4xl font-black tracking-tight text-slate-100 uppercase">
@@ -287,6 +295,11 @@ export const Dashboard = () => {
         <section className="space-y-4">
           <AchievementShowcase achievementsData={achievementsData} />
         </section>
+
+        {/* ══════════════════════════════════════════════════════════
+            STAGE 10 — ANALYTICS & PROGRESS INTELLIGENCE
+        ══════════════════════════════════════════════════════════ */}
+        <AnalyticsDashboard analyticsData={analyticsData} onRefresh={fetchDashboardData} />
 
         {/* ══════════════════════════════════════════════════════════
             STAGE 7 — PROGRESSION & RECORD HISTORY
@@ -430,7 +443,7 @@ export const Dashboard = () => {
 
       {/* Footer */}
       <footer className="border-t border-slate-800/80 bg-void/80 py-4 text-center text-xs text-slate-500 font-mono">
-        <span>F-TRACK: FITNESS ASCENSION • STAGE 9 ACHIEVEMENT MATRIX ONLINE</span>
+        <span>F-TRACK: FITNESS ASCENSION • STAGE 10 ANALYTICS CORE ONLINE</span>
       </footer>
     </div>
   );
