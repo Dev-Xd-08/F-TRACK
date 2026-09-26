@@ -8,7 +8,8 @@ import {
   Sparkles, 
   X, 
   ArrowUpCircle,
-  Crown
+  Crown,
+  Clock
 } from 'lucide-react';
 
 /**
@@ -18,6 +19,9 @@ import {
  * - LEVEL_UP
  * - RANK_UP
  * - STREAK_UPDATED
+ * - NEW_RECORD_LONGEST_WORKOUT
+ * - NEW_RECORD_HIGHEST_CALORIES
+ * - NEW_RECORD_MOST_ACTIVE_WEEK
  */
 export const SystemNotification = ({ events = [], onClose }) => {
   useEffect(() => {
@@ -38,6 +42,9 @@ export const SystemNotification = ({ events = [], onClose }) => {
           const isLevelUp = evt.type === 'LEVEL_UP';
           const isRankUp = evt.type === 'RANK_UP';
           const isStreak = evt.type === 'STREAK_UPDATED';
+          const isLongestRecord = evt.type === 'NEW_RECORD_LONGEST_WORKOUT';
+          const isCaloriesRecord = evt.type === 'NEW_RECORD_HIGHEST_CALORIES';
+          const isWeekRecord = evt.type === 'NEW_RECORD_MOST_ACTIVE_WEEK';
           
           let borderGlow = 'border-cyan-neon shadow-[0_0_25px_rgba(0,245,255,0.4)]';
           let headerColor = 'text-cyan-neon';
@@ -55,6 +62,18 @@ export const SystemNotification = ({ events = [], onClose }) => {
             borderGlow = 'border-amber-400 shadow-[0_0_25px_rgba(251,191,36,0.5)]';
             headerColor = 'text-amber-400';
             IconComponent = Flame;
+          } else if (isLongestRecord) {
+            borderGlow = 'border-cyan-neon shadow-[0_0_30px_rgba(0,245,255,0.6)]';
+            headerColor = 'text-cyan-neon';
+            IconComponent = Clock;
+          } else if (isCaloriesRecord) {
+            borderGlow = 'border-crimson-aura shadow-[0_0_30px_rgba(255,42,95,0.6)]';
+            headerColor = 'text-crimson-aura';
+            IconComponent = Flame;
+          } else if (isWeekRecord) {
+            borderGlow = 'border-gold-mythic shadow-[0_0_30px_rgba(255,184,0,0.6)]';
+            headerColor = 'text-gold-mythic';
+            IconComponent = Trophy;
           }
 
           return (
@@ -90,6 +109,11 @@ export const SystemNotification = ({ events = [], onClose }) => {
                     {evt.xpGained > 0 && (
                       <span className="inline-block text-[10px] font-mono text-cyan-neon font-bold">
                         +{evt.xpGained} XP ACCELERATION
+                      </span>
+                    )}
+                    {evt.recordValue && (
+                      <span className="inline-block text-[10px] font-mono text-gold-mythic font-bold ml-2">
+                        ★ PR: {evt.recordValue} {evt.recordUnit}
                       </span>
                     )}
                   </div>

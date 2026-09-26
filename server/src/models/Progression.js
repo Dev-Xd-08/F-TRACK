@@ -5,7 +5,15 @@ const progressionEventSchema = new mongoose.Schema(
     type: {
       type: String,
       required: true,
-      enum: ['WORKOUT_COMPLETED', 'LEVEL_UP', 'RANK_UP', 'STREAK_UPDATED'],
+      enum: [
+        'WORKOUT_COMPLETED',
+        'LEVEL_UP',
+        'RANK_UP',
+        'STREAK_UPDATED',
+        'NEW_RECORD_LONGEST_WORKOUT',
+        'NEW_RECORD_HIGHEST_CALORIES',
+        'NEW_RECORD_MOST_ACTIVE_WEEK',
+      ],
     },
     title: {
       type: String,
@@ -27,6 +35,15 @@ const progressionEventSchema = new mongoose.Schema(
     },
     streak: {
       type: Number,
+    },
+    recordValue: {
+      type: Number,
+    },
+    recordUnit: {
+      type: String,
+    },
+    workoutId: {
+      type: String,
     },
     timestamp: {
       type: Date,

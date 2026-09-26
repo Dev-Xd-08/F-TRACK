@@ -1,4 +1,5 @@
 import Workout from '../models/Workout.js';
+import Progression from '../models/Progression.js';
 import {
   isMongoConnected,
   getDevWorkouts,
@@ -6,8 +7,13 @@ import {
   createDevWorkout,
   updateDevWorkout,
   deleteDevWorkout,
+  addDevProgressionEvent,
 } from '../utils/devStore.js';
 import { awardWorkoutProgression } from '../utils/progressionEngine.js';
+import {
+  detectRecordBreakingEvents,
+  getUserPersonalRecords,
+} from '../utils/recordEngine.js';
 
 const VALID_ACTIVITIES = [
   'Running',
@@ -130,6 +136,14 @@ export const createWorkout = async (req, res) => {
       });
     }
 
+    // Fetch prior workouts to evaluate against previous personal records
+    let existingWorkouts = [];
+    if (isMongoConnected()) {
+      existingWorkouts = await Workout.find({ user: userId }).lean();
+    } else {
+      existingWorkouts = await getDevWorkouts(userId);
+    }
+
     // 2. Creation
     let workout;
     if (isMongoConnected()) {
@@ -160,12 +174,48 @@ export const createWorkout = async (req, res) => {
       console.error(`[PROGRESSION_ENGINE ERROR] ${progErr.message}`);
     }
 
+    // 4. Stage 7 Personal Record Matrix Evaluation
+    let recordEvents = [];
+    let currentRecords = null;
+    try {
+      recordEvents = detectRecordBreakingEvents(existingWorkouts, workout);
+      if (recordEvents.length > 0) {
+        if (isMongoConnected()) {
+          await Progression.findOneAndUpdate(
+            { user: userId },
+            {
+              $push: {
+                events: {
+                  $each: recordEvents,
+                  $position: 0,
+                  $slice: 20,
+                },
+              },
+            }
+          );
+        } else {
+          for (const rev of [...recordEvents].reverse()) {
+            await addDevProgressionEvent(userId, rev);
+          }
+        }
+      }
+      currentRecords = await getUserPersonalRecords(userId);
+    } catch (recErr) {
+      console.error(`[RECORD_ENGINE ERROR] ${recErr.message}`);
+    }
+
+    const combinedEvents = [
+      ...(progressionUpdate?.newEvents || []),
+      ...recordEvents,
+    ];
+
     return res.status(201).json({
       success: true,
       message: 'Training quest completed and recorded in your ascension log.',
       workout,
       progression: progressionUpdate?.progression || null,
-      events: progressionUpdate?.newEvents || [],
+      events: combinedEvents,
+      records: currentRecords,
     });
   } catch (error) {
     console.error(`[CREATE_WORKOUT ERROR] ${error.message}`);

@@ -22,7 +22,10 @@ import { useAuth } from '../context/AuthContext';
 import { getWorkouts } from '../services/workoutService';
 import { getHealthProfile } from '../services/healthService';
 import { getProgression } from '../services/progressionService';
+import { getRecords } from '../services/recordService';
 import AscensionHUD from '../components/progression/AscensionHUD';
+import PersonalRecordMatrix from '../components/progression/PersonalRecordMatrix';
+import RecentActivity from '../components/progression/RecentActivity';
 import AnimeButton from '../components/ui/AnimeButton';
 import GlassCard from '../components/ui/GlassCard';
 import EnergyBar from '../components/ui/EnergyBar';
@@ -35,15 +38,17 @@ export const Dashboard = () => {
   const [loadingDashboard, setLoadingDashboard] = useState(true);
   const [healthProfile, setHealthProfile] = useState(null);
   const [progression, setProgression] = useState(null);
+  const [records, setRecords] = useState(null);
 
-  // Load real workouts, health metrics, and ascension progression
+  // Load real workouts, health metrics, ascension progression, and personal records
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const [workoutData, healthData, progressionData] = await Promise.all([
+        const [workoutData, healthData, progressionData, recordData] = await Promise.all([
           getWorkouts().catch(() => ({ workouts: [] })),
           getHealthProfile().catch(() => ({ profile: null })),
           getProgression().catch(() => ({ progression: null })),
+          getRecords().catch(() => ({ records: null })),
         ]);
 
         setWorkouts(workoutData.workouts || []);
@@ -52,6 +57,9 @@ export const Dashboard = () => {
         }
         if (progressionData && progressionData.progression) {
           setProgression(progressionData.progression);
+        }
+        if (recordData && recordData.records) {
+          setRecords(recordData.records);
         }
       } catch (err) {
         console.warn('Failed to load dashboard metrics', err.message);
@@ -155,7 +163,7 @@ export const Dashboard = () => {
             <div className="space-y-3">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-neon/40 bg-cyan-neon/10 text-cyan-neon text-xs font-orbitron font-bold tracking-widest">
                 <Sparkles className="w-3.5 h-3.5" />
-                <span>CHAMBER PROTOCOL ACTIVE • STAGE 6 ASCENSION ONLINE</span>
+                <span>CHAMBER PROTOCOL ACTIVE • STAGE 7 RECORD MATRIX ONLINE</span>
               </div>
 
               <h1 className="font-orbitron text-2xl sm:text-4xl font-black tracking-tight text-slate-100 uppercase">
@@ -230,6 +238,20 @@ export const Dashboard = () => {
           </div>
 
           <AscensionHUD progression={progression} />
+        </section>
+
+        {/* ══════════════════════════════════════════════════════════
+            STAGE 7 — PERSONAL RECORD MATRIX
+        ══════════════════════════════════════════════════════════ */}
+        <section className="space-y-4">
+          <PersonalRecordMatrix records={records} />
+        </section>
+
+        {/* ══════════════════════════════════════════════════════════
+            STAGE 7 — PROGRESSION & RECORD HISTORY
+        ══════════════════════════════════════════════════════════ */}
+        <section className="space-y-4">
+          <RecentActivity events={progression?.events || []} />
         </section>
 
         {/* ══════════════════════════════════════════════════════════
@@ -367,7 +389,7 @@ export const Dashboard = () => {
 
       {/* Footer */}
       <footer className="border-t border-slate-800/80 bg-void/80 py-4 text-center text-xs text-slate-500 font-mono">
-        <span>F-TRACK: FITNESS ASCENSION • STAGE 6 ASCENSION ENGINE ONLINE</span>
+        <span>F-TRACK: FITNESS ASCENSION • STAGE 7 PERSONAL RECORD MATRIX ONLINE</span>
       </footer>
     </div>
   );
