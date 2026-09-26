@@ -8,6 +8,7 @@ import workoutRoutes from './routes/workoutRoutes.js';
 import progressionRoutes from './routes/progressionRoutes.js';
 import recordRoutes from './routes/recordRoutes.js';
 import questRoutes from './routes/questRoutes.js';
+import achievementRoutes from './routes/achievementRoutes.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 
 // Load environment variables
@@ -43,6 +44,7 @@ app.use('/api/workouts', workoutRoutes);
 app.use('/api/progression', progressionRoutes);
 app.use('/api/records', recordRoutes);
 app.use('/api/quests', questRoutes);
+app.use('/api/achievements', achievementRoutes);
 
 app.get('/', (req, res) => {
   res.json({

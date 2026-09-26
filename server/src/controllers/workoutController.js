@@ -15,6 +15,7 @@ import {
   getUserPersonalRecords,
 } from '../utils/recordEngine.js';
 import { evaluateUserQuests } from '../utils/questEngine.js';
+import { evaluateUserAchievements } from '../utils/achievementEngine.js';
 
 const VALID_ACTIVITIES = [
   'Running',
@@ -215,14 +216,28 @@ export const createWorkout = async (req, res) => {
       console.error(`[QUEST_ENGINE ERROR] ${questErr.message}`);
     }
 
-    // Final progression reflects workout XP + any newly awarded quest XP
+    // 6. Stage 9 Achievement System Evaluation
+    let achievementEvaluation = null;
+    let achievementEvents = [];
+    try {
+      achievementEvaluation = await evaluateUserAchievements(userId, { allowXpAward: true });
+      achievementEvents = achievementEvaluation?.achievementEvents || [];
+    } catch (achErr) {
+      console.error(`[ACHIEVEMENT_ENGINE ERROR] ${achErr.message}`);
+    }
+
+    // Final progression reflects workout XP + quest XP + achievement XP
     const finalProgression =
-      questEvaluation?.progression || progressionUpdate?.progression || null;
+      achievementEvaluation?.progression ||
+      questEvaluation?.progression ||
+      progressionUpdate?.progression ||
+      null;
 
     const combinedEvents = [
       ...(progressionUpdate?.newEvents || []),
       ...recordEvents,
       ...questEvents,
+      ...achievementEvents,
     ];
 
     return res.status(201).json({
@@ -236,6 +251,7 @@ export const createWorkout = async (req, res) => {
         daily: questEvaluation?.daily || [],
         weekly: questEvaluation?.weekly || [],
       },
+      achievements: achievementEvaluation?.achievements || [],
     });
   } catch (error) {
     console.error(`[CREATE_WORKOUT ERROR] ${error.message}`);
@@ -333,11 +349,12 @@ export const updateWorkout = async (req, res) => {
       updatedWorkout = await updateDevWorkout(workoutId, userId, updates);
     }
 
-    // Safely recalculate quest progress without awarding XP or events
+    // Safely recalculate quest progress and achievements without awarding XP or events
     try {
       await evaluateUserQuests(userId, { allowXpAward: false });
-    } catch (questErr) {
-      console.error(`[QUEST_ENGINE UPDATE ERROR] ${questErr.message}`);
+      await evaluateUserAchievements(userId, { allowXpAward: false });
+    } catch (syncErr) {
+      console.error(`[SYNC UPDATE ERROR] ${syncErr.message}`);
     }
 
     return res.status(200).json({
@@ -378,11 +395,12 @@ export const deleteWorkout = async (req, res) => {
       });
     }
 
-    // Safely recalculate quest progress without altering XP
+    // Safely recalculate quest progress and achievements without altering XP
     try {
       await evaluateUserQuests(userId, { allowXpAward: false });
-    } catch (questErr) {
-      console.error(`[QUEST_ENGINE DELETE ERROR] ${questErr.message}`);
+      await evaluateUserAchievements(userId, { allowXpAward: false });
+    } catch (syncErr) {
+      console.error(`[SYNC DELETE ERROR] ${syncErr.message}`);
     }
 
     return res.status(200).json({

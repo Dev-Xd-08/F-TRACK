@@ -14,6 +14,7 @@ const progressionEventSchema = new mongoose.Schema(
         'NEW_RECORD_HIGHEST_CALORIES',
         'NEW_RECORD_MOST_ACTIVE_WEEK',
         'QUEST_COMPLETED',
+        'ACHIEVEMENT_UNLOCKED',
       ],
     },
     title: {
@@ -50,6 +51,9 @@ const progressionEventSchema = new mongoose.Schema(
       type: String,
     },
     periodType: {
+      type: String,
+    },
+    achievementId: {
       type: String,
     },
     timestamp: {

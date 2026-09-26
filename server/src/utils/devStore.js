@@ -17,6 +17,7 @@ import bcrypt from 'bcryptjs';
 const devUsers = [];
 const devWorkouts = [];
 const devQuestProgress = [];
+const devAchievements = [];
 
 /**
  * Check if real MongoDB is actively connected
@@ -374,4 +375,62 @@ export const getDevQuestHistory = async (userId) => {
     .filter((q) => q.user.toString() === userId.toString() && q.completed)
     .sort((a, b) => new Date(b.completedAt || b.updatedAt) - new Date(a.completedAt || a.updatedAt));
 };
+
+/* ─────────────────────────────────────────────────────────────
+   ACHIEVEMENT FALLBACK OPERATIONS
+───────────────────────────────────────────────────────────── */
+
+export const getDevAchievements = async (userId) => {
+  return devAchievements.filter((a) => a.user.toString() === userId.toString());
+};
+
+export const getDevAchievement = async (userId, achievementId) => {
+  return (
+    devAchievements.find(
+      (a) => a.user.toString() === userId.toString() && a.achievementId === achievementId
+    ) || null
+  );
+};
+
+export const upsertDevAchievement = async (userId, achievementData) => {
+  const { achievementId, unlocked, unlockedAt, progressValue, targetValue, metadata } = achievementData;
+  const existingIndex = devAchievements.findIndex(
+    (a) => a.user.toString() === userId.toString() && a.achievementId === achievementId
+  );
+
+  if (existingIndex >= 0) {
+    devAchievements[existingIndex] = {
+      ...devAchievements[existingIndex],
+      unlocked,
+      unlockedAt: unlocked ? (devAchievements[existingIndex].unlockedAt || unlockedAt || new Date()) : null,
+      progressValue,
+      targetValue,
+      metadata: metadata || devAchievements[existingIndex].metadata || {},
+      updatedAt: new Date(),
+    };
+    return devAchievements[existingIndex];
+  } else {
+    const newRecord = {
+      _id: `dev_ach_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+      user: userId.toString(),
+      achievementId,
+      unlocked: !!unlocked,
+      unlockedAt: unlocked ? (unlockedAt || new Date()) : null,
+      progressValue: Number(progressValue) || 0,
+      targetValue: Number(targetValue) || 0,
+      metadata: metadata || {},
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    devAchievements.push(newRecord);
+    return newRecord;
+  }
+};
+
+export const getDevAchievementHistory = async (userId) => {
+  return devAchievements
+    .filter((a) => a.user.toString() === userId.toString() && a.unlocked)
+    .sort((a, b) => new Date(b.unlockedAt || b.updatedAt) - new Date(a.unlockedAt || a.updatedAt));
+};
+
 

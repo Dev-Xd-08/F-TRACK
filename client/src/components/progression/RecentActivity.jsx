@@ -22,6 +22,14 @@ import GlassCard from '../ui/GlassCard';
 export const RecentActivity = ({ events = [] }) => {
   const getEventBadge = (evt) => {
     switch (evt.type) {
+      case 'ACHIEVEMENT_UNLOCKED':
+        return {
+          icon: Award,
+          color: 'text-gold-mythic',
+          border: 'border-gold-mythic/40',
+          bg: 'bg-gold-mythic/10',
+          tag: 'ACHIEVEMENT',
+        };
       case 'QUEST_COMPLETED':
         return {
           icon: CheckCircle2,

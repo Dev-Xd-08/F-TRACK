@@ -24,10 +24,12 @@ import { getHealthProfile } from '../services/healthService';
 import { getProgression } from '../services/progressionService';
 import { getRecords } from '../services/recordService';
 import { getQuests, getQuestHistory } from '../services/questService';
+import { getAchievements } from '../services/achievementService';
 import AscensionHUD from '../components/progression/AscensionHUD';
 import PersonalRecordMatrix from '../components/progression/PersonalRecordMatrix';
 import RecentActivity from '../components/progression/RecentActivity';
 import QuestBoard from '../components/quests/QuestBoard';
+import AchievementShowcase from '../components/achievements/AchievementShowcase';
 import AnimeButton from '../components/ui/AnimeButton';
 import GlassCard from '../components/ui/GlassCard';
 import EnergyBar from '../components/ui/EnergyBar';
@@ -43,18 +45,28 @@ export const Dashboard = () => {
   const [records, setRecords] = useState(null);
   const [quests, setQuests] = useState(null);
   const [questHistory, setQuestHistory] = useState([]);
+  const [achievementsData, setAchievementsData] = useState(null);
 
-  // Load real workouts, health metrics, ascension progression, personal records, and active quests
+  // Load real workouts, health metrics, ascension progression, personal records, active quests, and achievements
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const [workoutData, healthData, progressionData, recordData, questData, questHistoryData] = await Promise.all([
+        const [
+          workoutData, 
+          healthData, 
+          progressionData, 
+          recordData, 
+          questData, 
+          questHistoryData,
+          achievementRes
+        ] = await Promise.all([
           getWorkouts().catch(() => ({ workouts: [] })),
           getHealthProfile().catch(() => ({ profile: null })),
           getProgression().catch(() => ({ progression: null })),
           getRecords().catch(() => ({ records: null })),
           getQuests().catch(() => ({ daily: [], weekly: [] })),
           getQuestHistory().catch(() => ({ history: [] })),
+          getAchievements().catch(() => null),
         ]);
 
         setWorkouts(workoutData.workouts || []);
@@ -72,6 +84,9 @@ export const Dashboard = () => {
         }
         if (questHistoryData && questHistoryData.history) {
           setQuestHistory(questHistoryData.history);
+        }
+        if (achievementRes) {
+          setAchievementsData(achievementRes);
         }
       } catch (err) {
         console.warn('Failed to load dashboard metrics', err.message);
@@ -175,7 +190,7 @@ export const Dashboard = () => {
             <div className="space-y-3">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-neon/40 bg-cyan-neon/10 text-cyan-neon text-xs font-orbitron font-bold tracking-widest">
                 <Sparkles className="w-3.5 h-3.5" />
-                <span>CHAMBER PROTOCOL ACTIVE • STAGE 8 QUEST SYSTEM ONLINE</span>
+                <span>CHAMBER PROTOCOL ACTIVE • STAGE 9 ACHIEVEMENT MATRIX ONLINE</span>
               </div>
 
               <h1 className="font-orbitron text-2xl sm:text-4xl font-black tracking-tight text-slate-100 uppercase">
@@ -264,6 +279,13 @@ export const Dashboard = () => {
         ══════════════════════════════════════════════════════════ */}
         <section className="space-y-4">
           <QuestBoard quests={quests} history={questHistory} onRefresh={fetchDashboardData} />
+        </section>
+
+        {/* ══════════════════════════════════════════════════════════
+            STAGE 9 — ACHIEVEMENT MATRIX & HUNTER BADGES
+        ══════════════════════════════════════════════════════════ */}
+        <section className="space-y-4">
+          <AchievementShowcase achievementsData={achievementsData} />
         </section>
 
         {/* ══════════════════════════════════════════════════════════
@@ -408,7 +430,7 @@ export const Dashboard = () => {
 
       {/* Footer */}
       <footer className="border-t border-slate-800/80 bg-void/80 py-4 text-center text-xs text-slate-500 font-mono">
-        <span>F-TRACK: FITNESS ASCENSION • STAGE 8 QUEST SYSTEM ONLINE</span>
+        <span>F-TRACK: FITNESS ASCENSION • STAGE 9 ACHIEVEMENT MATRIX ONLINE</span>
       </footer>
     </div>
   );

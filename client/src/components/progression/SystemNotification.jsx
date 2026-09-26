@@ -10,7 +10,8 @@ import {
   ArrowUpCircle,
   Crown,
   Clock,
-  CheckCircle2
+  CheckCircle2,
+  Award
 } from 'lucide-react';
 
 /**
@@ -24,6 +25,7 @@ import {
  * - NEW_RECORD_HIGHEST_CALORIES
  * - NEW_RECORD_MOST_ACTIVE_WEEK
  * - QUEST_COMPLETED
+ * - ACHIEVEMENT_UNLOCKED
  */
 export const SystemNotification = ({ events = [], onClose }) => {
   useEffect(() => {
@@ -48,12 +50,17 @@ export const SystemNotification = ({ events = [], onClose }) => {
           const isCaloriesRecord = evt.type === 'NEW_RECORD_HIGHEST_CALORIES';
           const isWeekRecord = evt.type === 'NEW_RECORD_MOST_ACTIVE_WEEK';
           const isQuestComplete = evt.type === 'QUEST_COMPLETED';
+          const isAchievement = evt.type === 'ACHIEVEMENT_UNLOCKED';
           
           let borderGlow = 'border-cyan-neon shadow-[0_0_25px_rgba(0,245,255,0.4)]';
           let headerColor = 'text-cyan-neon';
           let IconComponent = Zap;
 
-          if (isLevelUp) {
+          if (isAchievement) {
+            borderGlow = 'border-gold-mythic shadow-[0_0_35px_rgba(255,184,0,0.8)]';
+            headerColor = 'text-gold-mythic';
+            IconComponent = Award;
+          } else if (isLevelUp) {
             borderGlow = 'border-violet-neon shadow-[0_0_30px_rgba(139,92,246,0.6)]';
             headerColor = 'text-violet-glow';
             IconComponent = ArrowUpCircle;
@@ -104,7 +111,7 @@ export const SystemNotification = ({ events = [], onClose }) => {
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
                       <span className="text-[9px] font-orbitron font-extrabold tracking-widest px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700 uppercase">
-                        {isQuestComplete ? 'QUEST COMPLETE' : isLevelUp ? 'ASCENSION' : isRankUp ? 'PROMOTION' : (isLongestRecord || isCaloriesRecord || isWeekRecord) ? 'NEW RECORD' : isStreak ? 'STREAK' : 'SYSTEM'}
+                        {isAchievement ? 'ACHIEVEMENT UNLOCKED' : isQuestComplete ? 'QUEST COMPLETE' : isLevelUp ? 'ASCENSION' : isRankUp ? 'PROMOTION' : (isLongestRecord || isCaloriesRecord || isWeekRecord) ? 'NEW RECORD' : isStreak ? 'STREAK' : 'SYSTEM'}
                       </span>
                       <h4 className={`font-orbitron font-black text-xs sm:text-sm tracking-wide ${headerColor} uppercase`}>
                         {evt.title}
