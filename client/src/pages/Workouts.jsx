@@ -25,6 +25,7 @@ import WorkoutCard from '../components/workouts/WorkoutCard';
 import WorkoutModal from '../components/workouts/WorkoutModal';
 import DeleteConfirmModal from '../components/workouts/DeleteConfirmModal';
 import AnimeButton from '../components/ui/AnimeButton';
+import SystemNotification from '../components/progression/SystemNotification';
 
 export const Workouts = () => {
   const [workouts, setWorkouts] = useState([]);
@@ -40,6 +41,9 @@ export const Workouts = () => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [workoutToDelete, setWorkoutToDelete] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
+
+  // Stage 6 System Notification events
+  const [systemEvents, setSystemEvents] = useState([]);
 
   // Fetch all workouts
   const fetchWorkouts = async () => {
@@ -78,7 +82,10 @@ export const Workouts = () => {
       if (editingWorkout) {
         await updateWorkout(editingWorkout._id, formData);
       } else {
-        await createWorkout(formData);
+        const result = await createWorkout(formData);
+        if (result?.events && result.events.length > 0) {
+          setSystemEvents(result.events);
+        }
       }
       setModalOpen(false);
       setEditingWorkout(null);
@@ -279,6 +286,12 @@ export const Workouts = () => {
         onConfirm={handleConfirmDelete}
         workoutTitle={workoutToDelete ? `${workoutToDelete.activityType} (${workoutToDelete.duration}m)` : ''}
         isDeleting={isDeleting}
+      />
+
+      {/* Stage 6 System Notification Popup for Ascension Events */}
+      <SystemNotification
+        events={systemEvents}
+        onClose={() => setSystemEvents([])}
       />
     </div>
   );

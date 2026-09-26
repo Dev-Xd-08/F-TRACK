@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Workouts from './pages/Workouts';
+import BodyAnalysis from './pages/BodyAnalysis';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 
 export function App() {
@@ -36,6 +37,16 @@ export function App() {
             element={
               <ProtectedRoute>
                 <Workouts />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Protected Body Analysis & Calorie Core Page */}
+          <Route
+            path="/body-analysis"
+            element={
+              <ProtectedRoute>
+                <BodyAnalysis />
               </ProtectedRoute>
             }
           />

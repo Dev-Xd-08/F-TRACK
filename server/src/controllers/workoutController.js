@@ -7,6 +7,7 @@ import {
   updateDevWorkout,
   deleteDevWorkout,
 } from '../utils/devStore.js';
+import { awardWorkoutProgression } from '../utils/progressionEngine.js';
 
 const VALID_ACTIVITIES = [
   'Running',
@@ -151,10 +152,20 @@ export const createWorkout = async (req, res) => {
       });
     }
 
+    // 3. Stage 6 Ascension Engine Progression Award
+    let progressionUpdate = null;
+    try {
+      progressionUpdate = await awardWorkoutProgression(userId, workout);
+    } catch (progErr) {
+      console.error(`[PROGRESSION_ENGINE ERROR] ${progErr.message}`);
+    }
+
     return res.status(201).json({
       success: true,
       message: 'Training quest completed and recorded in your ascension log.',
       workout,
+      progression: progressionUpdate?.progression || null,
+      events: progressionUpdate?.newEvents || [],
     });
   } catch (error) {
     console.error(`[CREATE_WORKOUT ERROR] ${error.message}`);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Zap, Menu, X, ChevronRight, LogOut, Shield, User, Dumbbell } from 'lucide-react';
+import { Zap, Menu, X, ChevronRight, LogOut, Shield, User, Dumbbell, Scale } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import AnimeButton from './ui/AnimeButton';
 
@@ -100,15 +100,22 @@ export const Navbar = () => {
           </div>
 
           {/* Desktop Right Action Buttons (Authenticated vs Logged Out) */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-3">
             {isAuthenticated ? (
               <>
                 <Link
                   to="/workouts"
-                  className="font-orbitron text-xs font-bold tracking-wider text-slate-300 hover:text-cyan-neon px-3 py-2 transition-colors duration-200 flex items-center gap-1.5"
+                  className="font-orbitron text-xs font-bold tracking-wider text-slate-300 hover:text-cyan-neon px-2.5 py-2 transition-colors duration-200 flex items-center gap-1.5"
                 >
                   <Dumbbell className="w-4 h-4 text-cyan-neon" />
                   <span>QUESTS</span>
+                </Link>
+                <Link
+                  to="/body-analysis"
+                  className="font-orbitron text-xs font-bold tracking-wider text-slate-300 hover:text-violet-glow px-2.5 py-2 transition-colors duration-200 flex items-center gap-1.5"
+                >
+                  <Scale className="w-4 h-4 text-violet-glow" />
+                  <span>BODY ANALYSIS</span>
                 </Link>
                 <Link to="/dashboard">
                   <AnimeButton variant="violet" size="sm" icon={Shield}>
@@ -117,7 +124,7 @@ export const Navbar = () => {
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="font-orbitron text-xs font-bold tracking-wider text-slate-400 hover:text-crimson-aura px-3 py-2 transition-colors duration-200 flex items-center gap-1.5"
+                  className="font-orbitron text-xs font-bold tracking-wider text-slate-400 hover:text-crimson-aura px-2.5 py-2 transition-colors duration-200 flex items-center gap-1.5"
                 >
                   <LogOut className="w-4 h-4" />
                   <span>LOGOUT</span>
@@ -190,6 +197,11 @@ export const Navbar = () => {
                   <Link to="/workouts" onClick={() => setMobileMenuOpen(false)}>
                     <AnimeButton variant="cyan" size="md" className="w-full" icon={Dumbbell}>
                       WORKOUT QUESTS
+                    </AnimeButton>
+                  </Link>
+                  <Link to="/body-analysis" onClick={() => setMobileMenuOpen(false)}>
+                    <AnimeButton variant="outline" size="md" className="w-full text-violet-glow border-violet-neon/40" icon={Scale}>
+                      BODY ANALYSIS
                     </AnimeButton>
                   </Link>
                   <Link to="/dashboard" onClick={() => setMobileMenuOpen(false)}>
