@@ -389,6 +389,113 @@ export const awardWorkoutProgression = async (userId, workout) => {
   };
 };
 
+/**
+ * Award Progression upon newly completed Quests (Stage 8)
+ * Only called when a quest state transitions from completed === false to true
+ * Daily quest: +25 XP
+ * Weekly quest: +100 XP
+ * 
+ * @param {string} userId
+ * @param {Array} newlyCompletedQuests - Array of quest objects that transitioned to complete
+ * @returns {Promise<{ progression: Object, newEvents: Array }>}
+ */
+export const awardQuestProgression = async (userId, newlyCompletedQuests = []) => {
+  const currentProgression = await getUserProgressionData(userId);
+
+  if (!newlyCompletedQuests || newlyCompletedQuests.length === 0) {
+    return {
+      progression: currentProgression,
+      newEvents: [],
+    };
+  }
+
+  const prevXP = currentProgression.xp;
+  const prevLevel = currentProgression.level;
+  const prevRank = currentProgression.rank;
+
+  let totalQuestXP = 0;
+  const newEvents = [];
+
+  for (const quest of newlyCompletedQuests) {
+    const xpReward = Number(quest.xp) || (quest.type === 'WEEKLY' ? 100 : 25);
+    totalQuestXP += xpReward;
+
+    newEvents.push({
+      type: 'QUEST_COMPLETED',
+      title: `QUEST COMPLETED: ${quest.title}`,
+      description: `+${xpReward} XP • Completed ${quest.type.toLowerCase()} mission "${quest.title}"`,
+      xpGained: xpReward,
+      questId: quest.id,
+      recordValue: quest.target,
+      recordUnit: quest.unit || quest.metric,
+      periodType: quest.type,
+      timestamp: new Date(),
+    });
+  }
+
+  const newXP = prevXP + totalQuestXP;
+  const levelStats = calculateLevelFromXP(newXP);
+  const rankInfo = getRankForLevel(levelStats.level);
+
+  // Level Up Event
+  if (levelStats.level > prevLevel) {
+    newEvents.push({
+      type: 'LEVEL_UP',
+      title: 'ASCENSION LEVEL UP!',
+      description: `Ascended to Level ${levelStats.level}! Energy capacity expanded.`,
+      newLevel: levelStats.level,
+      timestamp: new Date(),
+    });
+  }
+
+  // Rank Promotion Event
+  if (rankInfo.rank !== prevRank) {
+    newEvents.push({
+      type: 'RANK_UP',
+      title: 'HUNTER RANK PROMOTION!',
+      description: `Promoted to Rank ${rankInfo.rank} — ${rankInfo.rankTitle}!`,
+      newRank: rankInfo.rank,
+      timestamp: new Date(),
+    });
+  }
+
+  const updatePayload = {
+    xp: newXP,
+    level: levelStats.level,
+    rank: rankInfo.rank,
+    rankTitle: rankInfo.rankTitle,
+  };
+
+  if (isMongoConnected()) {
+    await Progression.findOneAndUpdate(
+      { user: userId },
+      {
+        $set: updatePayload,
+        $push: {
+          events: {
+            $each: newEvents,
+            $position: 0,
+            $slice: 20,
+          },
+        },
+      },
+      { new: true, upsert: true }
+    );
+  } else {
+    await saveDevProgression(userId, updatePayload);
+    for (const evt of [...newEvents].reverse()) {
+      await addDevProgressionEvent(userId, evt);
+    }
+  }
+
+  const finalState = await getUserProgressionData(userId);
+
+  return {
+    progression: finalState,
+    newEvents,
+  };
+};
+
 export default {
   WORKOUT_XP_REWARD,
   calculateLevelFromXP,
@@ -396,4 +503,5 @@ export default {
   evaluateStreak,
   getUserProgressionData,
   awardWorkoutProgression,
+  awardQuestProgression,
 };

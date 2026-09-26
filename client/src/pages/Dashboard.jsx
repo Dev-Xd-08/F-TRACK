@@ -23,9 +23,11 @@ import { getWorkouts } from '../services/workoutService';
 import { getHealthProfile } from '../services/healthService';
 import { getProgression } from '../services/progressionService';
 import { getRecords } from '../services/recordService';
+import { getQuests, getQuestHistory } from '../services/questService';
 import AscensionHUD from '../components/progression/AscensionHUD';
 import PersonalRecordMatrix from '../components/progression/PersonalRecordMatrix';
 import RecentActivity from '../components/progression/RecentActivity';
+import QuestBoard from '../components/quests/QuestBoard';
 import AnimeButton from '../components/ui/AnimeButton';
 import GlassCard from '../components/ui/GlassCard';
 import EnergyBar from '../components/ui/EnergyBar';
@@ -39,16 +41,20 @@ export const Dashboard = () => {
   const [healthProfile, setHealthProfile] = useState(null);
   const [progression, setProgression] = useState(null);
   const [records, setRecords] = useState(null);
+  const [quests, setQuests] = useState(null);
+  const [questHistory, setQuestHistory] = useState([]);
 
-  // Load real workouts, health metrics, ascension progression, and personal records
+  // Load real workouts, health metrics, ascension progression, personal records, and active quests
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const [workoutData, healthData, progressionData, recordData] = await Promise.all([
+        const [workoutData, healthData, progressionData, recordData, questData, questHistoryData] = await Promise.all([
           getWorkouts().catch(() => ({ workouts: [] })),
           getHealthProfile().catch(() => ({ profile: null })),
           getProgression().catch(() => ({ progression: null })),
           getRecords().catch(() => ({ records: null })),
+          getQuests().catch(() => ({ daily: [], weekly: [] })),
+          getQuestHistory().catch(() => ({ history: [] })),
         ]);
 
         setWorkouts(workoutData.workouts || []);
@@ -60,6 +66,12 @@ export const Dashboard = () => {
         }
         if (recordData && recordData.records) {
           setRecords(recordData.records);
+        }
+        if (questData) {
+          setQuests(questData);
+        }
+        if (questHistoryData && questHistoryData.history) {
+          setQuestHistory(questHistoryData.history);
         }
       } catch (err) {
         console.warn('Failed to load dashboard metrics', err.message);
@@ -163,7 +175,7 @@ export const Dashboard = () => {
             <div className="space-y-3">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-neon/40 bg-cyan-neon/10 text-cyan-neon text-xs font-orbitron font-bold tracking-widest">
                 <Sparkles className="w-3.5 h-3.5" />
-                <span>CHAMBER PROTOCOL ACTIVE • STAGE 7 RECORD MATRIX ONLINE</span>
+                <span>CHAMBER PROTOCOL ACTIVE • STAGE 8 QUEST SYSTEM ONLINE</span>
               </div>
 
               <h1 className="font-orbitron text-2xl sm:text-4xl font-black tracking-tight text-slate-100 uppercase">
@@ -245,6 +257,13 @@ export const Dashboard = () => {
         ══════════════════════════════════════════════════════════ */}
         <section className="space-y-4">
           <PersonalRecordMatrix records={records} />
+        </section>
+
+        {/* ══════════════════════════════════════════════════════════
+            STAGE 8 — QUEST SYSTEM (DAILY & WEEKLY MISSIONS)
+        ══════════════════════════════════════════════════════════ */}
+        <section className="space-y-4">
+          <QuestBoard quests={quests} history={questHistory} onRefresh={fetchDashboardData} />
         </section>
 
         {/* ══════════════════════════════════════════════════════════
@@ -389,7 +408,7 @@ export const Dashboard = () => {
 
       {/* Footer */}
       <footer className="border-t border-slate-800/80 bg-void/80 py-4 text-center text-xs text-slate-500 font-mono">
-        <span>F-TRACK: FITNESS ASCENSION • STAGE 7 PERSONAL RECORD MATRIX ONLINE</span>
+        <span>F-TRACK: FITNESS ASCENSION • STAGE 8 QUEST SYSTEM ONLINE</span>
       </footer>
     </div>
   );

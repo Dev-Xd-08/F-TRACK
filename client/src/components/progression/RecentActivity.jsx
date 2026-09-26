@@ -10,17 +10,26 @@ import {
   Calendar,
   Sparkles,
   Activity,
-  Award
+  Award,
+  CheckCircle2
 } from 'lucide-react';
 import GlassCard from '../ui/GlassCard';
 
 /**
- * RecentActivity Component (Stage 7)
+ * RecentActivity Component (Stage 7 & 8)
  * Displays authentic chronological progression and record events from actual history
  */
 export const RecentActivity = ({ events = [] }) => {
   const getEventBadge = (evt) => {
     switch (evt.type) {
+      case 'QUEST_COMPLETED':
+        return {
+          icon: CheckCircle2,
+          color: 'text-gold-mythic',
+          border: 'border-gold-mythic/40',
+          bg: 'bg-gold-mythic/10',
+          tag: 'QUEST COMPLETE',
+        };
       case 'NEW_RECORD_LONGEST_WORKOUT':
         return {
           icon: Clock,

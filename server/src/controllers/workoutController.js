@@ -14,6 +14,7 @@ import {
   detectRecordBreakingEvents,
   getUserPersonalRecords,
 } from '../utils/recordEngine.js';
+import { evaluateUserQuests } from '../utils/questEngine.js';
 
 const VALID_ACTIVITIES = [
   'Running',
@@ -204,18 +205,37 @@ export const createWorkout = async (req, res) => {
       console.error(`[RECORD_ENGINE ERROR] ${recErr.message}`);
     }
 
+    // 5. Stage 8 Quest System Evaluation
+    let questEvaluation = null;
+    let questEvents = [];
+    try {
+      questEvaluation = await evaluateUserQuests(userId, { allowXpAward: true });
+      questEvents = questEvaluation?.questEvents || [];
+    } catch (questErr) {
+      console.error(`[QUEST_ENGINE ERROR] ${questErr.message}`);
+    }
+
+    // Final progression reflects workout XP + any newly awarded quest XP
+    const finalProgression =
+      questEvaluation?.progression || progressionUpdate?.progression || null;
+
     const combinedEvents = [
       ...(progressionUpdate?.newEvents || []),
       ...recordEvents,
+      ...questEvents,
     ];
 
     return res.status(201).json({
       success: true,
       message: 'Training quest completed and recorded in your ascension log.',
       workout,
-      progression: progressionUpdate?.progression || null,
+      progression: finalProgression,
       events: combinedEvents,
       records: currentRecords,
+      quests: {
+        daily: questEvaluation?.daily || [],
+        weekly: questEvaluation?.weekly || [],
+      },
     });
   } catch (error) {
     console.error(`[CREATE_WORKOUT ERROR] ${error.message}`);
@@ -313,6 +333,13 @@ export const updateWorkout = async (req, res) => {
       updatedWorkout = await updateDevWorkout(workoutId, userId, updates);
     }
 
+    // Safely recalculate quest progress without awarding XP or events
+    try {
+      await evaluateUserQuests(userId, { allowXpAward: false });
+    } catch (questErr) {
+      console.error(`[QUEST_ENGINE UPDATE ERROR] ${questErr.message}`);
+    }
+
     return res.status(200).json({
       success: true,
       message: 'Training quest updated successfully.',
@@ -349,6 +376,13 @@ export const deleteWorkout = async (req, res) => {
         success: false,
         message: 'Training quest not found or access denied.',
       });
+    }
+
+    // Safely recalculate quest progress without altering XP
+    try {
+      await evaluateUserQuests(userId, { allowXpAward: false });
+    } catch (questErr) {
+      console.error(`[QUEST_ENGINE DELETE ERROR] ${questErr.message}`);
     }
 
     return res.status(200).json({

@@ -7,6 +7,7 @@ import authRoutes from './routes/authRoutes.js';
 import workoutRoutes from './routes/workoutRoutes.js';
 import progressionRoutes from './routes/progressionRoutes.js';
 import recordRoutes from './routes/recordRoutes.js';
+import questRoutes from './routes/questRoutes.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 
 // Load environment variables
@@ -41,6 +42,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/workouts', workoutRoutes);
 app.use('/api/progression', progressionRoutes);
 app.use('/api/records', recordRoutes);
+app.use('/api/quests', questRoutes);
 
 app.get('/', (req, res) => {
   res.json({

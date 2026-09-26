@@ -13,6 +13,7 @@ const progressionEventSchema = new mongoose.Schema(
         'NEW_RECORD_LONGEST_WORKOUT',
         'NEW_RECORD_HIGHEST_CALORIES',
         'NEW_RECORD_MOST_ACTIVE_WEEK',
+        'QUEST_COMPLETED',
       ],
     },
     title: {
@@ -43,6 +44,12 @@ const progressionEventSchema = new mongoose.Schema(
       type: String,
     },
     workoutId: {
+      type: String,
+    },
+    questId: {
+      type: String,
+    },
+    periodType: {
       type: String,
     },
     timestamp: {

@@ -16,6 +16,7 @@ import bcrypt from 'bcryptjs';
 // In-Memory Collections (Isolated per server process, zero file persistence)
 const devUsers = [];
 const devWorkouts = [];
+const devQuestProgress = [];
 
 /**
  * Check if real MongoDB is actively connected
@@ -298,5 +299,79 @@ export const addDevProgressionEvent = async (userId, event) => {
     updatedAt: new Date(),
   };
   return devProgressions[key];
+};
+
+/* ─────────────────────────────────────────────────────────────
+   QUEST PROGRESS FALLBACK OPERATIONS
+───────────────────────────────────────────────────────────── */
+
+export const getDevQuestProgress = async (userId, questId, periodStart) => {
+  const pStartTime = new Date(periodStart).getTime();
+  return (
+    devQuestProgress.find(
+      (q) =>
+        q.user.toString() === userId.toString() &&
+        q.questId === questId &&
+        new Date(q.periodStart).getTime() === pStartTime
+    ) || null
+  );
+};
+
+export const getUserDevQuestProgressList = async (userId, periodStart = null) => {
+  return devQuestProgress.filter((q) => {
+    const userMatch = q.user.toString() === userId.toString();
+    if (!userMatch) return false;
+    if (periodStart) {
+      return new Date(q.periodStart).getTime() === new Date(periodStart).getTime();
+    }
+    return true;
+  });
+};
+
+export const upsertDevQuestProgress = async (userId, questData) => {
+  const { questId, periodType, periodStart, periodEnd, currentValue, targetValue, completed, completedAt } = questData;
+  const pStartTime = new Date(periodStart).getTime();
+  
+  const existingIndex = devQuestProgress.findIndex(
+    (q) =>
+      q.user.toString() === userId.toString() &&
+      q.questId === questId &&
+      new Date(q.periodStart).getTime() === pStartTime
+  );
+
+  if (existingIndex >= 0) {
+    devQuestProgress[existingIndex] = {
+      ...devQuestProgress[existingIndex],
+      currentValue,
+      targetValue,
+      completed,
+      completedAt: completed ? (devQuestProgress[existingIndex].completedAt || completedAt || new Date()) : null,
+      updatedAt: new Date(),
+    };
+    return devQuestProgress[existingIndex];
+  } else {
+    const newRecord = {
+      _id: `dev_qp_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+      user: userId.toString(),
+      questId,
+      periodType,
+      periodStart: new Date(periodStart),
+      periodEnd: new Date(periodEnd),
+      currentValue,
+      targetValue,
+      completed: !!completed,
+      completedAt: completed ? (completedAt || new Date()) : null,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    devQuestProgress.push(newRecord);
+    return newRecord;
+  }
+};
+
+export const getDevQuestHistory = async (userId) => {
+  return devQuestProgress
+    .filter((q) => q.user.toString() === userId.toString() && q.completed)
+    .sort((a, b) => new Date(b.completedAt || b.updatedAt) - new Date(a.completedAt || a.updatedAt));
 };
 
