@@ -1,0 +1,29 @@
+{
+  "name": "f-track",
+  "version": "1.0.0",
+  "description": "F-TRACK: FITNESS ASCENSION — Anime-Inspired Full-Stack Fitness Tracker",
+  "private": true,
+  "scripts": {
+    "install:all": "npm install && npm install --prefix server && npm install --prefix client",
+    "dev": "concurrently -n \"SERVER,CLIENT\" -c \"magenta.bold,cyan.bold\" \"npm run server\" \"npm run client\"",
+    "server": "npm run dev --prefix server",
+    "client": "npm run dev --prefix client",
+    "build:client": "npm run build --prefix client",
+    "start": "npm run start --prefix server"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "keywords": [
+    "fitness",
+    "tracker",
+    "anime",
+    "gamification",
+    "mern",
+    "react",
+    "vite",
+    "tailwind"
+  ],
+  "author": "F-TRACK Team",
+  "license": "ISC"
+}
