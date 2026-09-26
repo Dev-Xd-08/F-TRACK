@@ -32,6 +32,7 @@ import RecentActivity from '../components/progression/RecentActivity';
 import QuestBoard from '../components/quests/QuestBoard';
 import AchievementShowcase from '../components/achievements/AchievementShowcase';
 import AnalyticsDashboard from '../components/analytics/AnalyticsDashboard';
+import NotificationBell from '../components/notifications/NotificationBell';
 import AnimeButton from '../components/ui/AnimeButton';
 import GlassCard from '../components/ui/GlassCard';
 import EnergyBar from '../components/ui/EnergyBar';
@@ -170,6 +171,8 @@ export const Dashboard = () => {
               </span>
             </div>
 
+            <NotificationBell />
+
             <AnimeButton
               variant="crimson"
               size="sm"
@@ -198,7 +201,7 @@ export const Dashboard = () => {
             <div className="space-y-3">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-neon/40 bg-cyan-neon/10 text-cyan-neon text-xs font-orbitron font-bold tracking-widest">
                 <Sparkles className="w-3.5 h-3.5" />
-                <span>CHAMBER PROTOCOL ACTIVE • STAGE 10 ANALYTICS CORE ONLINE</span>
+                <span>CHAMBER PROTOCOL ACTIVE • STAGE 11 SMART NOTIFICATION CORE ONLINE</span>
               </div>
 
               <h1 className="font-orbitron text-2xl sm:text-4xl font-black tracking-tight text-slate-100 uppercase">
@@ -443,7 +446,7 @@ export const Dashboard = () => {
 
       {/* Footer */}
       <footer className="border-t border-slate-800/80 bg-void/80 py-4 text-center text-xs text-slate-500 font-mono">
-        <span>F-TRACK: FITNESS ASCENSION • STAGE 10 ANALYTICS CORE ONLINE</span>
+        <span>F-TRACK: FITNESS ASCENSION • STAGE 11 SMART NOTIFICATION CORE ONLINE</span>
       </footer>
     </div>
   );

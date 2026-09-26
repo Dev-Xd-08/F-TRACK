@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Zap, Menu, X, ChevronRight, LogOut, Shield, User, Dumbbell, Scale } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import AnimeButton from './ui/AnimeButton';
+import NotificationBell from './notifications/NotificationBell';
 
 export const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -122,6 +123,7 @@ export const Navbar = () => {
                     ASCENSION CHAMBER
                   </AnimeButton>
                 </Link>
+                <NotificationBell />
                 <button
                   onClick={handleLogout}
                   className="font-orbitron text-xs font-bold tracking-wider text-slate-400 hover:text-crimson-aura px-2.5 py-2 transition-colors duration-200 flex items-center gap-1.5"
@@ -147,8 +149,9 @@ export const Navbar = () => {
             )}
           </div>
 
-          {/* Mobile Hamburger Button */}
-          <div className="md:hidden flex items-center">
+          {/* Mobile Right Icons & Hamburger Button */}
+          <div className="md:hidden flex items-center gap-2">
+            {isAuthenticated && <NotificationBell />}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 rounded-sm border border-slate-700 bg-obsidian/80 text-slate-200 hover:text-cyan-neon hover:border-cyan-neon transition-colors"

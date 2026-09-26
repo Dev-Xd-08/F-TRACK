@@ -18,6 +18,7 @@ const devUsers = [];
 const devWorkouts = [];
 const devQuestProgress = [];
 const devAchievements = [];
+const devNotifications = [];
 
 /**
  * Check if real MongoDB is actively connected
@@ -432,5 +433,78 @@ export const getDevAchievementHistory = async (userId) => {
     .filter((a) => a.user.toString() === userId.toString() && a.unlocked)
     .sort((a, b) => new Date(b.unlockedAt || b.updatedAt) - new Date(a.unlockedAt || a.updatedAt));
 };
+
+/* ─────────────────────────────────────────────────────────────
+   NOTIFICATION FALLBACK OPERATIONS (Stage 11)
+───────────────────────────────────────────────────────────── */
+
+export const createDevNotification = async ({
+  userId,
+  type,
+  title,
+  message,
+  priority = 'MEDIUM',
+  dedupKey,
+  metadata = {},
+}) => {
+  const existing = devNotifications.find(
+    (n) => n.user.toString() === userId.toString() && n.dedupKey === dedupKey
+  );
+  if (existing) {
+    return { notification: existing, created: false };
+  }
+
+  const newRecord = {
+    _id: `dev_notif_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+    user: userId.toString(),
+    type,
+    title: title ? title.trim() : '',
+    message: message ? message.trim() : '',
+    priority,
+    isRead: false,
+    dedupKey,
+    metadata: metadata || {},
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
+
+  devNotifications.push(newRecord);
+  return { notification: newRecord, created: true };
+};
+
+export const getDevNotifications = async (userId) => {
+  return devNotifications
+    .filter((n) => n.user.toString() === userId.toString())
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+};
+
+export const getDevUnreadNotificationCount = async (userId) => {
+  return devNotifications.filter(
+    (n) => n.user.toString() === userId.toString() && !n.isRead
+  ).length;
+};
+
+export const markDevNotificationRead = async (id, userId) => {
+  const notif = devNotifications.find(
+    (n) => n._id.toString() === id.toString() && n.user.toString() === userId.toString()
+  );
+  if (!notif) return null;
+  notif.isRead = true;
+  notif.updatedAt = new Date();
+  return notif;
+};
+
+export const markAllDevNotificationsRead = async (userId) => {
+  let count = 0;
+  devNotifications.forEach((n) => {
+    if (n.user.toString() === userId.toString() && !n.isRead) {
+      n.isRead = true;
+      n.updatedAt = new Date();
+      count++;
+    }
+  });
+  return count;
+};
+
 
 

@@ -16,6 +16,7 @@ import {
 } from '../utils/recordEngine.js';
 import { evaluateUserQuests } from '../utils/questEngine.js';
 import { evaluateUserAchievements } from '../utils/achievementEngine.js';
+import { evaluateUserNotifications } from '../utils/notificationEngine.js';
 
 const VALID_ACTIVITIES = [
   'Running',
@@ -239,6 +240,13 @@ export const createWorkout = async (req, res) => {
       ...questEvents,
       ...achievementEvents,
     ];
+
+    // Stage 11: Evaluate and synchronize smart notifications in background
+    try {
+      await evaluateUserNotifications(userId);
+    } catch (notifErr) {
+      console.error(`[NOTIFICATION_EVALUATION ERROR] ${notifErr.message}`);
+    }
 
     return res.status(201).json({
       success: true,
