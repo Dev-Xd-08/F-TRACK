@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Zap, Shield, Heart, Terminal, ArrowUp } from 'lucide-react';
 
 export const Footer = () => {
@@ -70,20 +71,20 @@ export const Footer = () => {
             </h4>
             <ul className="space-y-2">
               <li>
-                <button
-                  onClick={() => alert('Login portal will be connected in Stage 3 (JWT Auth)!')}
-                  className="hover:text-cyan-neon transition-colors text-left"
+                <Link
+                  to="/login"
+                  className="hover:text-cyan-neon transition-colors block"
                 >
                   Login Portal
-                </button>
+                </Link>
               </li>
               <li>
-                <button
-                  onClick={() => alert('Hunter registration will be connected in Stage 3 (JWT Auth)!')}
-                  className="hover:text-cyan-neon transition-colors text-left"
+                <Link
+                  to="/register"
+                  className="hover:text-cyan-neon transition-colors block"
                 >
                   Hunter Registration
-                </button>
+                </Link>
               </li>
               <li>
                 <span className="text-slate-500">MERN Stack Engine</span>

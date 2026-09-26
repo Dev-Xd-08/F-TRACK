@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Zap, Menu, X, ChevronRight, Shield, Dumbbell } from 'lucide-react';
+import { Zap, Menu, X, ChevronRight, LogOut, Shield, User, Dumbbell } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 import AnimeButton from './ui/AnimeButton';
 
 export const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const { user, isAuthenticated, logout } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,12 +22,31 @@ export const Navbar = () => {
   }, []);
 
   const navLinks = [
-    { name: 'Home', href: '#hero' },
-    { name: 'Features', href: '#features' },
-    { name: 'How It Works', href: '#how-it-works' },
-    { name: 'Rankings', href: '#rankings' },
-    { name: 'About', href: '#about' },
+    { name: 'Home', href: '/#hero' },
+    { name: 'Features', href: '/#features' },
+    { name: 'How It Works', href: '/#how-it-works' },
+    { name: 'Rankings', href: '/#rankings' },
+    { name: 'About', href: '/#about' },
   ];
+
+  const handleNavClick = (href) => {
+    setMobileMenuOpen(false);
+    if (location.pathname !== '/') {
+      navigate(href);
+    } else {
+      const targetId = href.replace('/#', '');
+      const el = document.getElementById(targetId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
+  const handleLogout = () => {
+    logout();
+    setMobileMenuOpen(false);
+    navigate('/');
+  };
 
   return (
     <nav
@@ -34,7 +59,7 @@ export const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo & Brand Tagline */}
-          <a href="#hero" className="flex items-center gap-3 group">
+          <Link to="/" className="flex items-center gap-3 group">
             <div className="relative w-10 h-10 rounded-sm bg-gradient-to-br from-violet-neon to-cyan-neon p-0.5 shadow-glow-cyan transition-transform duration-300 group-hover:scale-105">
               <div className="w-full h-full bg-void flex items-center justify-center rounded-sm">
                 <Zap className="w-5 h-5 text-cyan-neon group-hover:text-white transition-colors animate-pulse" />
@@ -54,7 +79,7 @@ export const Navbar = () => {
                 Fitness Ascension
               </span>
             </div>
-          </a>
+          </Link>
 
           {/* Desktop Navigation Links */}
           <div className="hidden md:flex items-center gap-8">
@@ -62,7 +87,11 @@ export const Navbar = () => {
               <a
                 key={link.name}
                 href={link.href}
-                className="relative font-orbitron text-xs font-semibold tracking-wider text-slate-300 hover:text-cyan-neon transition-colors duration-200 py-1 group"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavClick(link.href);
+                }}
+                className="relative font-orbitron text-xs font-semibold tracking-wider text-slate-300 hover:text-cyan-neon transition-colors duration-200 py-1 group cursor-pointer"
               >
                 <span>{link.name}</span>
                 <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-cyan-neon to-violet-neon transition-all duration-300 group-hover:w-full" />
@@ -70,28 +99,45 @@ export const Navbar = () => {
             ))}
           </div>
 
-          {/* Desktop Right Action Buttons */}
+          {/* Desktop Right Action Buttons (Authenticated vs Logged Out) */}
           <div className="hidden md:flex items-center gap-4">
-            <button
-              onClick={() => {
-                const el = document.getElementById('cta');
-                el?.scrollIntoView({ behavior: 'smooth' });
-              }}
-              className="font-orbitron text-xs font-bold tracking-wider text-slate-300 hover:text-cyan-neon px-4 py-2 transition-colors duration-200"
-            >
-              LOGIN
-            </button>
-            <AnimeButton
-              variant="cyan"
-              size="sm"
-              icon={Zap}
-              onClick={() => {
-                const el = document.getElementById('cta');
-                el?.scrollIntoView({ behavior: 'smooth' });
-              }}
-            >
-              START ASCENSION
-            </AnimeButton>
+            {isAuthenticated ? (
+              <>
+                <Link
+                  to="/workouts"
+                  className="font-orbitron text-xs font-bold tracking-wider text-slate-300 hover:text-cyan-neon px-3 py-2 transition-colors duration-200 flex items-center gap-1.5"
+                >
+                  <Dumbbell className="w-4 h-4 text-cyan-neon" />
+                  <span>QUESTS</span>
+                </Link>
+                <Link to="/dashboard">
+                  <AnimeButton variant="violet" size="sm" icon={Shield}>
+                    ASCENSION CHAMBER
+                  </AnimeButton>
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="font-orbitron text-xs font-bold tracking-wider text-slate-400 hover:text-crimson-aura px-3 py-2 transition-colors duration-200 flex items-center gap-1.5"
+                >
+                  <LogOut className="w-4 h-4" />
+                  <span>LOGOUT</span>
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="font-orbitron text-xs font-bold tracking-wider text-slate-300 hover:text-cyan-neon px-4 py-2 transition-colors duration-200"
+                >
+                  LOGIN
+                </Link>
+                <Link to="/register">
+                  <AnimeButton variant="cyan" size="sm" icon={Zap}>
+                    START ASCENSION
+                  </AnimeButton>
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Hamburger Button */}
@@ -122,7 +168,10 @@ export const Navbar = () => {
                 <a
                   key={link.name}
                   href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavClick(link.href);
+                  }}
                   className="font-orbitron text-sm font-semibold tracking-wider text-slate-200 hover:text-cyan-neon px-3 py-2 rounded border border-transparent hover:border-slate-800 hover:bg-obsidian transition-colors flex items-center justify-between"
                 >
                   <span>{link.name}</span>
@@ -132,27 +181,46 @@ export const Navbar = () => {
             </div>
 
             <div className="pt-4 border-t border-slate-800 flex flex-col gap-3">
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  document.getElementById('cta')?.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="w-full text-center font-orbitron text-sm font-bold tracking-wider py-2.5 rounded border border-slate-700 text-slate-200 hover:border-cyan-neon hover:text-cyan-neon transition-colors"
-              >
-                LOGIN
-              </button>
-              <AnimeButton
-                variant="cyan"
-                size="md"
-                className="w-full"
-                icon={Zap}
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  document.getElementById('cta')?.scrollIntoView({ behavior: 'smooth' });
-                }}
-              >
-                START ASCENSION
-              </AnimeButton>
+              {isAuthenticated ? (
+                <>
+                  <div className="px-3 py-2 text-xs font-mono text-slate-400 bg-obsidian rounded border border-slate-800 flex items-center gap-2">
+                    <User className="w-3.5 h-3.5 text-cyan-neon" />
+                    <span>HUNTER: {user?.name}</span>
+                  </div>
+                  <Link to="/workouts" onClick={() => setMobileMenuOpen(false)}>
+                    <AnimeButton variant="cyan" size="md" className="w-full" icon={Dumbbell}>
+                      WORKOUT QUESTS
+                    </AnimeButton>
+                  </Link>
+                  <Link to="/dashboard" onClick={() => setMobileMenuOpen(false)}>
+                    <AnimeButton variant="violet" size="md" className="w-full" icon={Shield}>
+                      ASCENSION CHAMBER
+                    </AnimeButton>
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="w-full text-center font-orbitron text-sm font-bold tracking-wider py-2.5 rounded border border-crimson-aura/40 text-crimson-aura hover:bg-crimson-aura/10 transition-colors flex items-center justify-center gap-2"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    <span>LOGOUT</span>
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    to="/login"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="w-full text-center font-orbitron text-sm font-bold tracking-wider py-2.5 rounded border border-slate-700 text-slate-200 hover:border-cyan-neon hover:text-cyan-neon transition-colors"
+                  >
+                    LOGIN
+                  </Link>
+                  <Link to="/register" onClick={() => setMobileMenuOpen(false)}>
+                    <AnimeButton variant="cyan" size="md" className="w-full" icon={Zap}>
+                      START ASCENSION
+                    </AnimeButton>
+                  </Link>
+                </>
+              )}
             </div>
           </motion.div>
         )}

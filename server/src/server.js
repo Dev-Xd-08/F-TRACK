@@ -3,6 +3,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { connectDB } from './config/db.js';
 import healthRoutes from './routes/healthRoutes.js';
+import authRoutes from './routes/authRoutes.js';
+import workoutRoutes from './routes/workoutRoutes.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 
 // Load environment variables
@@ -31,8 +33,10 @@ if (process.env.NODE_ENV !== 'production') {
   });
 }
 
-// Health Check & Root Route
+// API Routes
 app.use('/api/health', healthRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/workouts', workoutRoutes);
 
 app.get('/', (req, res) => {
   res.json({

@@ -1,30 +1,50 @@
 import React from 'react';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import FeatureSection from './components/FeatureSection';
-import HowItWorks from './components/HowItWorks';
-import RankSystem from './components/RankSystem';
-import CTASection from './components/CTASection';
-import Footer from './components/Footer';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import LandingPage from './pages/LandingPage';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Dashboard from './pages/Dashboard';
+import Workouts from './pages/Workouts';
+import ProtectedRoute from './components/auth/ProtectedRoute';
 
 export function App() {
   return (
-    <div className="min-h-screen bg-void text-slate-100 selection:bg-cyan-neon selection:text-void overflow-x-hidden relative">
-      {/* Top Navbar */}
-      <Navbar />
+    <Router>
+      <AuthProvider>
+        <Routes>
+          {/* Public Landing Page */}
+          <Route path="/" element={<LandingPage />} />
 
-      {/* Main Landing Page Flow */}
-      <main className="relative z-10">
-        <Hero />
-        <FeatureSection />
-        <HowItWorks />
-        <RankSystem />
-        <CTASection />
-      </main>
+          {/* Authentication Pages */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
 
-      {/* Footer */}
-      <Footer />
-    </div>
+          {/* Protected Ascension Chamber / Dashboard */}
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Protected Workout Quests Page */}
+          <Route
+            path="/workouts"
+            element={
+              <ProtectedRoute>
+                <Workouts />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Catch-all redirect to Overworld */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </AuthProvider>
+    </Router>
   );
 }
 

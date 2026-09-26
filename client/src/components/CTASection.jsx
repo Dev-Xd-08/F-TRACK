@@ -1,9 +1,13 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Zap, Flame, Shield, CheckCircle2 } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 import AnimeButton from './ui/AnimeButton';
 
 export const CTASection = () => {
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   return (
     <section id="cta" className="py-28 relative overflow-hidden">
       {/* Background Vortex / Energy Ring */}
@@ -51,7 +55,11 @@ export const CTASection = () => {
               icon={Zap}
               className="px-10 py-4 text-base"
               onClick={() => {
-                alert('⚡ Stage 2 is complete! Authentication & Login will be connected in Stage 3.');
+                if (isAuthenticated) {
+                  navigate('/dashboard');
+                } else {
+                  navigate('/register');
+                }
               }}
             >
               ⚡ START YOUR JOURNEY

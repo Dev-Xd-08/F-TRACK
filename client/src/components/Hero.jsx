@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
   Zap, 
@@ -11,9 +12,12 @@ import {
   BatteryCharging,
   Compass
 } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 import AnimeButton from './ui/AnimeButton';
 
 export const Hero = () => {
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   return (
     <section id="hero" className="relative min-h-screen pt-28 pb-16 flex items-center justify-center overflow-hidden">
       {/* Background Energy Matrix & Concentric Neon Grid */}
@@ -82,7 +86,11 @@ export const Hero = () => {
                 size="lg"
                 icon={Zap}
                 onClick={() => {
-                  document.getElementById('cta')?.scrollIntoView({ behavior: 'smooth' });
+                  if (isAuthenticated) {
+                    navigate('/dashboard');
+                  } else {
+                    navigate('/register');
+                  }
                 }}
               >
                 ⚡ BEGIN ASCENSION
