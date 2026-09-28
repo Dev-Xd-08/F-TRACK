@@ -48,108 +48,94 @@ const QuestCard = ({ quest, isWeekly = false }) => {
   };
 
   const IconComponent = getMetricIcon(quest.metric);
-  const accentColor = isWeekly ? 'text-violet-glow' : 'text-cyan-neon';
-  const progressBg = isWeekly ? 'bg-gradient-to-r from-violet-neon to-cyan-neon' : 'bg-gradient-to-r from-cyan-neon to-matrix-neon';
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.35 }}
-      className={`rounded-2xl p-5 border relative overflow-hidden flex flex-col justify-between transition-all duration-300 ${
+      transition={{ duration: 0.25 }}
+      className={`rounded-sm p-5 border relative overflow-hidden flex flex-col justify-between transition-all duration-200 ${
         completed
-          ? 'bg-obsidian/90 border-gold-mythic/40 shadow-[0_0_20px_rgba(255,184,0,0.15)]'
-          : 'bg-obsidian/75 border-slate-800 hover:border-slate-700/80 shadow-lg'
+          ? 'bg-charcoal border-steel shadow-steel-card'
+          : 'bg-charcoal border-steel/70 hover:border-steel shadow-steel-card'
       }`}
     >
-      {/* Background Ambient Glow */}
-      {completed && (
-        <div className="absolute top-0 right-0 w-36 h-36 bg-gold-mythic/10 rounded-full blur-2xl pointer-events-none" />
-      )}
-
       {/* Top Header */}
       <div className="space-y-3 relative z-10">
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-center gap-2.5">
-            <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
-              completed
-                ? 'bg-gold-mythic/15 border border-gold-mythic/40 text-gold-mythic'
-                : 'bg-slate-800 border border-slate-700 ' + accentColor
+            <div className={`w-8 h-8 rounded-sm flex items-center justify-center flex-shrink-0 bg-obsidian border border-steel ${
+              completed ? 'text-crimson' : 'text-offwhite'
             }`}>
               {completed ? (
-                <CheckCircle2 className="w-4 h-4 text-gold-mythic" />
+                <CheckCircle2 className="w-4 h-4 text-crimson" />
               ) : (
-                <IconComponent className="w-4 h-4" />
+                <IconComponent className="w-4 h-4 text-steel-light" />
               )}
             </div>
 
             <div>
-              <h4 className="font-orbitron font-bold text-xs sm:text-sm text-slate-100 uppercase tracking-wide flex items-center gap-2">
+              <h4 className="font-orbitron font-bold text-xs sm:text-sm text-offwhite uppercase tracking-wide flex items-center gap-2">
                 {title}
               </h4>
-              <span className="text-[10px] font-mono text-slate-500 uppercase flex items-center gap-1">
-                <Timer className="w-3 h-3 text-slate-500" />
-                {timeRemaining || (isWeekly ? 'WEEKLY CYCLE' : 'DAILY CYCLE')}
+              <span className="text-[10px] font-mono text-ash uppercase flex items-center gap-1">
+                <Timer className="w-3 h-3 text-ash" />
+                {timeRemaining || (isWeekly ? 'WEEKLY DIRECTIVE' : 'DAILY DIRECTIVE')}
               </span>
             </div>
           </div>
 
           {/* XP Reward Pill */}
-          <div className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono font-bold border flex-shrink-0 ${
-            completed
-              ? 'bg-gold-mythic/10 text-gold-mythic border-gold-mythic/30'
-              : 'bg-slate-800/80 text-cyan-neon border-slate-700'
-          }`}>
-            <Sparkles className="w-3 h-3" />
+          <div className="flex items-center gap-1 px-2 py-0.5 rounded-sm text-[10px] font-mono font-bold border border-steel/60 bg-obsidian text-bone flex-shrink-0">
             <span>+{xp} XP</span>
           </div>
         </div>
 
         {/* Quest Description */}
-        <p className="text-xs text-slate-400 font-sans leading-relaxed">
+        <p className="text-xs text-ash font-sans leading-relaxed">
           {description}
         </p>
       </div>
 
       {/* Bottom Progress Area */}
-      <div className="mt-5 pt-3 border-t border-slate-800/80 space-y-2 relative z-10">
+      <div className="mt-5 pt-3 border-t border-steel/50 space-y-2 relative z-10">
         <div className="flex items-center justify-between text-xs font-mono">
-          <span className="text-slate-400">
-            {completed ? 'REQUIREMENT SATISFIED' : 'OBJECTIVE PROGRESS'}
+          <span className="text-ash">
+            {completed ? 'DIRECTIVE SATISFIED' : 'OBJECTIVE PROGRESS'}
           </span>
-          <span className="font-bold text-slate-200">
+          <span className="font-bold text-offwhite">
             {currentValue.toLocaleString()} / {target.toLocaleString()}{' '}
-            <span className="text-slate-500 font-normal">{unit}</span>
+            <span className="text-ash font-normal">{unit}</span>
           </span>
         </div>
 
         {/* Progress Bar Track */}
-        <div className="w-full h-2 rounded-full bg-slate-900 border border-slate-800 overflow-hidden relative">
+        <div className="w-full h-1.5 bg-void border border-steel/60 overflow-hidden relative">
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: `${percentage}%` }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-            className={`h-full rounded-full ${
+            transition={{ duration: 0.5, ease: 'easeOut' }}
+            className={`h-full ${
               completed
-                ? 'bg-gradient-to-r from-gold-mythic to-amber-300 shadow-[0_0_10px_rgba(255,184,0,0.5)]'
-                : progressBg
+                ? 'bg-steel-light'
+                : 'bg-gradient-to-r from-crimson-dark to-crimson'
             }`}
           />
         </div>
 
         {/* Footer Status Badge */}
         <div className="flex items-center justify-between pt-1">
-          <span className="text-[10px] font-mono text-slate-500">
-            {percentage}% SYNCHRONIZED
+          <span className="text-[10px] font-mono text-ash">
+            {percentage}% VERIFIED
           </span>
 
           {completed ? (
-            <span className="inline-flex items-center gap-1 text-[10px] font-orbitron font-bold px-2 py-0.5 rounded bg-gold-mythic/15 text-gold-mythic border border-gold-mythic/40">
-              <CheckCircle2 className="w-3 h-3" />
+            <span className="inline-flex items-center gap-1 text-[10px] font-mono font-bold px-2 py-0.5 rounded-sm bg-obsidian text-offwhite border border-steel">
+              <CheckCircle2 className="w-3 h-3 text-crimson" />
               <span>COMPLETED</span>
             </span>
           ) : (
-            <span className="inline-flex items-center gap-1 text-[10px] font-orbitron font-bold px-2 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700">
+            <span className="inline-flex items-center gap-1 text-[10px] font-mono font-bold px-2 py-0.5 rounded-sm bg-obsidian text-ash border border-steel/60">
               <span>IN PROGRESS</span>
             </span>
           )}
@@ -175,50 +161,50 @@ export const QuestBoard = ({ quests, history = [], onRefresh }) => {
   return (
     <div className="space-y-4">
       {/* Section Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-steel/50 pb-3">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-cyan-neon/10 border border-cyan-neon/30 flex items-center justify-center text-cyan-neon shadow-[0_0_12px_rgba(0,245,255,0.25)]">
-            <Target className="w-4 h-4 text-cyan-neon" />
+          <div className="w-8 h-8 rounded-sm bg-obsidian border border-steel flex items-center justify-center text-crimson">
+            <Target className="w-4 h-4 text-crimson" />
           </div>
           <div>
-            <h3 className="font-orbitron font-bold text-sm sm:text-base text-slate-100 flex items-center gap-2">
-              QUEST BOARD
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-cyan-neon border border-slate-700">
+            <h3 className="font-orbitron font-bold text-xs sm:text-sm text-offwhite flex items-center gap-2 tracking-wider">
+              OPERATIONAL DIRECTIVES
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded-sm bg-charcoal text-ash border border-steel/60">
                 ACTIVE MISSIONS
               </span>
             </h3>
-            <p className="text-[11px] text-slate-400 font-sans">
-              Your daily and weekly fitness missions calculated from authentic workout telemetry
+            <p className="text-[11px] text-ash font-sans">
+              Daily and weekly training requirements calculated from authentic workout telemetry
             </p>
           </div>
         </div>
 
         {/* Tab Navigation Controls */}
-        <div className="flex items-center gap-1.5 p-1 rounded-xl bg-slate-900 border border-slate-800">
+        <div className="flex items-center gap-1 p-0.5 rounded-sm bg-obsidian border border-steel">
           <button
             onClick={() => setActiveTab('daily')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-orbitron font-bold transition-all flex items-center gap-1.5 ${
+            className={`px-3 py-1.5 rounded-sm text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${
               activeTab === 'daily'
-                ? 'bg-cyan-neon/15 text-cyan-neon border border-cyan-neon/40 shadow-glow-cyan'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'bg-charcoal text-offwhite border border-steel shadow-steel-card'
+                : 'text-ash hover:text-offwhite'
             }`}
           >
             <span>DAILY</span>
-            <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-slate-800 text-slate-300">
+            <span className="text-[10px] font-mono px-1.5 py-0.2 rounded-sm bg-obsidian text-ash">
               {dailyCompletedCount}/{dailyQuests.length}
             </span>
           </button>
 
           <button
             onClick={() => setActiveTab('weekly')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-orbitron font-bold transition-all flex items-center gap-1.5 ${
+            className={`px-3 py-1.5 rounded-sm text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${
               activeTab === 'weekly'
-                ? 'bg-violet-neon/15 text-violet-glow border border-violet-neon/40 shadow-glow-violet'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'bg-charcoal text-offwhite border border-steel shadow-steel-card'
+                : 'text-ash hover:text-offwhite'
             }`}
           >
             <span>WEEKLY</span>
-            <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-slate-800 text-slate-300">
+            <span className="text-[10px] font-mono px-1.5 py-0.2 rounded-sm bg-obsidian text-ash">
               {weeklyCompletedCount}/{weeklyQuests.length}
             </span>
           </button>
@@ -226,10 +212,10 @@ export const QuestBoard = ({ quests, history = [], onRefresh }) => {
           {history && history.length > 0 && (
             <button
               onClick={() => setActiveTab('history')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-orbitron font-bold transition-all flex items-center gap-1.5 ${
+              className={`px-3 py-1.5 rounded-sm text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${
                 activeTab === 'history'
-                  ? 'bg-gold-mythic/15 text-gold-mythic border border-gold-mythic/40'
-                  : 'text-slate-400 hover:text-slate-200'
+                  ? 'bg-charcoal text-offwhite border border-steel shadow-steel-card'
+                  : 'text-ash hover:text-offwhite'
               }`}
             >
               <History className="w-3.5 h-3.5" />
@@ -285,36 +271,36 @@ export const QuestBoard = ({ quests, history = [], onRefresh }) => {
             className="space-y-2.5"
           >
             {history.length === 0 ? (
-              <GlassCard className="p-6 text-center text-xs font-mono text-slate-500">
+              <GlassCard glow="none" className="p-6 text-center text-xs font-mono text-ash">
                 No archived quests yet. Complete daily or weekly quests to establish your record archive.
               </GlassCard>
             ) : (
               history.slice(0, 10).map((h, idx) => (
                 <div
                   key={`${h.questId}-${idx}-${h.completedAt}`}
-                  className="p-3.5 rounded-xl bg-obsidian/75 border border-slate-800 flex items-center justify-between gap-4"
+                  className="p-3.5 rounded-sm bg-obsidian border border-steel/60 flex items-center justify-between gap-4"
                 >
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className="w-8 h-8 rounded-lg bg-gold-mythic/10 border border-gold-mythic/30 flex items-center justify-center flex-shrink-0 text-gold-mythic">
-                      <CheckCircle2 className="w-4 h-4" />
+                    <div className="w-8 h-8 rounded-sm bg-charcoal border border-steel flex items-center justify-center flex-shrink-0 text-bone">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                     </div>
                     <div className="min-w-0">
                       <div className="flex items-center gap-2">
-                        <span className="text-[9px] font-orbitron font-extrabold px-1.5 py-0.5 rounded bg-slate-800 text-gold-mythic border border-slate-700 uppercase">
+                        <span className="text-[9px] font-orbitron font-extrabold px-1.5 py-0.5 rounded-sm bg-charcoal text-amber-400 border border-steel uppercase">
                           {h.type}
                         </span>
-                        <h5 className="font-orbitron font-bold text-xs text-slate-200 truncate">
+                        <h5 className="font-orbitron font-bold text-xs text-bone truncate">
                           {h.title}
                         </h5>
                       </div>
-                      <p className="text-xs text-slate-400 font-sans truncate mt-0.5">
+                      <p className="text-xs text-ash font-sans truncate mt-0.5">
                         Completed {h.completedAt ? new Date(h.completedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : 'Recently'}
                       </p>
                     </div>
                   </div>
 
                   <div className="text-right flex-shrink-0">
-                    <span className="text-xs font-mono font-bold text-gold-mythic">
+                    <span className="text-xs font-mono font-bold text-bone">
                       +{h.xp} XP
                     </span>
                   </div>

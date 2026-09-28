@@ -19,6 +19,12 @@ const devWorkouts = [];
 const devQuestProgress = [];
 const devAchievements = [];
 const devNotifications = [];
+const devGoals = [];
+const devPurposes = [];
+const devReflections = [];
+const devTrainingPlans = [];
+const devWeeklyReflections = [];
+const devLifeContexts = [];
 
 /**
  * Check if real MongoDB is actively connected
@@ -81,7 +87,7 @@ export const createDevUser = async ({ name, email, password }) => {
 
 export const getDevWorkouts = async (userId) => {
   return devWorkouts
-    .filter((w) => w.user.toString() === userId.toString())
+    .filter((w) => w.user && w.user.toString() === userId.toString())
     .sort((a, b) => new Date(b.workoutDate) - new Date(a.workoutDate));
 };
 
@@ -505,6 +511,361 @@ export const markAllDevNotificationsRead = async (userId) => {
   });
   return count;
 };
+
+/* ─────────────────────────────────────────────────────────────
+   FITNESS GOALS FALLBACK OPERATIONS (Stage 13)
+───────────────────────────────────────────────────────────── */
+
+export const createDevGoal = async (goalData) => {
+  const newGoal = {
+    _id: `dev_goal_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+    user: goalData.userId.toString(),
+    title: goalData.title ? goalData.title.trim() : '',
+    description: goalData.description ? goalData.description.trim() : '',
+    type: goalData.type,
+    targetValue: Number(goalData.targetValue),
+    currentValue: Number(goalData.currentValue) || 0,
+    initialValue: Number(goalData.initialValue) || 0,
+    unit: goalData.unit ? goalData.unit.trim() : '',
+    startDate: goalData.startDate ? new Date(goalData.startDate) : new Date(),
+    targetDate: new Date(goalData.targetDate),
+    status: goalData.status || 'ACTIVE',
+    progressPercentage: Number(goalData.progressPercentage) || 0,
+    completedAt: goalData.completedAt ? new Date(goalData.completedAt) : null,
+    metadata: goalData.metadata || {},
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
+
+  devGoals.push(newGoal);
+  return newGoal;
+};
+
+export const getDevGoals = async (userId) => {
+  return devGoals
+    .filter((g) => g.user.toString() === userId.toString())
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+};
+
+export const getDevGoalById = async (id, userId) => {
+  return devGoals.find(
+    (g) => g._id.toString() === id.toString() && g.user.toString() === userId.toString()
+  ) || null;
+};
+
+export const updateDevGoal = async (id, userId, updates) => {
+  const index = devGoals.findIndex(
+    (g) => g._id.toString() === id.toString() && g.user.toString() === userId.toString()
+  );
+
+  if (index === -1) return null;
+
+  const current = devGoals[index];
+  const updated = {
+    ...current,
+    ...updates,
+    updatedAt: new Date(),
+  };
+
+  devGoals[index] = updated;
+  return updated;
+};
+
+export const deleteDevGoal = async (id, userId) => {
+  const index = devGoals.findIndex(
+    (g) => g._id.toString() === id.toString() && g.user.toString() === userId.toString()
+  );
+
+  if (index === -1) return false;
+
+  devGoals.splice(index, 1);
+  return true;
+};
+
+/* ─────────────────────────────────────────────────────────────
+   FITNESS PURPOSE FALLBACK OPERATIONS (Stage 19)
+───────────────────────────────────────────────────────────── */
+
+export const getDevPurpose = async (userId) => {
+  return devPurposes.find(
+    (p) => p.user.toString() === userId.toString() && p.active !== false
+  ) || null;
+};
+
+export const createOrUpdateDevPurpose = async (userId, { purposeType, customPurpose, identityStatement, coreWhy, primaryMotivation, commitmentLevel, notes, active = true }) => {
+  const existingIndex = devPurposes.findIndex(
+    (p) => p.user.toString() === userId.toString()
+  );
+
+  if (existingIndex !== -1) {
+    devPurposes[existingIndex] = {
+      ...devPurposes[existingIndex],
+      purposeType: purposeType || devPurposes[existingIndex].purposeType,
+      customPurpose: customPurpose !== undefined ? customPurpose.trim() : devPurposes[existingIndex].customPurpose,
+      identityStatement: identityStatement !== undefined ? identityStatement.trim() : devPurposes[existingIndex].identityStatement,
+      coreWhy: coreWhy !== undefined ? coreWhy.trim() : devPurposes[existingIndex].coreWhy,
+      primaryMotivation: primaryMotivation !== undefined ? primaryMotivation.trim() : devPurposes[existingIndex].primaryMotivation,
+      commitmentLevel: commitmentLevel || devPurposes[existingIndex].commitmentLevel,
+      notes: notes !== undefined ? notes.trim() : devPurposes[existingIndex].notes,
+      active: active !== undefined ? active : true,
+      updatedAt: new Date(),
+    };
+    return devPurposes[existingIndex];
+  }
+
+  const newPurpose = {
+    _id: `dev_purpose_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+    user: userId.toString(),
+    purposeType: purposeType || 'BUILD_DISCIPLINE',
+    customPurpose: customPurpose ? customPurpose.trim() : '',
+    identityStatement: identityStatement ? identityStatement.trim() : '',
+    coreWhy: coreWhy ? coreWhy.trim() : '',
+    primaryMotivation: primaryMotivation ? primaryMotivation.trim() : '',
+    commitmentLevel: commitmentLevel || 'MODERATE',
+    notes: notes ? notes.trim() : '',
+    active: active !== undefined ? active : true,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
+
+  devPurposes.push(newPurpose);
+  return newPurpose;
+};
+
+export const deleteDevPurpose = async (userId) => {
+  const index = devPurposes.findIndex(
+    (p) => p.user.toString() === userId.toString()
+  );
+
+  if (index === -1) return false;
+  devPurposes.splice(index, 1);
+  return true;
+};
+
+/* ─────────────────────────────────────────────────────────────
+   WORKOUT REFLECTION FALLBACK OPERATIONS (Stage 19)
+───────────────────────────────────────────────────────────── */
+
+export const createDevReflection = async (userId, { workoutId, effort, note, activityType, duration }) => {
+  const newReflection = {
+    _id: `dev_reflection_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+    user: userId.toString(),
+    workout: workoutId ? workoutId.toString() : null,
+    effort: effort || 'GOOD',
+    note: note ? note.trim() : '',
+    activityType: activityType || 'Workout',
+    duration: Number(duration) || 0,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
+
+  devReflections.push(newReflection);
+  return newReflection;
+};
+
+export const getDevReflections = async (userId, limit = 50) => {
+  return devReflections
+    .filter((r) => r.user && r.user.toString() === userId.toString())
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    .slice(0, limit);
+};
+
+/* ─────────────────────────────────────────────────────────────
+   TRAINING PLAN FALLBACK OPERATIONS (Stage 20)
+───────────────────────────────────────────────────────────── */
+
+export const getDevTrainingPlan = async (userId) => {
+  return (
+    devTrainingPlans.find(
+      (p) => p.user && p.user.toString() === userId.toString() && p.status === 'ACTIVE'
+    ) || null
+  );
+};
+
+export const getDevTrainingPlanById = async (id, userId) => {
+  return (
+    devTrainingPlans.find(
+      (p) => p._id.toString() === id.toString() && p.user && p.user.toString() === userId.toString()
+    ) || null
+  );
+};
+
+export const createDevTrainingPlan = async (userId, planData) => {
+  // Deactivate any existing active plans for this user
+  devTrainingPlans.forEach((p) => {
+    if (p.user && p.user.toString() === userId.toString() && p.status === 'ACTIVE') {
+      p.status = 'ARCHIVED';
+      p.updatedAt = new Date();
+    }
+  });
+
+  const newPlan = {
+    _id: `dev_plan_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+    user: userId.toString(),
+    name: planData.name || 'Adaptive Weekly Training Plan',
+    purposeId: planData.purposeId || null,
+    goalIds: planData.goalIds || [],
+    weeklyTargetSessions: Number(planData.weeklyTargetSessions) || 3,
+    preferredSessionDuration: Number(planData.preferredSessionDuration) || 25,
+    preferredDays: planData.preferredDays || ['MON', 'WED', 'FRI'],
+    minimumSessionDuration: Number(planData.minimumSessionDuration) || 15,
+    maximumSessionDuration: Number(planData.maximumSessionDuration) || 45,
+    focusAreas: planData.focusAreas || ['Discipline', 'General Fitness'],
+    status: planData.status || 'ACTIVE',
+    schedule: planData.schedule || [],
+    startDate: planData.startDate ? new Date(planData.startDate) : new Date(),
+    endDate: planData.endDate ? new Date(planData.endDate) : null,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
+
+  devTrainingPlans.push(newPlan);
+  return newPlan;
+};
+
+export const updateDevTrainingPlan = async (id, userId, updates) => {
+  const index = devTrainingPlans.findIndex(
+    (p) => p._id.toString() === id.toString() && p.user && p.user.toString() === userId.toString()
+  );
+
+  if (index === -1) return null;
+
+  const current = devTrainingPlans[index];
+  const updated = {
+    ...current,
+    ...updates,
+    updatedAt: new Date(),
+  };
+
+  devTrainingPlans[index] = updated;
+  return updated;
+};
+
+export const deleteDevTrainingPlan = async (id, userId) => {
+  const index = devTrainingPlans.findIndex(
+    (p) => p._id.toString() === id.toString() && p.user && p.user.toString() === userId.toString()
+  );
+
+  if (index === -1) return false;
+  devTrainingPlans.splice(index, 1);
+  return true;
+};
+
+/* ─────────────────────────────────────────────────────────────
+   WEEKLY REFLECTION FALLBACK OPERATIONS (Stage 20)
+───────────────────────────────────────────────────────────── */
+
+export const getDevWeeklyReflections = async (userId, limit = 20) => {
+  return devWeeklyReflections
+    .filter((r) => r.user && r.user.toString() === userId.toString())
+    .sort((a, b) => new Date(b.weekStart) - new Date(a.weekStart))
+    .slice(0, limit);
+};
+
+export const getDevWeeklyReflectionByWeek = async (userId, weekStart) => {
+  const targetTime = new Date(weekStart).setUTCHours(0, 0, 0, 0);
+  return (
+    devWeeklyReflections.find((r) => {
+      if (!r.user || r.user.toString() !== userId.toString()) return false;
+      const rTime = new Date(r.weekStart).setUTCHours(0, 0, 0, 0);
+      return rTime === targetTime;
+    }) || null
+  );
+};
+
+export const createOrUpdateDevWeeklyReflection = async (userId, reflectionData) => {
+  const weekStart = new Date(reflectionData.weekStart || Date.now());
+  weekStart.setUTCHours(0, 0, 0, 0);
+
+  const existingIndex = devWeeklyReflections.findIndex((r) => {
+    if (!r.user || r.user.toString() !== userId.toString()) return false;
+    const rTime = new Date(r.weekStart).setUTCHours(0, 0, 0, 0);
+    return rTime === weekStart.getTime();
+  });
+
+  if (existingIndex >= 0) {
+    devWeeklyReflections[existingIndex] = {
+      ...devWeeklyReflections[existingIndex],
+      wentWell: reflectionData.wentWell !== undefined ? reflectionData.wentWell.trim() : devWeeklyReflections[existingIndex].wentWell,
+      difficult: reflectionData.difficult !== undefined ? reflectionData.difficult.trim() : devWeeklyReflections[existingIndex].difficult,
+      nextFocus: reflectionData.nextFocus !== undefined ? reflectionData.nextFocus.trim() : devWeeklyReflections[existingIndex].nextFocus,
+      sessionsCompleted: reflectionData.sessionsCompleted ?? devWeeklyReflections[existingIndex].sessionsCompleted,
+      targetSessions: reflectionData.targetSessions ?? devWeeklyReflections[existingIndex].targetSessions,
+      updatedAt: new Date(),
+    };
+    return devWeeklyReflections[existingIndex];
+  }
+
+  const newReflection = {
+    _id: `dev_wk_refl_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+    user: userId.toString(),
+    weekStart,
+    weekEnd: reflectionData.weekEnd ? new Date(reflectionData.weekEnd) : new Date(weekStart.getTime() + 6 * 24 * 60 * 60 * 1000),
+    wentWell: reflectionData.wentWell ? reflectionData.wentWell.trim() : '',
+    difficult: reflectionData.difficult ? reflectionData.difficult.trim() : '',
+    nextFocus: reflectionData.nextFocus ? reflectionData.nextFocus.trim() : '',
+    sessionsCompleted: Number(reflectionData.sessionsCompleted) || 0,
+    targetSessions: Number(reflectionData.targetSessions) || 3,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
+
+  devWeeklyReflections.push(newReflection);
+  return newReflection;
+};
+
+/* ─────────────────────────────────────────────────────────────
+   USER LIFE CONTEXT FALLBACK OPERATIONS (Stage 20)
+───────────────────────────────────────────────────────────── */
+
+export const getDevLifeContext = async (userId) => {
+  const found = devLifeContexts.find(
+    (c) => c.user && c.user.toString() === userId.toString()
+  );
+  if (found) return found;
+
+  const defaultContext = {
+    _id: `dev_ctx_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+    user: userId.toString(),
+    lifeLoad: 'NORMAL',
+    todayAvailableMinutes: 25,
+    lastAvailabilityDate: new Date().toISOString().split('T')[0],
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
+  devLifeContexts.push(defaultContext);
+  return defaultContext;
+};
+
+export const setDevLifeContext = async (userId, updates) => {
+  const index = devLifeContexts.findIndex(
+    (c) => c.user && c.user.toString() === userId.toString()
+  );
+
+  if (index >= 0) {
+    devLifeContexts[index] = {
+      ...devLifeContexts[index],
+      ...updates,
+      updatedAt: new Date(),
+    };
+    return devLifeContexts[index];
+  }
+
+  const newContext = {
+    _id: `dev_ctx_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+    user: userId.toString(),
+    lifeLoad: updates.lifeLoad || 'NORMAL',
+    todayAvailableMinutes: updates.todayAvailableMinutes || 25,
+    lastAvailabilityDate: updates.lastAvailabilityDate || new Date().toISOString().split('T')[0],
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
+  devLifeContexts.push(newContext);
+  return newContext;
+};
+
+
+
 
 
 

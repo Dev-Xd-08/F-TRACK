@@ -94,15 +94,15 @@ export const NotificationBell = ({ className = '' }) => {
     <>
       <button
         onClick={handleToggle}
-        className={`relative p-2 rounded-lg bg-obsidian/80 border border-slate-800 hover:border-cyan-neon/40 text-slate-300 hover:text-cyan-neon transition-all duration-200 group flex items-center justify-center ${className}`}
+        className={`relative p-2 rounded bg-charcoal-900 border border-steel-700/80 hover:border-crimson-800 text-ash-300 hover:text-bone-100 transition-all duration-200 group flex items-center justify-center ${className}`}
         aria-label="View notifications"
-        title="Hunter Alerts & Reminders"
+        title="System Alerts & Reminders"
       >
         <Bell className="w-4 h-4 transition-transform group-hover:rotate-12" />
 
         {/* Dynamic Unread Badge */}
         {unreadCount > 0 && (
-          <span className="absolute -top-1.5 -right-1.5 px-1.5 py-0.2 min-w-[18px] h-[18px] rounded-full bg-crimson-aura text-[10px] font-orbitron font-black text-white flex items-center justify-center border border-void shadow-[0_0_8px_rgba(255,42,95,0.7)] animate-pulse">
+          <span className="absolute -top-1.5 -right-1.5 px-1.5 py-0.2 min-w-[18px] h-[18px] rounded-full bg-crimson-700 text-[10px] font-orbitron font-bold text-bone-100 flex items-center justify-center border border-charcoal-900">
             {unreadCount > 99 ? '99+' : unreadCount}
           </span>
         )}

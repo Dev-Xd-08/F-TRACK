@@ -162,20 +162,20 @@ export const BodyAnalysis = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-16 w-full flex-1 space-y-12 relative z-10">
         
         {/* Page Header */}
-        <div className="space-y-2 border-b border-slate-800/80 pb-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-neon/40 bg-violet-neon/10 text-violet-glow text-xs font-orbitron font-bold tracking-widest uppercase">
-            <Sparkles className="w-3.5 h-3.5" />
+        <div className="space-y-2 border-b border-steel/40 pb-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-sm border border-steel/60 bg-charcoal text-ash text-xs font-orbitron font-bold tracking-widest uppercase">
+            <Sparkles className="w-3.5 h-3.5 text-crimson-bright" />
             <span>MODULE 02 & 03 • BODY COMPOSITION & METABOLIC MATRIX</span>
           </div>
 
-          <h1 className="font-orbitron text-3xl sm:text-5xl font-black tracking-tight text-slate-100 uppercase">
+          <h1 className="font-orbitron text-3xl sm:text-5xl font-black tracking-tight text-bone uppercase">
             BODY{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-neon via-white to-violet-glow text-glow-cyan">
+            <span className="text-crimson-bright">
               ANALYSIS
             </span>
           </h1>
 
-          <p className="text-slate-400 text-xs sm:text-sm font-sans max-w-2xl leading-relaxed">
+          <p className="text-ash text-xs sm:text-sm font-sans max-w-2xl leading-relaxed">
             Scan your current physical metrics. Calculate your Body Mass Index and activate your 
             Calorie Core engine to determine exact basal energy expenditure and daily maintenance requirements.
           </p>
@@ -185,36 +185,36 @@ export const BodyAnalysis = () => {
             SECTION A: BODY METRICS (BMI CORE)
         ══════════════════════════════════════════════════════════ */}
         <section className="space-y-6">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+          <div className="flex items-center justify-between border-b border-steel/40 pb-2">
             <div className="flex items-center gap-2.5">
-              <div className="p-2 rounded-lg bg-cyan-neon/10 border border-cyan-neon/30 text-cyan-neon">
+              <div className="p-2 rounded-lg bg-charcoal border border-steel/60 text-crimson-bright shadow-steel-card">
                 <Scale className="w-5 h-5" />
               </div>
               <div>
-                <h2 className="font-orbitron font-bold text-lg text-slate-100 uppercase tracking-wide">
+                <h2 className="font-orbitron font-bold text-lg text-bone uppercase tracking-wide">
                   SECTION A: BODY METRICS & BMI CORE
                 </h2>
-                <p className="text-xs text-slate-400 font-sans">
+                <p className="text-xs text-ash font-sans">
                   Height and weight biometric assessment based on standard World Health thresholds.
                 </p>
               </div>
             </div>
-            <span className="text-xs font-mono text-cyan-neon hidden sm:inline-block">
+            <span className="text-xs font-mono text-ash hidden sm:inline-block">
               STANDARD FORMULA
             </span>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             {/* Input Form Panel (5 cols) */}
-            <GlassCard glow="cyan" className="lg:col-span-5 space-y-6">
-              <h3 className="font-orbitron font-bold text-sm text-slate-200 tracking-wider flex items-center gap-2">
-                <Activity className="w-4 h-4 text-cyan-neon" />
+            <GlassCard className="lg:col-span-5 space-y-6">
+              <h3 className="font-orbitron font-bold text-sm text-bone tracking-wider flex items-center gap-2">
+                <Activity className="w-4 h-4 text-crimson-bright" />
                 BIOMETRIC SCANNER INPUT
               </h3>
 
               {/* BMI Error Alert */}
               {bmiError && (
-                <div className="p-3 rounded-lg bg-crimson-aura/10 border border-crimson-aura/40 flex items-center gap-2 text-xs font-mono text-crimson-aura">
+                <div className="p-3 rounded-lg bg-crimson/15 border border-crimson/50 flex items-center gap-2 text-xs font-mono text-crimson-bright">
                   <AlertCircle className="w-4 h-4 flex-shrink-0" />
                   <span>{bmiError}</span>
                 </div>
@@ -223,7 +223,7 @@ export const BodyAnalysis = () => {
               <form onSubmit={handleScanBMI} className="space-y-4">
                 {/* Height Input */}
                 <div className="space-y-1.5">
-                  <label className="block text-xs font-orbitron font-bold tracking-wider text-slate-300">
+                  <label className="block text-xs font-orbitron font-bold tracking-wider text-ash">
                     HEIGHT (CENTIMETERS)
                   </label>
                   <input
@@ -235,13 +235,13 @@ export const BodyAnalysis = () => {
                     onChange={(e) => setHeightCm(e.target.value)}
                     placeholder="e.g. 175"
                     required
-                    className="w-full px-3.5 py-2.5 rounded-lg bg-void/90 border border-slate-700 text-slate-100 placeholder-slate-500 text-sm font-sans focus:outline-none focus:border-cyan-neon focus:ring-1 focus:ring-cyan-neon transition-colors"
+                    className="w-full px-3.5 py-2.5 rounded-lg bg-void border border-steel/60 text-bone placeholder-ash/60 text-sm font-sans focus:outline-none focus:border-crimson transition-colors"
                   />
                 </div>
 
                 {/* Weight Input */}
                 <div className="space-y-1.5">
-                  <label className="block text-xs font-orbitron font-bold tracking-wider text-slate-300">
+                  <label className="block text-xs font-orbitron font-bold tracking-wider text-ash">
                     BODY WEIGHT (KILOGRAMS)
                   </label>
                   <input
@@ -253,14 +253,14 @@ export const BodyAnalysis = () => {
                     onChange={(e) => setWeightKg(e.target.value)}
                     placeholder="e.g. 70"
                     required
-                    className="w-full px-3.5 py-2.5 rounded-lg bg-void/90 border border-slate-700 text-slate-100 placeholder-slate-500 text-sm font-sans focus:outline-none focus:border-cyan-neon focus:ring-1 focus:ring-cyan-neon transition-colors"
+                    className="w-full px-3.5 py-2.5 rounded-lg bg-void border border-steel/60 text-bone placeholder-ash/60 text-sm font-sans focus:outline-none focus:border-crimson transition-colors"
                   />
                 </div>
 
                 <div className="pt-2">
                   <AnimeButton
                     type="submit"
-                    variant="cyan"
+                    variant="crimson"
                     size="lg"
                     icon={Activity}
                     disabled={bmiLoading}
@@ -273,14 +273,14 @@ export const BodyAnalysis = () => {
             </GlassCard>
 
             {/* Results & Scale Panel (7 cols) */}
-            <GlassCard glow="violet" className="lg:col-span-7 space-y-6 flex flex-col justify-between">
+            <GlassCard className="lg:col-span-7 space-y-6 flex flex-col justify-between">
               <div>
-                <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-                  <span className="text-xs font-orbitron font-bold text-slate-300 tracking-wider">
+                <div className="flex items-center justify-between border-b border-steel/40 pb-3">
+                  <span className="text-xs font-orbitron font-bold text-bone tracking-wider">
                     SCAN RESULT TELEMETRY
                   </span>
                   {bmiResult && (
-                    <span className="text-[10px] font-mono text-matrix-neon flex items-center gap-1">
+                    <span className="text-[10px] font-mono text-emerald-400 flex items-center gap-1">
                       <CheckCircle2 className="w-3.5 h-3.5" /> CALCULATION VERIFIED
                     </span>
                   )}
@@ -289,31 +289,31 @@ export const BodyAnalysis = () => {
                 {/* Scores Display */}
                 <div className="grid grid-cols-2 gap-4 my-6">
                   {/* BMI Score */}
-                  <div className="p-4 rounded-xl bg-void/80 border border-slate-800">
-                    <span className="text-[10px] font-orbitron font-bold text-slate-400 block mb-1">
+                  <div className="p-4 rounded-lg bg-void border border-steel/40">
+                    <span className="text-[10px] font-orbitron font-bold text-ash block mb-1">
                       BMI SCORE
                     </span>
-                    <p className="font-orbitron font-black text-3xl sm:text-4xl text-cyan-neon">
+                    <p className="font-orbitron font-black text-3xl sm:text-4xl text-bone">
                       {bmiResult ? bmiResult.bmi : '--.-'}
                     </p>
-                    <span className="text-[10px] font-mono text-slate-500">kg / m²</span>
+                    <span className="text-[10px] font-mono text-ash">kg / m²</span>
                   </div>
 
                   {/* BMI Category */}
-                  <div className="p-4 rounded-xl bg-void/80 border border-slate-800">
-                    <span className="text-[10px] font-orbitron font-bold text-slate-400 block mb-1">
+                  <div className="p-4 rounded-lg bg-void border border-steel/40">
+                    <span className="text-[10px] font-orbitron font-bold text-ash block mb-1">
                       BMI CATEGORY
                     </span>
                     <p className={`font-orbitron font-black text-xl sm:text-2xl ${
-                      bmiResult?.category === 'Underweight' ? 'text-cyan-neon' :
-                      bmiResult?.category === 'Normal' ? 'text-matrix-neon' :
-                      bmiResult?.category === 'Overweight' ? 'text-gold-mythic' :
-                      bmiResult?.category === 'Obesity' ? 'text-crimson-aura' :
-                      'text-slate-400'
+                      bmiResult?.category === 'Underweight' ? 'text-steel-light' :
+                      bmiResult?.category === 'Normal' ? 'text-emerald-400' :
+                      bmiResult?.category === 'Overweight' ? 'text-brass' :
+                      bmiResult?.category === 'Obesity' ? 'text-crimson-bright' :
+                      'text-ash'
                     }`}>
                       {bmiResult ? bmiResult.category.toUpperCase() : 'PENDING SCAN'}
                     </p>
-                    <span className="text-[10px] font-mono text-slate-500">
+                    <span className="text-[10px] font-mono text-ash">
                       {bmiResult ? `${bmiResult.heightCm} cm • ${bmiResult.weightKg} kg` : 'Awaiting input'}
                     </span>
                   </div>
@@ -332,16 +332,16 @@ export const BodyAnalysis = () => {
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mt-6 p-4 rounded-xl bg-obsidian/90 border border-slate-800 space-y-2"
+                    className="mt-6 p-4 rounded-lg bg-charcoal border border-steel/60 space-y-2 shadow-steel-card"
                   >
-                    <div className="flex items-center gap-1.5 text-xs font-orbitron text-violet-glow font-bold">
-                      <Info className="w-4 h-4" />
+                    <div className="flex items-center gap-1.5 text-xs font-orbitron text-bone font-bold">
+                      <Info className="w-4 h-4 text-crimson-bright" />
                       <span>ANALYSIS INSIGHT</span>
                     </div>
-                    <p className="text-xs text-slate-300 font-sans leading-relaxed">
+                    <p className="text-xs text-ash font-sans leading-relaxed">
                       {bmiResult.explanation}
                     </p>
-                    <p className="text-[10px] text-slate-500 font-sans italic border-t border-slate-800/80 pt-2">
+                    <p className="text-[10px] text-ash/70 font-sans italic border-t border-steel/40 pt-2">
                       {bmiResult.disclaimer}
                     </p>
                   </motion.div>
@@ -355,31 +355,31 @@ export const BodyAnalysis = () => {
             SECTION B: CALORIE CORE (BMR & TDEE ENGINE)
         ══════════════════════════════════════════════════════════ */}
         <section className="space-y-6 pt-4">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+          <div className="flex items-center justify-between border-b border-steel/40 pb-2">
             <div className="flex items-center gap-2.5">
-              <div className="p-2 rounded-lg bg-crimson-aura/10 border border-crimson-aura/30 text-crimson-aura">
+              <div className="p-2 rounded-lg bg-charcoal border border-steel/60 text-crimson-bright shadow-steel-card">
                 <Flame className="w-5 h-5" />
               </div>
               <div>
-                <h2 className="font-orbitron font-bold text-lg text-slate-100 uppercase tracking-wide">
+                <h2 className="font-orbitron font-bold text-lg text-bone uppercase tracking-wide">
                   SECTION B: CALORIE CORE
                 </h2>
-                <p className="text-xs text-slate-400 font-sans">
+                <p className="text-xs text-ash font-sans">
                   Estimate your daily energy requirements using the Mifflin-St Jeor equation.
                 </p>
               </div>
             </div>
-            <span className="text-xs font-mono text-crimson-aura hidden sm:inline-block">
+            <span className="text-xs font-mono text-ash hidden sm:inline-block">
               MIFFLIN-ST JEOR ENGINE
             </span>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             {/* Input Form Panel (6 cols) */}
-            <GlassCard glow="crimson" className="lg:col-span-6 space-y-5">
+            <GlassCard className="lg:col-span-6 space-y-5">
               <div className="flex items-center justify-between">
-                <h3 className="font-orbitron font-bold text-sm text-slate-200 tracking-wider flex items-center gap-2">
-                  <Flame className="w-4 h-4 text-crimson-aura" />
+                <h3 className="font-orbitron font-bold text-sm text-bone tracking-wider flex items-center gap-2">
+                  <Flame className="w-4 h-4 text-crimson-bright" />
                   METABOLIC CONFIGURATION
                 </h3>
 
@@ -388,7 +388,7 @@ export const BodyAnalysis = () => {
                   <button
                     type="button"
                     onClick={handleSyncToCalories}
-                    className="text-[10px] font-mono text-cyan-neon hover:underline flex items-center gap-1"
+                    className="text-[10px] font-mono text-ash hover:text-bone flex items-center gap-1"
                   >
                     <RefreshCw className="w-3 h-3" />
                     <span>USE SCANNED METRICS</span>
@@ -398,7 +398,7 @@ export const BodyAnalysis = () => {
 
               {/* Calorie Error Alert */}
               {calError && (
-                <div className="p-3 rounded-lg bg-crimson-aura/10 border border-crimson-aura/40 flex items-center gap-2 text-xs font-mono text-crimson-aura">
+                <div className="p-3 rounded-lg bg-crimson/15 border border-crimson/50 flex items-center gap-2 text-xs font-mono text-crimson-bright">
                   <AlertCircle className="w-4 h-4 flex-shrink-0" />
                   <span>{calError}</span>
                 </div>
@@ -409,7 +409,7 @@ export const BodyAnalysis = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Age */}
                   <div className="space-y-1.5">
-                    <label className="block text-xs font-orbitron font-bold tracking-wider text-slate-300">
+                    <label className="block text-xs font-orbitron font-bold tracking-wider text-ash">
                       AGE (YEARS)
                     </label>
                     <input
@@ -420,23 +420,23 @@ export const BodyAnalysis = () => {
                       onChange={(e) => setAge(e.target.value)}
                       placeholder="e.g. 21"
                       required
-                      className="w-full px-3.5 py-2 rounded-lg bg-void/90 border border-slate-700 text-slate-100 placeholder-slate-500 text-sm font-sans focus:outline-none focus:border-crimson-aura focus:ring-1 focus:ring-crimson-aura transition-colors"
+                      className="w-full px-3.5 py-2 rounded-lg bg-void border border-steel/60 text-bone placeholder-ash/60 text-sm font-sans focus:outline-none focus:border-crimson transition-colors"
                     />
                   </div>
 
                   {/* Sex Selection Pills */}
                   <div className="space-y-1.5">
-                    <label className="block text-xs font-orbitron font-bold tracking-wider text-slate-300">
+                    <label className="block text-xs font-orbitron font-bold tracking-wider text-ash">
                       BIOLOGICAL SEX
                     </label>
                     <div className="grid grid-cols-2 gap-2">
                       <button
                         type="button"
                         onClick={() => setSex('male')}
-                        className={`py-2 px-3 rounded-lg font-orbitron text-xs font-bold border transition-all ${
+                        className={`py-2 px-3 rounded-sm font-orbitron text-xs font-bold border transition-all ${
                           sex === 'male'
-                            ? 'bg-cyan-neon/15 border-cyan-neon text-cyan-neon shadow-glow-cyan'
-                            : 'bg-void/80 border-slate-800 text-slate-400 hover:border-slate-700'
+                            ? 'bg-charcoal border-steel text-bone shadow-steel-card'
+                            : 'bg-void border-steel/40 text-ash hover:border-steel/60 hover:text-bone'
                         }`}
                       >
                         MALE
@@ -444,10 +444,10 @@ export const BodyAnalysis = () => {
                       <button
                         type="button"
                         onClick={() => setSex('female')}
-                        className={`py-2 px-3 rounded-lg font-orbitron text-xs font-bold border transition-all ${
+                        className={`py-2 px-3 rounded-sm font-orbitron text-xs font-bold border transition-all ${
                           sex === 'female'
-                            ? 'bg-crimson-aura/15 border-crimson-aura text-crimson-aura shadow-glow-crimson'
-                            : 'bg-void/80 border-slate-800 text-slate-400 hover:border-slate-700'
+                            ? 'bg-crimson/20 border-crimson/60 text-crimson-bright shadow-steel-card'
+                            : 'bg-void border-steel/40 text-ash hover:border-steel/60 hover:text-bone'
                         }`}
                       >
                         FEMALE
@@ -460,7 +460,7 @@ export const BodyAnalysis = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Height */}
                   <div className="space-y-1.5">
-                    <label className="block text-xs font-orbitron font-bold tracking-wider text-slate-300">
+                    <label className="block text-xs font-orbitron font-bold tracking-wider text-ash">
                       HEIGHT (CM)
                     </label>
                     <input
@@ -471,13 +471,13 @@ export const BodyAnalysis = () => {
                       onChange={(e) => setCalHeightCm(e.target.value)}
                       placeholder="e.g. 175"
                       required
-                      className="w-full px-3.5 py-2 rounded-lg bg-void/90 border border-slate-700 text-slate-100 placeholder-slate-500 text-sm font-sans focus:outline-none focus:border-crimson-aura focus:ring-1 focus:ring-crimson-aura transition-colors"
+                      className="w-full px-3.5 py-2 rounded-lg bg-void border border-steel/60 text-bone placeholder-ash/60 text-sm font-sans focus:outline-none focus:border-crimson transition-colors"
                     />
                   </div>
 
                   {/* Weight */}
                   <div className="space-y-1.5">
-                    <label className="block text-xs font-orbitron font-bold tracking-wider text-slate-300">
+                    <label className="block text-xs font-orbitron font-bold tracking-wider text-ash">
                       WEIGHT (KG)
                     </label>
                     <input
@@ -488,23 +488,23 @@ export const BodyAnalysis = () => {
                       onChange={(e) => setCalWeightKg(e.target.value)}
                       placeholder="e.g. 70"
                       required
-                      className="w-full px-3.5 py-2 rounded-lg bg-void/90 border border-slate-700 text-slate-100 placeholder-slate-500 text-sm font-sans focus:outline-none focus:border-crimson-aura focus:ring-1 focus:ring-crimson-aura transition-colors"
+                      className="w-full px-3.5 py-2 rounded-lg bg-void border border-steel/60 text-bone placeholder-ash/60 text-sm font-sans focus:outline-none focus:border-crimson transition-colors"
                     />
                   </div>
                 </div>
 
                 {/* Activity Level Dropdown */}
                 <div className="space-y-1.5">
-                  <label className="block text-xs font-orbitron font-bold tracking-wider text-slate-300">
+                  <label className="block text-xs font-orbitron font-bold tracking-wider text-ash">
                     TRAINING ACTIVITY LEVEL
                   </label>
                   <select
                     value={activityLevel}
                     onChange={(e) => setActivityLevel(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-lg bg-void/90 border border-slate-700 text-slate-100 text-sm font-sans focus:outline-none focus:border-crimson-aura focus:ring-1 focus:ring-crimson-aura transition-colors"
+                    className="w-full px-3.5 py-2.5 rounded-lg bg-void border border-steel/60 text-bone text-sm font-sans focus:outline-none focus:border-crimson transition-colors"
                   >
                     {ACTIVITY_OPTIONS.map((opt) => (
-                      <option key={opt.value} value={opt.value} className="bg-obsidian text-slate-200">
+                      <option key={opt.value} value={opt.value} className="bg-obsidian text-bone">
                         {opt.label} — {opt.sub}
                       </option>
                     ))}
@@ -527,14 +527,14 @@ export const BodyAnalysis = () => {
             </GlassCard>
 
             {/* Results Display Panel (6 cols) */}
-            <GlassCard glow="gold" className="lg:col-span-6 space-y-6 flex flex-col justify-between">
+            <GlassCard className="lg:col-span-6 space-y-6 flex flex-col justify-between">
               <div>
-                <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-                  <span className="text-xs font-orbitron font-bold text-slate-300 tracking-wider">
+                <div className="flex items-center justify-between border-b border-steel/40 pb-3">
+                  <span className="text-xs font-orbitron font-bold text-bone tracking-wider">
                     CALORIE ENGINE TELEMETRY
                   </span>
                   {calorieResult && (
-                    <span className="text-[10px] font-mono text-gold-mythic flex items-center gap-1">
+                    <span className="text-[10px] font-mono text-emerald-400 flex items-center gap-1">
                       <Zap className="w-3.5 h-3.5" /> METABOLIC LOCK ACQUIRED
                     </span>
                   )}
@@ -543,25 +543,25 @@ export const BodyAnalysis = () => {
                 {/* Calorie Stats HUD Cards */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-6">
                   {/* BMR Card */}
-                  <div className="p-5 rounded-xl bg-void/85 border border-slate-800 space-y-1">
-                    <span className="text-[10px] font-orbitron font-bold text-slate-400 uppercase tracking-wider">
+                  <div className="p-5 rounded-lg bg-void border border-steel/40 space-y-1">
+                    <span className="text-[10px] font-orbitron font-bold text-ash uppercase tracking-wider">
                       BMR (BASAL RATE)
                     </span>
-                    <p className="font-orbitron font-black text-3xl text-violet-glow">
+                    <p className="font-orbitron font-black text-3xl text-bone">
                       {calorieResult ? calorieResult.bmr.toLocaleString() : '----'}
                     </p>
-                    <p className="text-[10px] font-mono text-slate-500">KCAL / DAY AT REST</p>
+                    <p className="text-[10px] font-mono text-ash">KCAL / DAY AT REST</p>
                   </div>
 
                   {/* Maintenance TDEE Card */}
-                  <div className="p-5 rounded-xl bg-void/85 border border-slate-800 space-y-1">
-                    <span className="text-[10px] font-orbitron font-bold text-slate-400 uppercase tracking-wider">
+                  <div className="p-5 rounded-lg bg-void border border-steel/40 space-y-1">
+                    <span className="text-[10px] font-orbitron font-bold text-ash uppercase tracking-wider">
                       ESTIMATED MAINTENANCE
                     </span>
-                    <p className="font-orbitron font-black text-3xl text-crimson-aura">
+                    <p className="font-orbitron font-black text-3xl text-crimson-bright">
                       {calorieResult ? calorieResult.tdee.toLocaleString() : '----'}
                     </p>
-                    <p className="text-[10px] font-mono text-slate-500">KCAL / DAY (TDEE)</p>
+                    <p className="text-[10px] font-mono text-ash">KCAL / DAY (TDEE)</p>
                   </div>
                 </div>
 
@@ -570,30 +570,30 @@ export const BodyAnalysis = () => {
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="p-4 rounded-xl bg-obsidian/90 border border-slate-800 space-y-3"
+                    className="p-4 rounded-lg bg-charcoal border border-steel/60 space-y-3 shadow-steel-card"
                   >
                     <div className="flex items-center justify-between text-xs font-orbitron">
-                      <span className="text-slate-400">ACTIVE MULTIPLIER:</span>
-                      <span className="text-gold-mythic font-bold">{calorieResult.activityLevel} ({calorieResult.activityMultiplier}x)</span>
+                      <span className="text-ash">ACTIVE MULTIPLIER:</span>
+                      <span className="text-bone font-bold">{calorieResult.activityLevel} ({calorieResult.activityMultiplier}x)</span>
                     </div>
 
-                    <p className="text-xs text-slate-300 font-sans leading-relaxed">
+                    <p className="text-xs text-ash font-sans leading-relaxed">
                       {calorieResult.explanation}
                     </p>
 
-                    <p className="text-[10px] text-slate-500 font-sans italic border-t border-slate-800/80 pt-2">
+                    <p className="text-[10px] text-ash/70 font-sans italic border-t border-steel/40 pt-2">
                       {calorieResult.disclaimer}
                     </p>
                   </motion.div>
                 )}
 
                 {!calorieResult && (
-                  <div className="p-8 rounded-xl bg-obsidian/40 border border-dashed border-slate-800 text-center space-y-2">
-                    <Flame className="w-8 h-8 text-slate-600 mx-auto" />
-                    <p className="font-orbitron text-xs text-slate-400">
+                  <div className="p-8 rounded-lg bg-charcoal/40 border border-dashed border-steel/60 text-center space-y-2">
+                    <Flame className="w-8 h-8 text-ash/50 mx-auto" />
+                    <p className="font-orbitron text-xs text-ash">
                       CALORIE ENGINE OFFLINE
                     </p>
-                    <p className="text-[11px] text-slate-500 font-sans max-w-xs mx-auto">
+                    <p className="text-[11px] text-ash/70 font-sans max-w-xs mx-auto">
                       Fill in your age, sex, metrics, and activity level to compute your maintenance calories.
                     </p>
                   </div>

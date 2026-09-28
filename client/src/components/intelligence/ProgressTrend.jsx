@@ -18,35 +18,35 @@ import GlassCard from '../ui/GlassCard';
  * Metric delta pill formatter
  */
 const MetricDelta = ({ value, label, current, previous, unit = '' }) => {
-  let badgeColor = 'bg-slate-800 border-slate-700 text-slate-400';
+  let badgeColor = 'bg-steel-800/60 border-steel-700 text-ash-400';
   let IconComponent = Minus;
   let text = '0% STABLE';
 
   if (value === null || value === undefined) {
-    badgeColor = 'bg-cyan-neon/15 border-cyan-neon/40 text-cyan-neon';
+    badgeColor = 'bg-steel-800 border-steel-700 text-bone-200';
     IconComponent = Sparkles;
     text = 'NEW BASELINE';
   } else if (value > 0) {
-    badgeColor = 'bg-matrix-neon/15 border-matrix-neon/40 text-matrix-neon';
+    badgeColor = 'bg-emerald-950/40 border-emerald-800/50 text-emerald-400';
     IconComponent = ArrowUpRight;
     text = `+${value}%`;
   } else if (value < 0) {
-    badgeColor = 'bg-amber-400/15 border-amber-400/40 text-amber-400';
+    badgeColor = 'bg-amber-950/40 border-amber-800/50 text-amber-400';
     IconComponent = ArrowDownRight;
     text = `${value}%`;
   }
 
   return (
-    <div className="p-3 rounded-lg bg-void/60 border border-slate-800/80 flex items-center justify-between">
+    <div className="p-3 rounded bg-charcoal-900/80 border border-steel-800 flex items-center justify-between">
       <div className="space-y-0.5">
-        <span className="text-[10px] font-orbitron font-bold text-slate-400 uppercase block">
+        <span className="text-[10px] font-orbitron font-bold text-ash-400 uppercase block">
           {label}
         </span>
         <div className="flex items-baseline gap-2">
-          <span className="font-orbitron font-bold text-base text-slate-100">
+          <span className="font-orbitron font-bold text-base text-bone-100">
             {current.toLocaleString()} {unit}
           </span>
-          <span className="text-[10px] font-mono text-slate-500">
+          <span className="text-[10px] font-mono text-ash-500">
             vs {previous.toLocaleString()} {unit}
           </span>
         </div>
@@ -80,23 +80,23 @@ export const ProgressTrend = ({ trend }) => {
       case 'IMPROVING':
         return {
           label: '📈 EXPANDING TRAJECTORY',
-          badgeClass: 'bg-matrix-neon/15 border-matrix-neon/40 text-matrix-neon shadow-glow-matrix',
+          badgeClass: 'bg-emerald-950/40 border-emerald-800/50 text-emerald-400',
         };
       case 'DECLINING':
         return {
           label: '📉 VOLUME RECALIBRATION',
-          badgeClass: 'bg-amber-400/15 border-amber-400/40 text-amber-400',
+          badgeClass: 'bg-amber-950/40 border-amber-800/50 text-amber-400',
         };
       case 'STABLE':
         return {
           label: '📊 STABLE PACING',
-          badgeClass: 'bg-cyan-neon/15 border-cyan-neon/40 text-cyan-neon shadow-glow-cyan',
+          badgeClass: 'bg-steel-800/60 border-steel-700 text-bone-200',
         };
       case 'INSUFFICIENT_DATA':
       default:
         return {
           label: '⏳ INSUFFICIENT DATA',
-          badgeClass: 'bg-slate-800 border-slate-700 text-slate-400',
+          badgeClass: 'bg-steel-800 border-steel-700 text-ash-400',
         };
     }
   };
@@ -104,18 +104,18 @@ export const ProgressTrend = ({ trend }) => {
   const badge = getClassificationBadge();
 
   return (
-    <GlassCard glow="violet" className="p-5 space-y-4">
+    <GlassCard glow="none" className="p-5 space-y-4 border-steel-700/60 bg-charcoal-900/90 shadow-steel-card">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-steel-800 pb-3">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-violet-neon/15 border border-violet-neon/30 flex items-center justify-center text-violet-glow">
+          <div className="w-8 h-8 rounded bg-steel-800/80 border border-steel-700 flex items-center justify-center text-bone-200">
             <TrendingUp className="w-4 h-4" />
           </div>
           <div>
-            <h4 className="font-orbitron font-bold text-xs sm:text-sm text-slate-100 uppercase tracking-wide">
+            <h4 className="font-orbitron font-bold text-xs sm:text-sm text-bone-100 uppercase tracking-wide">
               14-DAY PROGRESSION TRAJECTORY
             </h4>
-            <span className="text-[10px] font-mono text-slate-400">
+            <span className="text-[10px] font-mono text-ash-400">
               CURRENT 14 DAYS ({currentPeriod.startDate} → {currentPeriod.endDate}) vs PRIOR 14 DAYS ({previousPeriod.startDate} → {previousPeriod.endDate})
             </span>
           </div>
@@ -127,7 +127,7 @@ export const ProgressTrend = ({ trend }) => {
       </div>
 
       {/* Explanatory Context Note */}
-      <p className="text-xs text-slate-300 font-sans leading-relaxed bg-void/40 p-3 rounded-lg border border-slate-800/60">
+      <p className="text-xs text-slate-300 font-sans leading-relaxed bg-void/60 p-3 rounded border border-steel-800/80">
         {reasoning}
       </p>
 

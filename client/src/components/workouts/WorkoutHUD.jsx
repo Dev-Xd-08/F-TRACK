@@ -54,8 +54,8 @@ export const WorkoutHUD = ({ workouts = [] }) => {
       value: totalWorkouts,
       unit: 'QUESTS',
       icon: Dumbbell,
-      glow: 'cyan',
-      textColor: 'text-cyan-neon',
+      iconColor: 'text-steel-light',
+      textColor: 'text-bone',
       subtext: 'COMPLETED SESSIONS',
     },
     {
@@ -63,8 +63,8 @@ export const WorkoutHUD = ({ workouts = [] }) => {
       value: totalMinutes,
       unit: 'MINS',
       icon: Clock,
-      glow: 'violet',
-      textColor: 'text-violet-glow',
+      iconColor: 'text-steel-light',
+      textColor: 'text-bone',
       subtext: 'TIME IN COMBAT',
     },
     {
@@ -72,17 +72,17 @@ export const WorkoutHUD = ({ workouts = [] }) => {
       value: totalCalories.toLocaleString(),
       unit: 'KCAL',
       icon: Flame,
-      glow: 'crimson',
-      textColor: 'text-crimson-aura',
+      iconColor: 'text-crimson-bright',
+      textColor: 'text-crimson-bright',
       subtext: 'METABOLIC EXPENDITURE',
     },
     {
-      label: 'CURRENT STREAK',
+      label: 'WARRIOR STREAK',
       value: streakDays,
       unit: 'DAYS',
       icon: Zap,
-      glow: 'gold',
-      textColor: 'text-gold-mythic',
+      iconColor: 'text-brass',
+      textColor: 'text-brass',
       subtext: streakDays > 0 ? 'FLAME IGNITED' : 'TRAIN TODAY TO IGNITE',
     },
   ];
@@ -98,12 +98,12 @@ export const WorkoutHUD = ({ workouts = [] }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: idx * 0.1 }}
           >
-            <GlassCard glow={stat.glow} className="p-5 flex flex-col justify-between h-full">
+            <GlassCard className="p-5 flex flex-col justify-between h-full">
               <div className="flex items-center justify-between mb-3">
-                <span className="text-[10px] font-orbitron font-bold tracking-wider text-slate-400 uppercase">
+                <span className="text-[10px] font-orbitron font-bold tracking-wider text-ash uppercase">
                   {stat.label}
                 </span>
-                <div className={`p-2 rounded-lg bg-obsidian border border-slate-800 ${stat.textColor}`}>
+                <div className={`p-2 rounded-lg bg-charcoal border border-steel/60 ${stat.iconColor} shadow-steel-card`}>
                   <Icon className="w-4 h-4" />
                 </div>
               </div>
@@ -113,11 +113,11 @@ export const WorkoutHUD = ({ workouts = [] }) => {
                   <span className={`font-orbitron font-black text-3xl sm:text-4xl ${stat.textColor}`}>
                     {stat.value}
                   </span>
-                  <span className="text-xs font-orbitron font-bold text-slate-400">
+                  <span className="text-xs font-orbitron font-bold text-ash">
                     {stat.unit}
                   </span>
                 </div>
-                <p className="text-[10px] text-slate-500 font-mono tracking-wide mt-1">
+                <p className="text-[10px] text-ash font-mono tracking-wide mt-1">
                   {stat.subtext}
                 </p>
               </div>

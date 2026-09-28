@@ -56,7 +56,7 @@ export const FeatureSection = () => {
     {
       number: '06',
       title: 'ACHIEVEMENT SYSTEM',
-      description: 'Track streaks, milestones and fitness achievements. Unlock legendary anime badges and ascend to higher Hunter Ranks.',
+      description: 'Track streaks, milestones and fitness achievements. Unlock milestone badges and ascend to higher athlete ranks.',
       icon: Trophy,
       accentColor: 'gold',
       perks: ['Daily Streaks', 'Milestone Badges', 'Personal Records'],
@@ -75,29 +75,28 @@ export const FeatureSection = () => {
 
   return (
     <section id="features" className="py-24 relative overflow-hidden">
-      {/* Background Accent Gradients */}
-      <div className="absolute top-1/2 left-0 w-80 h-80 bg-violet-neon/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-cyan-neon/10 rounded-full blur-3xl pointer-events-none" />
+      {/* Background Architectural Grid Accent */}
+      <div className="absolute inset-0 pointer-events-none opacity-20 architectural-grid" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-violet-neon/40 bg-violet-neon/10 text-violet-glow text-xs font-orbitron font-bold tracking-widest uppercase">
-            <Sparkles className="w-3.5 h-3.5" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded border border-steel-700 bg-charcoal-900 text-ash-300 text-xs font-orbitron font-bold tracking-widest uppercase shadow-steel-card">
+            <Sparkles className="w-3.5 h-3.5 text-crimson-600" />
             <span>CORE FITNESS ARCHITECTURE</span>
           </div>
 
-          <h2 className="font-orbitron text-3xl sm:text-5xl font-black tracking-tight text-slate-100 uppercase">
+          <h2 className="font-orbitron text-3xl sm:text-5xl font-black tracking-tight text-bone-100 uppercase">
             THE ASCENSION{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-neon via-white to-violet-glow text-glow-cyan">
+            <span className="text-crimson-600">
               SYSTEM
             </span>
           </h2>
 
           <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
             Everything you need to transform your fitness journey. Grounded in rigorous fitness tracking science, 
-            amplified by anime progression mechanics.
+            amplified by Dark Warrior progression mechanics.
           </p>
         </div>
 

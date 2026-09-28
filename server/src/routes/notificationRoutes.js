@@ -27,17 +27,19 @@ router.get('/', getNotifications);
 router.get('/unread', getUnreadNotificationCount);
 
 /**
- * @route   PATCH /api/notifications/read-all
+ * @route   PATCH/PUT /api/notifications/read-all
  * @desc    Mark all notifications as read
  * @access  Private
  */
 router.patch('/read-all', markAllAsRead);
+router.put('/read-all', markAllAsRead);
 
 /**
- * @route   PATCH /api/notifications/:id/read
+ * @route   PATCH/PUT /api/notifications/:id/read
  * @desc    Mark a specific notification as read
  * @access  Private
  */
 router.patch('/:id/read', markAsRead);
+router.put('/:id/read', markAsRead);
 
 export default router;

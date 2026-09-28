@@ -1,10 +1,14 @@
 import Workout from '../models/Workout.js';
 import HealthProfile from '../models/HealthProfile.js';
+import FitnessGoal from '../models/FitnessGoal.js';
+import FitnessPurpose from '../models/FitnessPurpose.js';
 import {
   isMongoConnected,
   getDevWorkouts,
   getDevHealthProfile,
   getDevProgression,
+  getDevGoals,
+  getDevPurpose,
 } from './devStore.js';
 import { getUserProgressionData } from './progressionEngine.js';
 import { getUserPersonalRecords } from './recordEngine.js';
@@ -307,11 +311,41 @@ export const generateFitnessInsights = ({
   pattern = null,
   activityPreference = null,
   trend = null,
+  activeGoals = [],
+  userPurpose = null,
 }) => {
   const insights = [];
 
   if (workouts.length === 0) {
     return insights;
+  }
+
+  // Purpose Alignment & Consistency Over Intensity (Stage 19)
+  if (userPurpose) {
+    const purposeLabels = {
+      BUILD_DISCIPLINE: 'Building Discipline',
+      IMPROVE_HEALTH: 'Improving Health',
+      INCREASE_ENERGY: 'Increasing Energy',
+      BUILD_CONFIDENCE: 'Building Confidence',
+      IMPROVE_STRENGTH: 'Improving Strength',
+      IMPROVE_ENDURANCE: 'Improving Endurance',
+      PREPARE_SPORT: 'Preparing for a Sport',
+      CHANGE_LIFESTYLE: 'Changing Lifestyle',
+      FEEL_BETTER: 'Feeling Better Daily',
+      SUPPORT_FAMILY: 'Supporting Loved Ones',
+      PERSONAL_CHALLENGE: 'Personal Challenge',
+      CUSTOM: userPurpose.customPurpose || 'Personal Purpose',
+    };
+    const purposeTitle = purposeLabels[userPurpose.purposeType] || 'Personal Purpose';
+
+    insights.push({
+      id: 'insight-purpose-alignment',
+      category: 'FOCUS',
+      title: `PURPOSE ALIGNMENT: ${purposeTitle.toUpperCase()}`,
+      explanation: `For your stated purpose — "${purposeTitle}" — steady weekly consistency is your most reliable foundation. Protect the routine before scaling intensity.`,
+      dataSource: 'Personal Purpose System',
+      priority: 'HIGH',
+    });
   }
 
   // Insight 1: Consistency Evaluation
@@ -435,6 +469,21 @@ export const generateFitnessInsights = ({
     });
   }
 
+  // Insight 7: Mission Progression Momentum (Stage 13)
+  if (activeGoals && activeGoals.length > 0) {
+    const topGoal = [...activeGoals].sort((a, b) => b.progressPercentage - a.progressPercentage)[0];
+    if (topGoal) {
+      insights.push({
+        id: 'insight-goal-momentum',
+        category: 'FOCUS',
+        title: 'MISSION PROGRESSION MOMENTUM',
+        explanation: `Your workout telemetry is actively contributing toward your mission "${topGoal.title}" (${topGoal.progressPercentage}% completed, target: ${topGoal.targetValue} ${topGoal.unit || ''}).`,
+        dataSource: `Mission Control (${topGoal.title})`,
+        priority: 'HIGH',
+      });
+    }
+  }
+
   return insights;
 };
 
@@ -550,6 +599,31 @@ export const calculateFitnessIntelligence = async (userId) => {
     records = await getUserPersonalRecords(userId);
   }
 
+  // Fetch active missions for goal momentum insight (Stage 13)
+  let activeGoals = [];
+  try {
+    if (isMongoConnected()) {
+      activeGoals = await FitnessGoal.find({ user: userId, status: 'ACTIVE' }).lean();
+    } else {
+      const devG = await getDevGoals(userId);
+      activeGoals = devG.filter((g) => g.status === 'ACTIVE');
+    }
+  } catch (gErr) {
+    console.error(`[INTELLIGENCE_GOALS_FETCH ERROR] ${gErr.message}`);
+  }
+
+  // Fetch active purpose for purpose alignment insight (Stage 19)
+  let userPurpose = null;
+  try {
+    if (isMongoConnected()) {
+      userPurpose = await FitnessPurpose.findOne({ user: userId, active: true }).lean();
+    } else {
+      userPurpose = await getDevPurpose(userId);
+    }
+  } catch (pErr) {
+    console.error(`[INTELLIGENCE_PURPOSE_FETCH ERROR] ${pErr.message}`);
+  }
+
   // 1. Consistency Score (30-day window)
   const consistency = calculateConsistencyScore(workouts, 30);
 
@@ -572,6 +646,8 @@ export const calculateFitnessIntelligence = async (userId) => {
     pattern: workoutPattern,
     activityPreference,
     trend: progressTrend,
+    activeGoals,
+    userPurpose,
   });
 
   // 6. Actionable Next Focus Suggestions

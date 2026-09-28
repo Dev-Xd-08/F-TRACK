@@ -25,18 +25,18 @@ export const Register = () => {
 
     // Client-side validation
     if (!name.trim()) {
-      setValidationError('Warrior name is required.');
+      setValidationError('Your name is required.');
       return;
     }
 
     if (!email.trim()) {
-      setValidationError('Enter a valid communication crystal address.');
+      setValidationError('Please enter a valid email address.');
       return;
     }
 
     const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/;
     if (!emailRegex.test(email.trim())) {
-      setValidationError('Enter a valid communication crystal address.');
+      setValidationError('Please enter a valid email address.');
       return;
     }
 
@@ -69,21 +69,20 @@ export const Register = () => {
   const displayedError = validationError || error;
 
   return (
-    <div className="min-h-screen bg-void text-slate-100 cyber-grid flex flex-col justify-between relative overflow-hidden">
-      {/* Background Energy Matrix & Concentric Neon Glows */}
+    <div className="min-h-screen bg-void text-bone-100 architectural-grid flex flex-col justify-between relative overflow-hidden">
+      {/* Background Subtle Radial Atmosphere */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-gradient-to-tr from-cyan-neon/15 via-violet-neon/10 to-transparent rounded-full blur-3xl opacity-70 animate-pulse-slow" />
-        <div className="absolute bottom-10 left-10 w-80 h-80 bg-gold-mythic/10 rounded-full blur-3xl opacity-50" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-crimson-950/15 rounded-full blur-3xl opacity-35" />
       </div>
 
       {/* Top Header / Back to Realm */}
       <header className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-6">
         <Link
           to="/"
-          className="inline-flex items-center gap-2 text-xs font-orbitron font-semibold tracking-wider text-slate-400 hover:text-cyan-neon transition-colors py-2"
+          className="inline-flex items-center gap-2 text-xs font-orbitron font-semibold tracking-wider text-ash-400 hover:text-bone-100 transition-colors py-2"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>RETURN TO OVERWORLD</span>
+          <span>RETURN TO HOME</span>
         </Link>
       </header>
 
@@ -93,32 +92,30 @@ export const Register = () => {
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="relative rounded-2xl p-8 sm:p-10 bg-obsidian/85 backdrop-blur-xl border border-cyan-neon/30 shadow-[0_0_40px_rgba(0,245,255,0.2)] overflow-hidden"
+          className="relative rounded p-8 sm:p-10 bg-charcoal-900 border border-steel-700 shadow-steel-card overflow-hidden"
         >
-          {/* Top Beam & Cyber Corners */}
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-violet-neon via-cyan-neon to-gold-mythic" />
-          <div className="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-violet-neon" />
-          <div className="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-cyan-neon" />
-          <div className="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2 border-gold-mythic" />
-          <div className="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-matrix-neon" />
+          {/* Top Line & Industrial Corners */}
+          <div className="absolute top-0 left-0 right-0 h-1 bg-crimson-800" />
+          <div className="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-steel-700" />
+          <div className="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-steel-700" />
+          <div className="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2 border-steel-700" />
+          <div className="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-steel-700" />
 
           {/* Chamber Header */}
           <div className="text-center space-y-2 mb-8">
-            <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-neon to-violet-neon p-0.5 shadow-glow-violet mb-2">
-              <div className="w-full h-full bg-void rounded-[10px] flex items-center justify-center">
-                <Sparkles className="w-6 h-6 text-violet-glow" />
-              </div>
+            <div className="inline-flex items-center justify-center w-12 h-12 rounded bg-charcoal-800 border border-steel-700 text-bone-100 shadow-steel-card mb-2">
+              <Sparkles className="w-6 h-6 text-crimson-600" />
             </div>
 
-            <h1 className="font-orbitron font-black text-2xl tracking-wide text-slate-100 uppercase">
-              BEGIN YOUR{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-glow via-white to-cyan-neon text-glow-violet">
-                ASCENSION
+            <h1 className="font-orbitron font-black text-2xl tracking-wide text-bone-100 uppercase">
+              CREATE YOUR{' '}
+              <span className="text-crimson-600">
+                ACCOUNT
               </span>
             </h1>
 
-            <p className="text-xs font-sans text-slate-400">
-              Create your warrior profile and begin your journey.
+            <p className="text-xs font-sans text-ash-400">
+              Set up your personal training log and track your progress.
             </p>
           </div>
 
@@ -127,7 +124,7 @@ export const Register = () => {
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mb-6 p-3.5 rounded-lg bg-crimson-aura/10 border border-crimson-aura/40 flex items-start gap-2.5 text-xs text-crimson-aura font-mono"
+              className="mb-6 p-3.5 rounded bg-crimson-950/60 border border-crimson-800/80 flex items-start gap-2.5 text-xs text-crimson-400 font-mono"
             >
               <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
               <span>{displayedError}</span>
@@ -136,53 +133,53 @@ export const Register = () => {
 
           {/* Registration Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Warrior Name Field */}
+            {/* Operator Name Field */}
             <div className="space-y-1.5">
-              <label className="block text-xs font-orbitron font-bold tracking-wider text-slate-300">
-                WARRIOR NAME (CALLSIGN)
+              <label className="block text-xs font-orbitron font-bold tracking-wider text-ash-300">
+                NAME / CALLSIGN
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-steel-500">
                   <User className="w-4 h-4" />
                 </div>
                 <input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="e.g. JinWoo"
+                  placeholder="e.g. Alex Hunter"
                   required
-                  className="w-full pl-10 pr-4 py-2 rounded-lg bg-void/90 border border-slate-700/80 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-neon focus:ring-1 focus:ring-cyan-neon transition-colors font-sans"
+                  className="w-full pl-10 pr-4 py-2 rounded bg-void border border-steel-700 text-bone-100 placeholder-ash-500 text-sm focus:outline-none focus:border-crimson-800 focus:ring-1 focus:ring-crimson-800 transition-colors font-sans"
                 />
               </div>
             </div>
 
             {/* Email Field */}
             <div className="space-y-1.5">
-              <label className="block text-xs font-orbitron font-bold tracking-wider text-slate-300">
-                COMMUNICATION CRYSTAL (EMAIL)
+              <label className="block text-xs font-orbitron font-bold tracking-wider text-ash-300">
+                EMAIL ADDRESS
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-steel-500">
                   <Mail className="w-4 h-4" />
                 </div>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="warrior@realm.com"
+                  placeholder="name@example.com"
                   required
-                  className="w-full pl-10 pr-4 py-2 rounded-lg bg-void/90 border border-slate-700/80 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-neon focus:ring-1 focus:ring-cyan-neon transition-colors font-sans"
+                  className="w-full pl-10 pr-4 py-2 rounded bg-void border border-steel-700 text-bone-100 placeholder-ash-500 text-sm focus:outline-none focus:border-crimson-800 focus:ring-1 focus:ring-crimson-800 transition-colors font-sans"
                 />
               </div>
             </div>
 
             {/* Password Field */}
             <div className="space-y-1.5">
-              <label className="block text-xs font-orbitron font-bold tracking-wider text-slate-300">
-                ACCESS CIPHER (MIN 6 CHARS)
+              <label className="block text-xs font-orbitron font-bold tracking-wider text-ash-300">
+                PASSWORD (MIN 6 CHARACTERS)
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-steel-500">
                   <Lock className="w-4 h-4" />
                 </div>
                 <input
@@ -191,12 +188,12 @@ export const Register = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
                   required
-                  className="w-full pl-10 pr-10 py-2 rounded-lg bg-void/90 border border-slate-700/80 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-violet-neon focus:ring-1 focus:ring-violet-neon transition-colors font-sans"
+                  className="w-full pl-10 pr-10 py-2 rounded bg-void border border-steel-700 text-bone-100 placeholder-ash-500 text-sm focus:outline-none focus:border-crimson-800 focus:ring-1 focus:ring-crimson-800 transition-colors font-sans"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-500 hover:text-slate-300 transition-colors"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-ash-400 hover:text-bone-100 transition-colors"
                   aria-label="Toggle password visibility"
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -206,11 +203,11 @@ export const Register = () => {
 
             {/* Confirm Password Field */}
             <div className="space-y-1.5">
-              <label className="block text-xs font-orbitron font-bold tracking-wider text-slate-300">
-                CONFIRM ACCESS CIPHER
+              <label className="block text-xs font-orbitron font-bold tracking-wider text-ash-300">
+                CONFIRM PASSWORD
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-steel-500">
                   <Lock className="w-4 h-4" />
                 </div>
                 <input
@@ -219,12 +216,12 @@ export const Register = () => {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="••••••••"
                   required
-                  className="w-full pl-10 pr-10 py-2 rounded-lg bg-void/90 border border-slate-700/80 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-violet-neon focus:ring-1 focus:ring-violet-neon transition-colors font-sans"
+                  className="w-full pl-10 pr-10 py-2 rounded bg-void border border-steel-700 text-bone-100 placeholder-ash-500 text-sm focus:outline-none focus:border-crimson-800 focus:ring-1 focus:ring-crimson-800 transition-colors font-sans"
                 />
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-500 hover:text-slate-300 transition-colors"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-ash-400 hover:text-bone-100 transition-colors"
                   aria-label="Toggle confirm password visibility"
                 >
                   {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -236,33 +233,33 @@ export const Register = () => {
             <div className="pt-3">
               <AnimeButton
                 type="submit"
-                variant="violet"
+                variant="crimson"
                 size="lg"
                 icon={Zap}
                 disabled={isSubmitting}
                 className="w-full"
               >
-                {isSubmitting ? 'AWAKENING PROFILE...' : 'AWAKEN'}
+                {isSubmitting ? 'CREATING ACCOUNT...' : 'CREATE ACCOUNT'}
               </AnimeButton>
             </div>
           </form>
 
           {/* Footer Portal Link */}
-          <div className="mt-6 pt-5 border-t border-slate-800 text-center text-xs">
-            <span className="text-slate-400 font-sans">Already have an account? </span>
+          <div className="mt-6 pt-5 border-t border-steel-800 text-center text-xs">
+            <span className="text-ash-400 font-sans">Already have an account? </span>
             <Link
               to="/login"
-              className="font-orbitron font-bold text-violet-glow hover:underline tracking-wider"
+              className="font-orbitron font-bold text-bone-100 hover:text-crimson-400 hover:underline tracking-wider"
             >
-              Enter Ascension
+              Sign In
             </Link>
           </div>
         </motion.div>
       </main>
 
       {/* Footer System Specs */}
-      <footer className="relative z-10 text-center py-4 text-[10px] font-mono text-slate-500">
-        <span>F-TRACK HUNTER AWAKENING • PROTOCOL READY</span>
+      <footer className="relative z-10 text-center py-4 text-[10px] font-mono text-ash-500">
+        <span>F-TRACK • DISCIPLINE & GROWTH SYSTEM</span>
       </footer>
     </div>
   );

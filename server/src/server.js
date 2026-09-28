@@ -12,6 +12,13 @@ import achievementRoutes from './routes/achievementRoutes.js';
 import analyticsRoutes from './routes/analyticsRoutes.js';
 import notificationRoutes from './routes/notificationRoutes.js';
 import intelligenceRoutes from './routes/intelligenceRoutes.js';
+import goalRoutes from './routes/goalRoutes.js';
+import purposeRoutes from './routes/purposeRoutes.js';
+import reflectionRoutes from './routes/reflectionRoutes.js';
+import journeyRoutes from './routes/journeyRoutes.js';
+import trainingPlanRoutes from './routes/trainingPlanRoutes.js';
+import weeklyReflectionRoutes from './routes/weeklyReflectionRoutes.js';
+import deepPersonalIntelligenceRoutes from './routes/deepPersonalIntelligenceRoutes.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 
 // Load environment variables
@@ -51,6 +58,13 @@ app.use('/api/achievements', achievementRoutes);
 app.use('/api/analytics', analyticsRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/intelligence', intelligenceRoutes);
+app.use('/api/goals', goalRoutes);
+app.use('/api/purpose', purposeRoutes);
+app.use('/api/reflections', reflectionRoutes);
+app.use('/api/journey', journeyRoutes);
+app.use('/api/training-plan', trainingPlanRoutes);
+app.use('/api/weekly-reflections', weeklyReflectionRoutes);
+app.use('/api/deep-intelligence', deepPersonalIntelligenceRoutes);
 
 app.get('/', (req, res) => {
   res.json({

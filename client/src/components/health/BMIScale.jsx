@@ -17,17 +17,17 @@ export const BMIScale = ({ bmi = null, category = '' }) => {
     : 0;
 
   const categories = [
-    { label: 'UNDERWEIGHT', range: '< 18.5', color: 'bg-cyan-500/80', text: 'text-cyan-neon', border: 'border-cyan-500/40' },
-    { label: 'NORMAL', range: '18.5 - 24.9', color: 'bg-matrix-neon/80', text: 'text-matrix-neon', border: 'border-matrix-neon/40' },
-    { label: 'OVERWEIGHT', range: '25.0 - 29.9', color: 'bg-gold-mythic/80', text: 'text-gold-mythic', border: 'border-gold-mythic/40' },
-    { label: 'OBESITY', range: '≥ 30.0', color: 'bg-crimson-aura/80', text: 'text-crimson-aura', border: 'border-crimson-aura/40' },
+    { label: 'UNDERWEIGHT', range: '< 18.5', color: 'bg-steel/60', text: 'text-bone', border: 'border-steel/60' },
+    { label: 'NORMAL', range: '18.5 - 24.9', color: 'bg-emerald-800/80', text: 'text-emerald-400', border: 'border-emerald-800/80' },
+    { label: 'OVERWEIGHT', range: '25.0 - 29.9', color: 'bg-brass/70', text: 'text-brass', border: 'border-brass/50' },
+    { label: 'OBESITY', range: '≥ 30.0', color: 'bg-crimson', text: 'text-crimson-bright', border: 'border-crimson/60' },
   ];
 
   return (
     <div className="w-full space-y-4">
       {/* Visual Scale Bar with Marker */}
       <div className="relative pt-6 pb-2">
-        {/* Dynamic Animated Pointer / HUD Marker */}
+        {/* Dynamic Animated Pointer / Physical Instrumentation Marker */}
         {hasValue && (
           <motion.div
             initial={{ left: '0%', opacity: 0 }}
@@ -35,19 +35,19 @@ export const BMIScale = ({ bmi = null, category = '' }) => {
             transition={{ duration: 0.8, ease: 'easeOut' }}
             className="absolute top-0 -translate-x-1/2 flex flex-col items-center pointer-events-none z-20"
           >
-            <div className="px-2 py-0.5 rounded bg-void border border-cyan-neon text-cyan-neon font-orbitron font-black text-[10px] shadow-glow-cyan">
+            <div className="px-2 py-0.5 rounded-sm bg-obsidian border border-crimson text-crimson-bright font-mono font-bold text-[10px] shadow-steel-card">
               {bmi}
             </div>
-            <div className="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[5px] border-t-cyan-neon -mt-0.5" />
+            <div className="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[5px] border-t-crimson -mt-0.5" />
           </motion.div>
         )}
 
-        {/* Multi-colored Gradient Zone Track */}
-        <div className="relative h-4 w-full bg-void-pure rounded-full overflow-hidden border border-slate-800 p-0.5 grid grid-cols-4 gap-0.5 shadow-inner">
-          <div className="h-full bg-gradient-to-r from-cyan-600 to-cyan-400 rounded-l-full" title="Underweight (<18.5)" />
-          <div className="h-full bg-gradient-to-r from-emerald-500 to-matrix-neon" title="Normal (18.5 - 24.9)" />
-          <div className="h-full bg-gradient-to-r from-amber-500 to-gold-mythic" title="Overweight (25 - 29.9)" />
-          <div className="h-full bg-gradient-to-r from-rose-600 to-crimson-aura rounded-r-full" title="Obesity (≥30.0)" />
+        {/* Physical Instrumentation Recessed Track */}
+        <div className="relative h-3 w-full bg-void rounded-sm overflow-hidden border border-steel/60 p-0.5 grid grid-cols-4 gap-0.5 shadow-inner">
+          <div className="h-full bg-steel/40" title="Underweight (<18.5)" />
+          <div className="h-full bg-emerald-900/60" title="Normal (18.5 - 24.9)" />
+          <div className="h-full bg-brass/40" title="Overweight (25 - 29.9)" />
+          <div className="h-full bg-crimson/70" title="Obesity (≥30.0)" />
         </div>
       </div>
 
@@ -58,19 +58,19 @@ export const BMIScale = ({ bmi = null, category = '' }) => {
           return (
             <div
               key={cat.label}
-              className={`p-2 rounded-lg border transition-all duration-300 ${
+              className={`p-2 rounded-sm border transition-all duration-200 ${
                 isActive
-                  ? `${cat.border} bg-obsidian shadow-lg scale-105`
-                  : 'border-slate-800/80 bg-void/50'
+                  ? `${cat.border} bg-charcoal shadow-steel-card font-bold`
+                  : 'border-steel/40 bg-void'
               }`}
             >
               <div className="flex items-center justify-center gap-1.5 mb-0.5">
-                <span className={`w-2 h-2 rounded-full ${cat.color}`} />
-                <span className={`text-[10px] font-orbitron font-bold tracking-wider ${isActive ? cat.text : 'text-slate-300'}`}>
+                <span className={`w-1.5 h-1.5 rounded-full ${cat.color}`} />
+                <span className={`text-[10px] font-orbitron tracking-wider ${isActive ? cat.text : 'text-ash'}`}>
                   {cat.label}
                 </span>
               </div>
-              <span className="text-[10px] font-mono text-slate-500 block">
+              <span className="text-[10px] font-mono text-ash/80 block">
                 {cat.range}
               </span>
             </div>

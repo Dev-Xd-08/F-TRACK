@@ -1,13 +1,14 @@
 import React from 'react';
 
 /**
- * AnimeButton — Neon Glow Cyberpunk / RPG Action Button
- * @param {string} variant - 'violet' | 'cyan' | 'crimson' | 'gold' | 'outline'
+ * AnimeButton — Dark Warrior Tactical Action Button
+ * Structured rectangular button with dark steel surfaces, crimson accents, and restrained hover.
+ * @param {string} variant - 'crimson' | 'cyan' | 'violet' | 'gold' | 'outline'
  * @param {string} size - 'sm' | 'md' | 'lg'
  */
 export const AnimeButton = ({
   children,
-  variant = 'cyan',
+  variant = 'crimson',
   size = 'md',
   className = '',
   icon: Icon,
@@ -17,16 +18,16 @@ export const AnimeButton = ({
 }) => {
   const sizeStyles = {
     sm: 'px-3 py-1.5 text-xs',
-    md: 'px-5 py-2.5 text-sm font-semibold tracking-wider',
-    lg: 'px-7 py-3.5 text-base font-bold tracking-widest',
+    md: 'px-4 py-2 text-xs sm:text-sm font-semibold tracking-wider',
+    lg: 'px-6 py-3 text-sm sm:text-base font-bold tracking-widest',
   };
 
   const variantStyles = {
-    cyan: 'bg-cyan-500/10 text-cyan-neon border-cyan-neon/50 hover:bg-cyan-neon hover:text-void shadow-glow-cyan hover:border-cyan-neon',
-    violet: 'bg-violet-600/15 text-violet-glow border-violet-neon/50 hover:bg-violet-neon hover:text-white shadow-glow-violet hover:border-violet-neon',
-    crimson: 'bg-crimson-aura/10 text-crimson-aura border-crimson-aura/50 hover:bg-crimson-aura hover:text-white shadow-glow-crimson hover:border-crimson-aura',
-    gold: 'bg-gold-mythic/10 text-gold-mythic border-gold-mythic/50 hover:bg-gold-mythic hover:text-void shadow-glow-gold hover:border-gold-mythic',
-    outline: 'bg-transparent text-slate-300 border-slate-700 hover:border-cyan-neon hover:text-cyan-neon',
+    crimson: 'bg-charcoal text-offwhite border-crimson/80 hover:bg-crimson hover:border-crimson-muted hover:text-offwhite shadow-sm',
+    cyan: 'bg-charcoal text-bone border-steel hover:border-cyan/60 hover:text-offwhite shadow-sm',
+    violet: 'bg-charcoal text-bone border-steel hover:border-violet/60 hover:text-offwhite shadow-sm',
+    gold: 'bg-charcoal text-bone border-steel hover:border-gold/60 hover:text-offwhite shadow-sm',
+    outline: 'bg-transparent text-ash border-steel hover:border-crimson/60 hover:text-offwhite',
   };
 
   return (
@@ -35,16 +36,16 @@ export const AnimeButton = ({
       disabled={disabled}
       className={`
         relative inline-flex items-center justify-center gap-2
-        font-orbitron uppercase transition-all duration-300
-        border rounded-sm backdrop-blur-md active:scale-95
+        font-orbitron uppercase transition-all duration-200
+        border rounded-lg active:scale-[0.98]
         disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none
         ${sizeStyles[size] || sizeStyles.md}
-        ${variantStyles[variant] || variantStyles.cyan}
+        ${variantStyles[variant] || variantStyles.crimson}
         ${className}
       `}
       {...props}
     >
-      {Icon && <Icon className="w-4 h-4 transition-transform group-hover:rotate-12" />}
+      {Icon && <Icon className="w-4 h-4 flex-shrink-0" />}
       <span>{children}</span>
     </button>
   );

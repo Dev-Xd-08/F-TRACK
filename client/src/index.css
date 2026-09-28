@@ -7,13 +7,14 @@
     scroll-behavior: smooth;
   }
   body {
-    background-color: #080B11;
-    color: #F8FAFC;
+    background-color: #070707;
+    color: #D4D0C8; /* Bone */
     background-image: 
-      radial-gradient(circle at 15% 15%, rgba(139, 92, 246, 0.08) 0%, transparent 40%),
-      radial-gradient(circle at 85% 75%, rgba(0, 245, 255, 0.06) 0%, transparent 40%),
-      radial-gradient(circle at 50% 50%, rgba(255, 42, 95, 0.04) 0%, transparent 50%);
+      radial-gradient(circle at 50% 0%, rgba(143, 29, 44, 0.06) 0%, transparent 45%),
+      radial-gradient(circle at 85% 85%, rgba(32, 37, 43, 0.3) 0%, transparent 50%),
+      #070707;
     background-attachment: fixed;
+    font-family: 'Outfit', sans-serif;
   }
 }
 
@@ -23,64 +24,87 @@
 }
 /* Hide scrollbar for IE, Edge and Firefox */
 .no-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-/* Custom Cyber Scrollbar */
+/* Dark Steel Worn Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #080B11;
+  background: #070707;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1E293B;
-  border-radius: 4px;
-  border: 1px solid rgba(139, 92, 246, 0.2);
+  background: #20252B;
+  border-radius: 2px;
+  border: 1px solid #30363D;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #8B5CF6;
-  box-shadow: 0 0 10px #8B5CF6;
+  background: #30363D;
+  border-color: #8F1D2C;
 }
 
-/* Cyber Glassmorphism & Card Utilities */
+/* Dark Steel Tactical Panel Utilities */
+.steel-panel {
+  background: #0D0F12;
+  border: 1px solid #20252B;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.025);
+}
+
+.steel-panel-crimson {
+  background: #0D0F12;
+  border: 1px solid rgba(143, 29, 44, 0.35);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(143, 29, 44, 0.1);
+}
+
+/* Retained Glass Panel compatibility aliases mapped to Dark Steel */
 .glass-panel {
-  background: rgba(15, 23, 42, 0.7);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(139, 92, 246, 0.2);
+  background: #0D0F12;
+  border: 1px solid #20252B;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
 }
 
 .glass-panel-cyan {
-  background: rgba(15, 23, 42, 0.7);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(0, 245, 255, 0.25);
+  background: #0D0F12;
+  border: 1px solid #252B32;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
 }
 
-/* Cyber Neon Text Shadows */
+/* Restrained Contrast Accents (Quiet & Powerful, Not Loud Neon) */
+.text-glow-crimson {
+  text-shadow: 0 1px 4px rgba(143, 29, 44, 0.5);
+}
+
 .text-glow-violet {
-  text-shadow: 0 0 12px rgba(139, 92, 246, 0.7);
+  text-shadow: 0 1px 4px rgba(102, 82, 138, 0.4);
 }
 
 .text-glow-cyan {
-  text-shadow: 0 0 12px rgba(0, 245, 255, 0.7);
-}
-
-.text-glow-crimson {
-  text-shadow: 0 0 12px rgba(255, 42, 95, 0.7);
+  text-shadow: 0 1px 4px rgba(57, 125, 131, 0.4);
 }
 
 .text-glow-gold {
-  text-shadow: 0 0 12px rgba(255, 184, 0, 0.7);
+  text-shadow: 0 1px 4px rgba(168, 135, 58, 0.4);
 }
 
-/* Scanline / Grid Background Overlay */
+/* Subtle Architectural Grid Texture */
 .cyber-grid {
   background-size: 40px 40px;
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+}
+
+/* Reduced Motion Accessibility Mode */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

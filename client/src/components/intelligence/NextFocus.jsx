@@ -11,24 +11,24 @@ export const NextFocus = ({ suggestions = [] }) => {
   if (!suggestions || suggestions.length === 0) return null;
 
   return (
-    <GlassCard glow="cyan" className="p-5 space-y-4">
+    <GlassCard glow="none" className="p-5 space-y-4 border-steel-700/60 bg-charcoal-900/90 shadow-steel-card">
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+      <div className="flex items-center justify-between border-b border-steel-800 pb-3">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-cyan-neon/10 border border-cyan-neon/30 flex items-center justify-center text-cyan-neon shadow-[0_0_10px_rgba(0,245,255,0.2)]">
+          <div className="w-8 h-8 rounded bg-steel-800/80 border border-steel-700 flex items-center justify-center text-bone-200">
             <Target className="w-4 h-4" />
           </div>
           <div>
-            <h4 className="font-orbitron font-bold text-xs sm:text-sm text-slate-100 uppercase tracking-wide">
+            <h4 className="font-orbitron font-bold text-xs sm:text-sm text-bone-100 uppercase tracking-wide">
               STRATEGIC NEXT FOCUS
             </h4>
-            <span className="text-[10px] font-mono text-slate-400">
+            <span className="text-[10px] font-mono text-ash-400">
               EVIDENCE-BASED TRAINING PRIORITIES (MAX 3)
             </span>
           </div>
         </div>
 
-        <span className="text-xs font-mono text-cyan-neon">
+        <span className="text-xs font-mono text-ash-400">
           {suggestions.length} ACTIONABLE {suggestions.length === 1 ? 'AREA' : 'AREAS'}
         </span>
       </div>
@@ -41,24 +41,24 @@ export const NextFocus = ({ suggestions = [] }) => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: idx * 0.08 }}
-            className="p-4 rounded-xl bg-void/60 border border-slate-800 hover:border-cyan-neon/40 transition-all flex flex-col justify-between space-y-3 relative overflow-hidden group"
+            className="p-4 rounded bg-void/70 border border-steel-800 hover:border-steel-600 transition-all flex flex-col justify-between space-y-3 relative overflow-hidden group shadow-steel-card"
           >
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-[9px] font-orbitron font-extrabold px-1.5 py-0.5 rounded bg-cyan-neon/15 border border-cyan-neon/30 text-cyan-neon">
+                <span className="text-[9px] font-orbitron font-extrabold px-1.5 py-0.5 rounded bg-steel-800 border border-steel-700 text-bone-200">
                   PRIORITY 0{idx + 1}
                 </span>
                 {item.priority === 'HIGH' && (
-                  <span className="w-2 h-2 rounded-full bg-crimson-aura shadow-[0_0_6px_rgba(255,42,95,0.8)] animate-pulse" />
+                  <span className="w-2 h-2 rounded-full bg-crimson-600" />
                 )}
               </div>
 
-              <h5 className="font-orbitron font-bold text-xs sm:text-sm text-slate-100 uppercase tracking-wide group-hover:text-cyan-neon transition-colors">
+              <h5 className="font-orbitron font-bold text-xs sm:text-sm text-bone-100 uppercase tracking-wide group-hover:text-crimson-400 transition-colors">
                 {item.title}
               </h5>
 
               <div className="space-y-1">
-                <span className="text-[9px] font-orbitron font-bold text-slate-500 uppercase tracking-wider block">
+                <span className="text-[9px] font-orbitron font-bold text-ash-500 uppercase tracking-wider block">
                   WHY THIS APPEARS:
                 </span>
                 <p className="text-xs text-slate-300 font-sans leading-relaxed">
@@ -67,9 +67,9 @@ export const NextFocus = ({ suggestions = [] }) => {
               </div>
             </div>
 
-            <div className="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[10px] font-mono text-slate-500">
-              <span className="flex items-center gap-1 text-slate-400">
-                <CheckCircle2 className="w-3 h-3 text-cyan-neon" />
+            <div className="pt-2 border-t border-steel-800 flex items-center justify-between text-[10px] font-mono text-ash-500">
+              <span className="flex items-center gap-1 text-ash-400">
+                <CheckCircle2 className="w-3 h-3 text-steel-400" />
                 Empirical Telemetry
               </span>
             </div>

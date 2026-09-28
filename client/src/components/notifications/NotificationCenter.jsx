@@ -50,64 +50,64 @@ const getTypeConfig = (type) => {
       return {
         icon: Dumbbell,
         label: 'WORKOUT QUEST',
-        color: 'text-cyan-neon',
-        bg: 'bg-cyan-neon/15',
-        border: 'border-cyan-neon/40',
-        badge: 'bg-cyan-neon/10 text-cyan-neon border-cyan-neon/30',
+        color: 'text-bone-100',
+        bg: 'bg-steel-800/80',
+        border: 'border-steel-700',
+        badge: 'bg-steel-800 border-steel-700 text-bone-200',
       };
     case 'STREAK_REMINDER':
       return {
         icon: Flame,
         label: 'STREAK ALERT',
-        color: 'text-crimson-aura',
-        bg: 'bg-crimson-aura/15',
-        border: 'border-crimson-aura/40',
-        badge: 'bg-crimson-aura/10 text-crimson-aura border-crimson-aura/30',
+        color: 'text-amber-400',
+        bg: 'bg-amber-950/40',
+        border: 'border-amber-800/50',
+        badge: 'bg-amber-950/40 border-amber-800/50 text-amber-400',
       };
     case 'QUEST_REMINDER':
       return {
         icon: Zap,
         label: 'QUEST MISSION',
-        color: 'text-violet-glow',
-        bg: 'bg-violet-neon/15',
-        border: 'border-violet-neon/40',
-        badge: 'bg-violet-neon/10 text-violet-glow border-violet-neon/30',
+        color: 'text-bone-200',
+        bg: 'bg-steel-800/80',
+        border: 'border-steel-700',
+        badge: 'bg-steel-800 border-steel-700 text-bone-200',
       };
     case 'QUEST_COMPLETED':
       return {
         icon: CheckCircle2,
         label: 'QUEST COMPLETE',
-        color: 'text-gold-mythic',
-        bg: 'bg-gold-mythic/15',
-        border: 'border-gold-mythic/40',
-        badge: 'bg-gold-mythic/10 text-gold-mythic border-gold-mythic/30',
+        color: 'text-emerald-400',
+        bg: 'bg-emerald-950/40',
+        border: 'border-emerald-800/50',
+        badge: 'bg-emerald-950/40 border-emerald-800/50 text-emerald-400',
       };
     case 'ACHIEVEMENT_UNLOCKED':
       return {
         icon: Trophy,
         label: 'ACHIEVEMENT',
-        color: 'text-gold-mythic',
-        bg: 'bg-gold-mythic/15',
-        border: 'border-gold-mythic/40',
-        badge: 'bg-gold-mythic/10 text-gold-mythic border-gold-mythic/30',
+        color: 'text-amber-300',
+        bg: 'bg-amber-950/40',
+        border: 'border-amber-800/50',
+        badge: 'bg-amber-950/40 border-amber-800/50 text-amber-300',
       };
     case 'RANK_PROGRESS':
       return {
         icon: Crown,
         label: 'RANK ASCENSION',
-        color: 'text-violet-glow',
-        bg: 'bg-violet-neon/15',
-        border: 'border-violet-neon/40',
-        badge: 'bg-violet-neon/10 text-violet-glow border-violet-neon/30',
+        color: 'text-crimson-400',
+        bg: 'bg-crimson-950/40',
+        border: 'border-crimson-800/50',
+        badge: 'bg-crimson-950/40 border-crimson-800/50 text-crimson-300',
       };
     default:
       return {
         icon: Bell,
         label: 'SYSTEM',
-        color: 'text-slate-300',
-        bg: 'bg-slate-800',
-        border: 'border-slate-700',
-        badge: 'bg-slate-800 text-slate-300 border-slate-700',
+        color: 'text-ash-300',
+        bg: 'bg-steel-800',
+        border: 'border-steel-700',
+        badge: 'bg-steel-800 text-ash-300 border-steel-700',
       };
   }
 };
@@ -119,20 +119,20 @@ const getPriorityBadge = (priority) => {
   switch (priority) {
     case 'HIGH':
       return (
-        <span className="text-[9px] font-orbitron font-black px-1.5 py-0.5 rounded bg-crimson-aura/15 border border-crimson-aura/40 text-crimson-aura animate-pulse">
+        <span className="text-[9px] font-orbitron font-bold px-1.5 py-0.5 rounded bg-crimson-950/60 border border-crimson-800/60 text-crimson-400">
           HIGH PRIORITY
         </span>
       );
     case 'LOW':
       return (
-        <span className="text-[9px] font-orbitron font-semibold px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-400">
+        <span className="text-[9px] font-orbitron font-semibold px-1.5 py-0.5 rounded bg-steel-800/60 border border-steel-700 text-ash-400">
           INFO
         </span>
       );
     case 'MEDIUM':
     default:
       return (
-        <span className="text-[9px] font-orbitron font-semibold px-1.5 py-0.5 rounded bg-cyan-neon/10 border border-cyan-neon/30 text-cyan-neon">
+        <span className="text-[9px] font-orbitron font-semibold px-1.5 py-0.5 rounded bg-steel-800/60 border border-steel-700 text-bone-200">
           ACTIVE
         </span>
       );
@@ -180,20 +180,20 @@ export const NotificationCenter = ({
         animate={{ x: 0 }}
         exit={{ x: '100%' }}
         transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-        className="relative z-50 w-full max-w-md bg-void/95 border-l border-slate-800 shadow-[0_0_50px_rgba(0,0,0,0.9)] h-full flex flex-col justify-between overflow-hidden"
+        className="relative z-50 w-full max-w-md bg-charcoal-900 border-l border-steel-700 shadow-2xl h-full flex flex-col justify-between overflow-hidden"
       >
         {/* Top Header */}
-        <div className="p-4 sm:p-5 border-b border-slate-800 bg-obsidian/90 space-y-3">
+        <div className="p-4 sm:p-5 border-b border-steel-800 bg-charcoal-900 space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-cyan-dark to-violet-dark border border-cyan-neon/40 flex items-center justify-center text-cyan-neon shadow-glow-cyan">
+              <div className="w-8 h-8 rounded bg-steel-800 border border-steel-700 flex items-center justify-center text-bone-100">
                 <Bell className="w-4 h-4" />
               </div>
               <div>
-                <h3 className="font-orbitron font-black text-sm text-slate-100 uppercase tracking-wider flex items-center gap-2">
+                <h3 className="font-orbitron font-black text-sm text-bone-100 uppercase tracking-wider flex items-center gap-2">
                   NOTIFICATION CORE
                 </h3>
-                <span className="text-[10px] font-mono text-cyan-neon tracking-widest uppercase">
+                <span className="text-[10px] font-mono text-ash-400 tracking-widest uppercase">
                   HUNTER TELEMETRY & ALERTS
                 </span>
               </div>
@@ -201,7 +201,7 @@ export const NotificationCenter = ({
 
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg border border-slate-700 bg-slate-800/60 text-slate-400 hover:text-slate-200 hover:border-slate-500 transition-colors"
+              className="p-1.5 rounded border border-steel-700 bg-steel-800/80 text-ash-400 hover:text-bone-100 hover:border-steel-600 transition-colors"
               aria-label="Close notification center"
             >
               <X className="w-4 h-4" />
@@ -213,12 +213,12 @@ export const NotificationCenter = ({
             <div className="flex items-center gap-2">
               <span className={`px-2 py-0.5 rounded text-[10px] font-orbitron font-bold border ${
                 unreadCount > 0
-                  ? 'bg-cyan-neon/15 border-cyan-neon/40 text-cyan-neon animate-pulse'
-                  : 'bg-slate-800 border-slate-700 text-slate-400'
+                  ? 'bg-crimson-950/60 border-crimson-800/60 text-crimson-400'
+                  : 'bg-steel-800 border-steel-700 text-ash-400'
               }`}>
                 {unreadCount} UNREAD
               </span>
-              <span className="text-slate-500">
+              <span className="text-ash-500">
                 {notifications.length} total alerts
               </span>
             </div>
@@ -226,7 +226,7 @@ export const NotificationCenter = ({
             {unreadCount > 0 && (
               <button
                 onClick={onMarkAllRead}
-                className="text-[11px] text-violet-glow hover:text-cyan-neon transition-colors flex items-center gap-1 font-orbitron font-bold"
+                className="text-[11px] text-ash-400 hover:text-crimson-400 transition-colors flex items-center gap-1 font-orbitron font-bold"
               >
                 <CheckCheck className="w-3.5 h-3.5" />
                 <span>MARK ALL READ</span>
@@ -247,8 +247,8 @@ export const NotificationCenter = ({
                 onClick={() => setFilter(tab.id)}
                 className={`px-2.5 py-1 rounded text-[10px] font-orbitron font-bold whitespace-nowrap transition-all ${
                   filter === tab.id
-                    ? 'bg-cyan-neon/20 text-cyan-neon border border-cyan-neon/40 shadow-glow-cyan'
-                    : 'text-slate-400 hover:text-slate-200 bg-slate-900 border border-slate-800'
+                    ? 'bg-crimson-900/60 text-bone-100 border border-crimson-800/80'
+                    : 'text-ash-400 hover:text-bone-100 bg-charcoal-800 border border-steel-800'
                 }`}
               >
                 {tab.label}
@@ -262,17 +262,17 @@ export const NotificationCenter = ({
           {filteredNotifications.length === 0 ? (
             /* Empty State */
             <div className="h-full flex flex-col items-center justify-center text-center p-6 space-y-4 py-16">
-              <div className="w-14 h-14 rounded-2xl bg-obsidian border border-slate-800 flex items-center justify-center text-slate-500">
+              <div className="w-14 h-14 rounded bg-charcoal-800 border border-steel-800 flex items-center justify-center text-ash-500">
                 <BellOff className="w-7 h-7" />
               </div>
               <div className="space-y-1.5 max-w-xs">
-                <h4 className="font-orbitron font-bold text-sm text-slate-200 uppercase tracking-wider">
+                <h4 className="font-orbitron font-bold text-sm text-bone-200 uppercase tracking-wider">
                   NOTIFICATION CORE
                 </h4>
-                <p className="text-xs text-slate-400 font-mono">
+                <p className="text-xs text-ash-400 font-mono">
                   No notifications yet.
                 </p>
-                <p className="text-[11px] text-slate-500 font-sans">
+                <p className="text-[11px] text-ash-500 font-sans">
                   Complete activities to begin receiving system alerts.
                 </p>
               </div>
@@ -295,20 +295,20 @@ export const NotificationCenter = ({
                       onMarkRead(notif._id);
                     }
                   }}
-                  className={`p-3.5 rounded-xl border transition-all cursor-pointer relative overflow-hidden group ${
+                  className={`p-3.5 rounded border transition-all cursor-pointer relative overflow-hidden group shadow-steel-card ${
                     isUnread
-                      ? 'bg-obsidian/95 border-violet-neon/40 shadow-[0_0_15px_rgba(139,92,246,0.15)] hover:border-cyan-neon/60'
-                      : 'bg-void/70 border-slate-800/80 opacity-75 hover:opacity-100 hover:border-slate-700'
+                      ? 'bg-charcoal-800/95 border-steel-600 hover:border-steel-500'
+                      : 'bg-void/70 border-steel-800/80 opacity-75 hover:opacity-100 hover:border-steel-700'
                   }`}
                 >
-                  {/* Unread Glowing Pip */}
+                  {/* Unread Pip */}
                   {isUnread && (
-                    <span className="absolute top-3.5 right-3.5 w-2 h-2 rounded-full bg-cyan-neon shadow-[0_0_8px_rgba(0,245,255,0.8)] animate-pulse" />
+                    <span className="absolute top-3.5 right-3.5 w-2 h-2 rounded-full bg-crimson-600" />
                   )}
 
                   <div className="flex items-start gap-3">
                     {/* Icon Avatar */}
-                    <div className={`w-8 h-8 rounded-lg ${cfg.bg} ${cfg.border} border flex items-center justify-center flex-shrink-0 ${cfg.color}`}>
+                    <div className={`w-8 h-8 rounded ${cfg.bg} ${cfg.border} border flex items-center justify-center flex-shrink-0 ${cfg.color}`}>
                       <Icon className="w-4 h-4" />
                     </div>
 
@@ -321,22 +321,22 @@ export const NotificationCenter = ({
                         {getPriorityBadge(notif.priority)}
                       </div>
 
-                      <h4 className={`font-orbitron font-bold text-xs uppercase tracking-wide ${isUnread ? 'text-slate-100' : 'text-slate-300'}`}>
+                      <h4 className={`font-orbitron font-bold text-xs uppercase tracking-wide ${isUnread ? 'text-bone-100' : 'text-ash-300'}`}>
                         {notif.title}
                       </h4>
 
-                      <p className="text-xs text-slate-400 font-sans leading-relaxed">
+                      <p className="text-xs text-slate-300 font-sans leading-relaxed">
                         {notif.message}
                       </p>
 
-                      <div className="pt-1 flex items-center justify-between text-[10px] font-mono text-slate-500">
+                      <div className="pt-1 flex items-center justify-between text-[10px] font-mono text-ash-500">
                         <span className="flex items-center gap-1">
-                          <Clock className="w-3 h-3 text-slate-600" />
+                          <Clock className="w-3 h-3 text-steel-500" />
                           {formatNotificationTime(notif.createdAt)}
                         </span>
 
                         {isUnread && (
-                          <span className="text-cyan-neon font-orbitron font-semibold text-[9px] group-hover:underline">
+                          <span className="text-ash-400 font-orbitron font-semibold text-[9px] group-hover:text-crimson-400">
                             Click to mark read
                           </span>
                         )}
@@ -350,8 +350,8 @@ export const NotificationCenter = ({
         </div>
 
         {/* Footer */}
-        <div className="p-3 border-t border-slate-800 bg-obsidian/80 text-center text-[10px] font-mono text-slate-500">
-          <span>F-TRACK • SMART NOTIFICATION ENGINE (STAGE 11)</span>
+        <div className="p-3 border-t border-steel-800 bg-charcoal-900 text-center text-[10px] font-mono text-ash-500">
+          <span>F-TRACK • NOTIFICATION ENGINE</span>
         </div>
       </motion.aside>
     </div>

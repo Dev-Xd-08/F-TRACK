@@ -9,7 +9,7 @@ import Footer from '../components/Footer';
 
 export const LandingPage = () => {
   return (
-    <div className="min-h-screen bg-void text-slate-100 selection:bg-cyan-neon selection:text-void overflow-x-hidden relative">
+    <div className="min-h-screen bg-void text-slate-100 selection:bg-crimson-900 selection:text-bone-100 overflow-x-hidden relative">
       {/* Top Sticky Navbar */}
       <Navbar />
 

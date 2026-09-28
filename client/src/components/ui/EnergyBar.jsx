@@ -1,54 +1,72 @@
 import React from 'react';
 
 /**
- * EnergyBar — Anime HP / Stamina / XP Progress Bar
- * @param {string} label - e.g. "HP", "STAMINA", "XP PROGRESS"
+ * EnergyBar — Dark Warrior Instrumentation Status Meter
+ * Restrained status meter styled like physical tactical instrumentation.
+ * @param {string} label - e.g. "XP PROGRESS", "STAMINA"
  * @param {number} current - e.g. 750
  * @param {number} max - e.g. 1000
- * @param {string} color - 'cyan' | 'crimson' | 'violet' | 'gold'
+ * @param {string} color - 'crimson' | 'violet' | 'cyan' | 'gold' | 'matrix'
+ * @param {string} unit - 'XP' | '%' | 'HP' | 'KCAL'
  */
 export const EnergyBar = ({
   label = 'XP PROGRESS',
   current = 75,
   max = 100,
-  color = 'violet',
+  color = 'crimson',
   unit = 'XP',
   showValues = true,
+  className = '',
 }) => {
-  const percent = Math.min(100, Math.max(0, Math.round((current / max) * 100)));
+  const safeMax = Math.max(1, Number(max) || 1);
+  const safeCurrent = Math.max(0, Number(current) || 0);
+  const percent = Math.min(100, Math.max(0, Math.round((safeCurrent / safeMax) * 100)));
 
-  const barGradients = {
-    violet: 'from-violet-600 to-violet-glow shadow-[0_0_12px_#8B5CF6]',
-    cyan: 'from-cyan-600 to-cyan-neon shadow-[0_0_12px_#00F5FF]',
-    crimson: 'from-crimson-dark to-crimson-aura shadow-[0_0_12px_#FF2A5F]',
-    gold: 'from-amber-600 to-gold-mythic shadow-[0_0_12px_#FFB800]',
+  // Disciplined dark steel and crimson instrumentation gradients
+  const barFills = {
+    crimson: 'bg-gradient-to-r from-crimson-dark via-crimson to-crimson-muted',
+    steel: 'bg-gradient-to-r from-steel-muted via-steel to-ash-dark',
+    violet: 'bg-gradient-to-r from-violet-dark via-violet to-violet-glow',
+    cyan: 'bg-gradient-to-r from-cyan-dark via-cyan to-cyan-glow',
+    gold: 'bg-gradient-to-r from-gold-dark via-gold to-gold-glow',
+    matrix: 'bg-gradient-to-r from-matrix via-matrix-neon to-matrix-glow',
   };
 
   const labelColors = {
-    violet: 'text-violet-glow',
-    cyan: 'text-cyan-neon',
-    crimson: 'text-crimson-aura',
-    gold: 'text-gold-mythic',
+    crimson: 'text-offwhite',
+    steel: 'text-bone',
+    violet: 'text-bone',
+    cyan: 'text-bone',
+    gold: 'text-bone',
+    matrix: 'text-bone',
   };
 
   return (
-    <div className="w-full space-y-1.5">
+    <div className={`w-full space-y-1.5 ${className}`}>
       <div className="flex justify-between items-center text-xs font-orbitron">
-        <span className={`tracking-wider font-bold ${labelColors[color] || labelColors.violet}`}>
+        <span className={`tracking-wider font-bold text-xs uppercase ${labelColors[color] || 'text-bone'}`}>
           {label}
         </span>
         {showValues && (
-          <span className="text-slate-400 font-mono">
-            <span className="text-slate-200 font-bold">{current}</span> / {max} {unit} ({percent}%)
+          <span className="text-ash font-mono text-[11px]">
+            <span className="text-offwhite font-bold">{safeCurrent.toLocaleString()}</span>
+            {' '}/ {safeMax.toLocaleString()} {unit} <span className="text-ash-dark">({percent}%)</span>
           </span>
         )}
       </div>
 
-      {/* Energy Bar Track */}
-      <div className="relative h-3 w-full bg-void-pure rounded-full overflow-hidden border border-slate-800 p-0.5">
+      {/* Meter Track: Dark recessed channel */}
+      <div
+        role="progressbar"
+        aria-valuenow={safeCurrent}
+        aria-valuemin={0}
+        aria-valuemax={safeMax}
+        aria-label={label}
+        className="relative h-2.5 w-full bg-void rounded-sm overflow-hidden border border-gunmetal p-[1px]"
+      >
         <div
-          className={`h-full rounded-full bg-gradient-to-r transition-all duration-700 ease-out ${
-            barGradients[color] || barGradients.violet
+          className={`h-full rounded-[1px] transition-all duration-500 ease-out ${
+            barFills[color] || barFills.crimson
           }`}
           style={{ width: `${percent}%` }}
         />

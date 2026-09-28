@@ -20,11 +20,10 @@ export const Hero = () => {
   const { isAuthenticated } = useAuth();
   return (
     <section id="hero" className="relative min-h-screen pt-28 pb-16 flex items-center justify-center overflow-hidden">
-      {/* Background Energy Matrix & Concentric Neon Grid */}
+      {/* Background Architectural Grid & Subtle Radial Atmosphere */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] bg-gradient-to-tr from-violet-neon/15 via-cyan-neon/10 to-transparent rounded-full blur-3xl opacity-70 animate-pulse-slow" />
-        <div className="absolute bottom-10 left-10 w-96 h-96 bg-crimson-aura/10 rounded-full blur-3xl opacity-50" />
-        <div className="absolute inset-0 cyber-grid opacity-30" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] bg-crimson-950/10 rounded-full blur-3xl opacity-40" />
+        <div className="absolute inset-0 architectural-grid opacity-25" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
@@ -37,11 +36,11 @@ export const Hero = () => {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-cyan-neon/40 bg-cyan-neon/10 backdrop-blur-md shadow-glow-cyan"
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded border border-steel-700 bg-charcoal-900/90 shadow-steel-card"
             >
-              <span className="w-2 h-2 rounded-full bg-cyan-neon animate-ping" />
-              <span className="text-[11px] font-orbitron font-bold tracking-widest text-cyan-neon uppercase">
-                SYSTEM AWAKENING PROTOCOL • ONLINE
+              <span className="w-2 h-2 rounded-full bg-crimson-600" />
+              <span className="text-[11px] font-orbitron font-bold tracking-widest text-ash-300 uppercase">
+                SYSTEM PROTOCOL • OPERATIONAL
               </span>
             </motion.div>
 
@@ -52,13 +51,13 @@ export const Hero = () => {
               transition={{ duration: 0.7, delay: 0.1 }}
               className="space-y-1"
             >
-              <h1 className="font-orbitron text-4xl sm:text-6xl xl:text-7xl font-black tracking-tight leading-[1.05] text-slate-100 uppercase">
-                YOUR BODY.
-                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-neon via-white to-violet-glow">
-                  YOUR POWER.
+              <h1 className="font-orbitron text-4xl sm:text-6xl xl:text-7xl font-black tracking-tight leading-[1.05] text-bone-100 uppercase">
+                BECOME SOMEONE
+                <span className="block text-ash-400">
+                  YOU'RE PROUD OF.
                 </span>
-                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-violet-neon via-crimson-glow to-gold-mythic text-glow-violet">
-                  YOUR ASCENSION.
+                <span className="block text-crimson-600 text-3xl sm:text-5xl xl:text-6xl">
+                  THE PATH CONTINUES.
                 </span>
               </h1>
             </motion.div>
@@ -68,10 +67,14 @@ export const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
-              className="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed"
+              className="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed space-y-1.5"
             >
-              Turn every workout into progress. Track your fitness. Complete quests. 
-              Earn XP. Become stronger. Experience fitness through an original anime RPG interface designed for peak performance.
+              <span className="block font-medium text-bone-100">
+                Train your body. Understand yourself. Build a routine you can return to.
+              </span>
+              <span className="block text-sm text-ash-400">
+                You don't need to become someone else. You need to become someone you can rely on. Start where you are. Keep moving forward.
+              </span>
             </motion.p>
 
             {/* Primary & Secondary Call to Actions */}
@@ -82,7 +85,7 @@ export const Hero = () => {
               className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2"
             >
               <AnimeButton
-                variant="cyan"
+                variant="crimson"
                 size="lg"
                 icon={Zap}
                 onClick={() => {
@@ -93,7 +96,7 @@ export const Hero = () => {
                   }
                 }}
               >
-                ⚡ BEGIN ASCENSION
+                START YOUR JOURNEY
               </AnimeButton>
 
               <AnimeButton
@@ -104,7 +107,7 @@ export const Hero = () => {
                   document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' });
                 }}
               >
-                EXPLORE SYSTEM
+                EXPLORE THE SYSTEM
               </AnimeButton>
             </motion.div>
 
@@ -113,84 +116,66 @@ export const Hero = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="pt-6 grid grid-cols-3 gap-4 border-t border-slate-800/80 max-w-lg mx-auto lg:mx-0 text-left font-orbitron"
+              className="pt-6 grid grid-cols-3 gap-4 border-t border-steel-800 max-w-lg mx-auto lg:mx-0 text-left font-orbitron"
             >
               <div>
-                <p className="text-xl sm:text-2xl font-black text-cyan-neon">6 CORE</p>
-                <p className="text-[10px] text-slate-400 font-sans tracking-wide">FITNESS MODULES</p>
+                <p className="text-xl sm:text-2xl font-black text-bone-100">6 CORE</p>
+                <p className="text-[10px] text-ash-400 font-mono tracking-wider">FITNESS MODULES</p>
               </div>
               <div>
-                <p className="text-xl sm:text-2xl font-black text-violet-glow">E → S</p>
-                <p className="text-[10px] text-slate-400 font-sans tracking-wide">RANK PROGRESSION</p>
+                <p className="text-xl sm:text-2xl font-black text-bone-100">E → S</p>
+                <p className="text-[10px] text-ash-400 font-mono tracking-wider">RANK PROGRESSION</p>
               </div>
               <div>
-                <p className="text-xl sm:text-2xl font-black text-gold-mythic">100%</p>
-                <p className="text-[10px] text-slate-400 font-sans tracking-wide">GAMIFIED WORKOUTS</p>
+                <p className="text-xl sm:text-2xl font-black text-crimson-500">100%</p>
+                <p className="text-[10px] text-ash-400 font-mono tracking-wider">VERIFIED TELEMETRY</p>
               </div>
             </motion.div>
           </div>
 
-          {/* Right Column: Original Anime Warrior Visual & Floating HUD Matrix (5 cols) */}
+          {/* Right Column: Dark Warrior Spec Dossier & Physical Instrumentation (5 cols) */}
           <div className="lg:col-span-5 relative flex items-center justify-center">
             
-            {/* Energy Core / Abstract Warrior Silhouette */}
             <div className="relative w-[320px] sm:w-[420px] h-[460px] sm:h-[540px] flex items-center justify-center">
               
-              {/* Concentric Rotating Energy Rings */}
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
-                className="absolute inset-4 rounded-full border border-dashed border-cyan-neon/30"
-              />
-              <motion.div
-                animate={{ rotate: -360 }}
-                transition={{ duration: 35, repeat: Infinity, ease: 'linear' }}
-                className="absolute inset-10 rounded-full border border-violet-neon/30"
-              />
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}
-                className="absolute inset-16 rounded-full border border-dashed border-gold-mythic/20"
-              />
+              {/* Outer Concentric Tactical Rings */}
+              <div className="absolute inset-4 rounded-full border border-steel-800/80 pointer-events-none" />
+              <div className="absolute inset-12 rounded-full border border-steel-800/50 pointer-events-none" />
 
               {/* Sci-Fi Warrior Silhouette Geometry */}
-              <div className="relative z-10 w-64 h-80 rounded-2xl bg-gradient-to-b from-obsidian/90 via-void/90 to-obsidian/90 border border-violet-neon/40 shadow-glow-violet backdrop-blur-md flex flex-col items-center justify-center p-6 text-center overflow-hidden group">
+              <div className="relative z-10 w-64 h-80 rounded bg-charcoal-900 border border-steel-700 shadow-steel-card flex flex-col items-center justify-center p-6 text-center overflow-hidden group">
+                {/* Single Crimson Top Line */}
+                <div className="absolute top-0 left-0 right-0 h-1 bg-crimson-800" />
                 
-                {/* Internal Scanlines & Shonen Aura Glow */}
-                <div className="absolute inset-0 bg-gradient-to-t from-violet-neon/20 via-transparent to-cyan-neon/20 opacity-60" />
-                <div className="absolute -top-16 left-1/2 -translate-x-1/2 w-40 h-40 bg-cyan-neon/30 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-700" />
-                
-                {/* Abstract Warrior Crest / Core Emblem */}
+                {/* Warrior Crest / Core Emblem */}
                 <div className="relative z-20 mb-4">
-                  <div className="w-24 h-24 rounded-xl bg-gradient-to-br from-violet-neon to-cyan-neon p-1 shadow-glow-cyan">
-                    <div className="w-full h-full bg-void rounded-lg flex items-center justify-center">
-                      <Shield className="w-12 h-12 text-cyan-neon drop-shadow-[0_0_8px_#00F5FF]" />
-                    </div>
+                  <div className="w-20 h-20 rounded bg-charcoal-800 border border-steel-700 flex items-center justify-center">
+                    <Shield className="w-10 h-10 text-bone-100" />
                   </div>
                 </div>
 
                 <div className="relative z-20 space-y-1">
-                  <div className="inline-block px-2.5 py-0.5 rounded text-[10px] font-orbitron font-extrabold bg-cyan-neon/15 text-cyan-neon border border-cyan-neon/40">
-                    HUNTER ARCHETYPE
+                  <div className="inline-block px-2.5 py-0.5 rounded text-[10px] font-orbitron font-extrabold bg-steel-800 text-bone-200 border border-steel-700">
+                    OPERATOR ARCHETYPE
                   </div>
-                  <h3 className="font-orbitron text-lg font-bold text-slate-100 tracking-wider">
-                    ASCENDANT WARRIOR
+                  <h3 className="font-orbitron text-lg font-bold text-bone-100 tracking-wider">
+                    DARK WARRIOR
                   </h3>
-                  <p className="text-[11px] text-slate-400 font-sans leading-tight">
-                    Resilient body matrix with adaptive strength and stamina capacity.
+                  <p className="text-[11px] text-ash-400 font-sans leading-tight">
+                    Resilient physical matrix with adaptive strength and endurance capacity.
                   </p>
                 </div>
 
                 {/* Energy Pulse Base Line */}
-                <div className="relative z-20 w-full mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-[10px] font-mono text-slate-400">
-                  <span>CORE: AWAKENED</span>
-                  <span className="text-matrix-neon flex items-center gap-1 font-bold">
-                    <span className="w-1.5 h-1.5 rounded-full bg-matrix-neon animate-pulse" /> SYNCHRONIZED
+                <div className="relative z-20 w-full mt-4 pt-3 border-t border-steel-800 flex items-center justify-between text-[10px] font-mono text-ash-400">
+                  <span>CORE: ONLINE</span>
+                  <span className="text-emerald-400 flex items-center gap-1 font-bold">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> SYNCHRONIZED
                   </span>
                 </div>
               </div>
 
-              {/* 5 FLOATING HUD ELEMENTS (Framer Motion Animated) */}
+              {/* 5 FLOATING HUD ELEMENTS (Physical Instrumentation Design) */}
 
               {/* HUD 1: RANK: E (Top Left) */}
               <motion.div
@@ -199,19 +184,15 @@ export const Hero = () => {
                 transition={{ duration: 0.6, delay: 0.4 }}
                 className="absolute top-4 -left-4 sm:-left-8 z-20"
               >
-                <motion.div
-                  animate={{ y: [0, -6, 0] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                  className="px-3.5 py-2 rounded-lg bg-obsidian/90 border border-slate-700/80 backdrop-blur-md shadow-lg flex items-center gap-2.5"
-                >
-                  <div className="w-7 h-7 rounded bg-slate-800 border border-slate-600 flex items-center justify-center font-orbitron font-bold text-xs text-slate-300">
+                <div className="px-3.5 py-2 rounded bg-charcoal-900 border border-steel-700 shadow-steel-card flex items-center gap-2.5">
+                  <div className="w-7 h-7 rounded bg-steel-800 border border-steel-600 flex items-center justify-center font-orbitron font-bold text-xs text-bone-200">
                     E
                   </div>
                   <div>
-                    <span className="text-[9px] font-orbitron block text-slate-400 tracking-wider">INITIATE STATUS</span>
-                    <span className="text-xs font-orbitron font-bold text-slate-200">RANK: E</span>
+                    <span className="text-[9px] font-orbitron block text-ash-400 tracking-wider">INITIATE STATUS</span>
+                    <span className="text-xs font-orbitron font-bold text-bone-100">RANK: E</span>
                   </div>
-                </motion.div>
+                </div>
               </motion.div>
 
               {/* HUD 2: LEVEL: 01 (Top Right) */}
@@ -221,19 +202,15 @@ export const Hero = () => {
                 transition={{ duration: 0.6, delay: 0.5 }}
                 className="absolute top-10 -right-4 sm:-right-8 z-20"
               >
-                <motion.div
-                  animate={{ y: [0, 6, 0] }}
-                  transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
-                  className="px-3.5 py-2 rounded-lg bg-obsidian/90 border border-violet-neon/40 backdrop-blur-md shadow-glow-violet flex items-center gap-2.5"
-                >
-                  <div className="w-7 h-7 rounded bg-violet-neon/20 border border-violet-neon/60 flex items-center justify-center font-orbitron font-bold text-xs text-violet-glow">
+                <div className="px-3.5 py-2 rounded bg-charcoal-900 border border-steel-700 shadow-steel-card flex items-center gap-2.5">
+                  <div className="w-7 h-7 rounded bg-steel-800 border border-steel-600 flex items-center justify-center font-orbitron font-bold text-xs text-bone-100">
                     01
                   </div>
                   <div>
-                    <span className="text-[9px] font-orbitron block text-violet-glow tracking-wider">ASCENSION</span>
-                    <span className="text-xs font-orbitron font-bold text-slate-100">LEVEL: 01</span>
+                    <span className="text-[9px] font-orbitron block text-ash-400 tracking-wider">ASCENSION</span>
+                    <span className="text-xs font-orbitron font-bold text-bone-100">LEVEL: 01</span>
                   </div>
-                </motion.div>
+                </div>
               </motion.div>
 
               {/* HUD 3: XP: 0 / 100 (Middle Left) */}
@@ -243,19 +220,15 @@ export const Hero = () => {
                 transition={{ duration: 0.6, delay: 0.6 }}
                 className="absolute top-1/2 -left-6 sm:-left-12 z-20"
               >
-                <motion.div
-                  animate={{ y: [0, 8, 0] }}
-                  transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-                  className="px-3.5 py-2 rounded-lg bg-obsidian/90 border border-cyan-neon/40 backdrop-blur-md shadow-glow-cyan w-40"
-                >
+                <div className="px-3.5 py-2 rounded bg-charcoal-900 border border-steel-700 shadow-steel-card w-40">
                   <div className="flex justify-between items-center text-[10px] font-orbitron mb-1">
-                    <span className="text-cyan-neon font-bold">XP MATRIX</span>
-                    <span className="text-slate-300 font-mono">0 / 100</span>
+                    <span className="text-ash-300 font-bold">XP MATRIX</span>
+                    <span className="text-bone-100 font-mono">0 / 100</span>
                   </div>
-                  <div className="h-1.5 w-full bg-void-pure rounded-full overflow-hidden border border-slate-800">
-                    <div className="h-full w-1/12 bg-cyan-neon rounded-full" />
+                  <div className="h-1.5 w-full bg-void border border-steel-800 rounded-sm overflow-hidden">
+                    <div className="h-full w-1/12 bg-crimson-700 rounded-sm" />
                   </div>
-                </motion.div>
+                </div>
               </motion.div>
 
               {/* HUD 4: STREAK: 0 DAYS (Bottom Left) */}
@@ -265,17 +238,13 @@ export const Hero = () => {
                 transition={{ duration: 0.6, delay: 0.7 }}
                 className="absolute -bottom-2 -left-2 sm:-left-6 z-20"
               >
-                <motion.div
-                  animate={{ y: [0, -7, 0] }}
-                  transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut' }}
-                  className="px-3 py-2 rounded-lg bg-obsidian/90 border border-crimson-aura/40 backdrop-blur-md shadow-glow-crimson flex items-center gap-2.5"
-                >
-                  <Flame className="w-5 h-5 text-crimson-aura fill-crimson-aura/40 animate-pulse" />
+                <div className="px-3 py-2 rounded bg-charcoal-900 border border-steel-700 shadow-steel-card flex items-center gap-2.5">
+                  <Flame className="w-5 h-5 text-amber-500" />
                   <div>
-                    <span className="text-[9px] font-orbitron block text-crimson-aura tracking-wider">DAILY DRIVE</span>
-                    <span className="text-xs font-orbitron font-bold text-slate-100">STREAK: 0 DAYS</span>
+                    <span className="text-[9px] font-orbitron block text-ash-400 tracking-wider">DAILY DISCIPLINE</span>
+                    <span className="text-xs font-orbitron font-bold text-bone-100">STREAK: 0 DAYS</span>
                   </div>
-                </motion.div>
+                </div>
               </motion.div>
 
               {/* HUD 5: ENERGY: 100% (Bottom Right) */}
@@ -285,17 +254,13 @@ export const Hero = () => {
                 transition={{ duration: 0.6, delay: 0.8 }}
                 className="absolute -bottom-4 -right-2 sm:-right-6 z-20"
               >
-                <motion.div
-                  animate={{ y: [0, 6, 0] }}
-                  transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut' }}
-                  className="px-3.5 py-2 rounded-lg bg-obsidian/90 border border-gold-mythic/40 backdrop-blur-md shadow-glow-gold flex items-center gap-2.5"
-                >
-                  <BatteryCharging className="w-5 h-5 text-gold-mythic" />
+                <div className="px-3.5 py-2 rounded bg-charcoal-900 border border-steel-700 shadow-steel-card flex items-center gap-2.5">
+                  <BatteryCharging className="w-5 h-5 text-ash-300" />
                   <div>
-                    <span className="text-[9px] font-orbitron block text-gold-mythic tracking-wider">STAMINA HUD</span>
-                    <span className="text-xs font-orbitron font-bold text-slate-100">ENERGY: 100%</span>
+                    <span className="text-[9px] font-orbitron block text-ash-400 tracking-wider">STAMINA HUD</span>
+                    <span className="text-xs font-orbitron font-bold text-bone-100">ENERGY: 100%</span>
                   </div>
-                </motion.div>
+                </div>
               </motion.div>
 
             </div>
